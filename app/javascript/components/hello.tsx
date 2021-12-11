@@ -9,7 +9,7 @@ const Hello = ({
   profile
 } : Props) => {
   return (
-    <div>Hello from {profile.id} now live ya. Reload!</div>
+    <div>Hello from {profile.id} now live ya. Now Reload!</div>
   )
 }
 
