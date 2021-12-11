@@ -1,3 +1,4 @@
 export default interface ProfileType {
-  id: number
+  id: number;
+  name: string;
 }
