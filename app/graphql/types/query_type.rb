@@ -10,9 +10,14 @@ module Types
     field :profile, ProfileType, "Find a profile by id" do
       argument :id, ID
     end
-
     def profile(id:)
       Profile.find(id)
+    end
+
+
+    field :activity_feed, [PostType], "Look at the posts in the feed"
+    def activity_feed
+      ActivityFeed.for(nil)
     end
   end
 end

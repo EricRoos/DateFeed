@@ -11,6 +11,7 @@ import {
 } from "@apollo/client";
 
 import Profile from './profile';
+import ActivityFeed from './activity-feed';
 
 
 const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
@@ -36,4 +37,4 @@ function renderComponent(component, container){
   }
 }
 const helloContainer = document.getElementById('root');
-renderComponent(<Profile profileId={1}/>, helloContainer);
+renderComponent(<ActivityFeed />, helloContainer);
