@@ -64,3 +64,7 @@ gem "guard-rspec", "~> 4.7", :groups => [:development, :test]
 
 gem "graphql", "~> 1.13"
 gem "graphiql-rails", group: :development
+
+gem "factory_bot_rails", "~> 6.2", :groups => [:development, :test]
+
+gem "faker", "~> 2.19", :groups => [:development, :test]
