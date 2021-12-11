@@ -1,18 +1,16 @@
 import * as React from "react";
-let Logo ="https://logrocket-assets.io/static/home-hero-c97849b227a3d3015730e3371a76a7f0.svg";
+import ProfileType from './profile';
 
-export default class Hello extends React.Component <{}> {
-  render() {
-    return (
-      <div>
-        <h3>A Simple React Component Example with Typescript</h3>
-        <div>
-          <img height="250" src={Logo} /> 
-        </div>
-        <p>This component shows the Logrocket logo.</p>
-        <p>For more info on Logrocket, please visit https://logrocket.com </p>
-      </div>
-    );
-  }
+interface Props {
+  profile: ProfileType
 }
 
+const Hello = ({
+  profile
+} : Props) => {
+  return (
+    <div>Hello from {profile.id} now live ya. Reload!</div>
+  )
+}
+
+export default Hello;

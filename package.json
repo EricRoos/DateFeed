@@ -5,6 +5,8 @@
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
     "esbuild": "^0.14.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -12,6 +14,10 @@
   },
   "version": "0.1.0",
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds"
+    "build": "esbuild app/javascript/application.js --bundle  --outdir=app/assets/builds"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.12",
+    "typescript": "^4.5.3"
   }
 }
