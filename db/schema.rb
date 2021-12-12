@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_12_004805) do
+ActiveRecord::Schema.define(version: 2021_12_12_162029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "post_interactions", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.bigint "post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_post_interactions_on_post_id"
+    t.index ["profile_id"], name: "index_post_interactions_on_profile_id"
+  end
 
   create_table "posts", force: :cascade do |t|
     t.text "content"
@@ -44,6 +53,8 @@ ActiveRecord::Schema.define(version: 2021_12_12_004805) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "post_interactions", "posts"
+  add_foreign_key "post_interactions", "profiles"
   add_foreign_key "posts", "profiles"
   add_foreign_key "profiles", "users"
 end
