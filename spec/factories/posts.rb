@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :post do
     content { "MyText" }
-    profile { nil }
+    association :profile
   end
 end

@@ -17,7 +17,8 @@ module Types
 
     field :activity_feed, [PostType], "Look at the posts in the feed"
     def activity_feed
-      ActivityFeed.for(nil)
+      Rails.logger.debug(context[:current_user])
+      ActivityFeed.for(context[:current_user])
     end
   end
 end

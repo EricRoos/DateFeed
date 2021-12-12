@@ -3,6 +3,6 @@ class ActivityFeedItem
   attr_accessor :post, :current_profile
 
   def likeable?
-    post.profile != profile
+    post.profile != current_profile
   end
 end

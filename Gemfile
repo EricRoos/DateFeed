@@ -70,3 +70,5 @@ gem "factory_bot_rails", "~> 6.2", :groups => [:development, :test]
 gem "faker", "~> 2.19", :groups => [:development, :test]
 
 gem "turbo-rails", "~> 0.9.0"
+
+gem 'devise', github: 'heartcombo/devise', branch: 'main'
