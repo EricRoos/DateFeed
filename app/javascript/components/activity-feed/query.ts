@@ -4,23 +4,26 @@ import {
   gql
 } from "@apollo/client";
 
-import PostType from '../models/post';
+import ActivityFeedItemType from '../models/activity_feed_item';
 
 
 const ACTIVITY_FEED_QUERY = gql`
   query FetchActivityFeed{
     activityFeed{
-      id
-      content
-      profile {
-        name
-      } 
+      likeable
+      post {
+        id
+        content
+        profile {
+          name
+        } 
+      }
     }
   }
 `
 
 interface ActivityFeedQueryData {
-  activityFeed: [PostType]
+  activityFeed: [ActivityFeedItemType]
 }
 
 interface ActivityFeedQueryVars {
