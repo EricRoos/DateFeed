@@ -1,7 +1,7 @@
 class Profile < ApplicationRecord
   belongs_to :user
 
-  searchable do
+  searchable auto_index: false do
     integer :age
     integer :shared_interactions_with, multiple: true
   end

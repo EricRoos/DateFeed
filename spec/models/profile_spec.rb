@@ -22,6 +22,6 @@ RSpec.describe Profile, type: :model do
 
     subject { me.shared_interactions_with }
 
-    it { is_expected.to eq [other.id, other3.id] }
+    it { is_expected.to match_array [other.id, other3.id] }
   end
 end
