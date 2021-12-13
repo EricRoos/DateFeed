@@ -72,3 +72,7 @@ gem "faker", "~> 2.19", :groups => [:development, :test]
 gem "turbo-rails", "~> 0.9.0"
 
 gem 'devise', github: 'heartcombo/devise', branch: 'main'
+
+gem "sunspot_rails", "~> 2.5"
+
+gem "sunspot_solr", "~> 2.5", :group => :development

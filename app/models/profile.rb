@@ -1,6 +1,11 @@
 class Profile < ApplicationRecord
   belongs_to :user
 
+  searchable do
+    integer :age
+    integer :shared_interactions_with, multiple: true
+  end
+
   def shared_interactions_with
     interaction_profiles = Hash.new(0)
     PostInteraction
