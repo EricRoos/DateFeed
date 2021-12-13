@@ -1,8 +1,8 @@
 module Types
   class QueryType < Types::BaseObject
     # Add `node(id: ID!) and `nodes(ids: [ID!]!)`
-    include GraphQL::Types::Relay::HasNodeField
-    include GraphQL::Types::Relay::HasNodesField
+    #include GraphQL::Types::Relay::HasNodeField
+    #include GraphQL::Types::Relay::HasNodesField
 
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
@@ -13,6 +13,17 @@ module Types
     def profile(id:)
       Profile.find(id)
     end
+
+    field :profile_search, [ProfileType], "Search for profiles" do
+      argument :searchParam, ProfileSearchInputType
+    end
+    def profile_search(searchParam:)
+      ProfileSearch.new(
+        min_age: searchParam.min_age,
+        max_age: searchParam.max_age
+      ).results
+    end
+
 
 
     field :activity_feed, [ActivityFeedItemType], "Look at the posts in the feed"
