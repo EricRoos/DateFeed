@@ -1,6 +1,6 @@
 import * as React from "react";
 import useActivityFeedData from './query';
-
+import LikeButton from '../like-button';
 const ActivityFeed = () => {
   const {
     loading,
@@ -12,26 +12,23 @@ const ActivityFeed = () => {
     const {
       activityFeed
     } = data;
-    console.log(activityFeed);
     return (
       <div>
-        ActivityFeed
-        <section>
-          <ul>
-            { activityFeed.map( a => (
-              <div key={a.post.id}>
-                <div>
-                  <div>
-                    { a.post.content }
-                    <br/>
-                    <small>{a.post.profile.name}</small>
-                  </div>
-                  { a.likeable ? <button>Like</button> : undefined }
-                </div>
-              </div> 
-            )) }
-          </ul>
-        </section>
+        { activityFeed.map( a => (
+          <div key={a.post.id}>
+            <div>
+              <div>
+                <p>
+                  { a.post.content }
+                </p>
+                <small>{a.post.profile.name}</small>
+              </div>
+              <div>
+                { a.likeable && ( <LikeButton liked={a.liked} postId={a.post.id}/> )}
+              </div>
+            </div>
+          </div> 
+        )) }
       </div>
     )
   }

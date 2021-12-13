@@ -11,6 +11,7 @@ const ACTIVITY_FEED_QUERY = gql`
   query FetchActivityFeed{
     activityFeed{
       likeable
+      liked
       post {
         id
         content
