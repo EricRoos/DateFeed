@@ -12,7 +12,7 @@ import {
 
 import Profile from './profile';
 import ActivityFeed from './activity-feed';
-
+import Search from './search';
 
 const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
 const client = new ApolloClient({
@@ -37,4 +37,4 @@ function renderComponent(component, container){
   }
 }
 const helloContainer = document.getElementById('root');
-renderComponent(<ActivityFeed />, helloContainer);
+renderComponent(<Search />, helloContainer);
