@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import useSearch from './query';
+
 import {
   Formik,
   FormikHelpers,
@@ -37,23 +39,37 @@ const SearchField = ({ label, ...props} : OtherSearchFieldProps & FieldHookConfi
 
 const Search = () => {
   const initialValues: SearchFields = { minAge: 18, maxAge: 99 }
+  const { setSearchVars, error, profiles, loading } = useSearch(initialValues);
+
+  function handleSubmit(values, actions){
+    setSearchVars(values);
+  }
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={(values, actions) => {
-        console.log(values);
-      }}
-    >
-      <Form>
-        <div>
-          <SearchField id='minAge' name='minAge' type='number' label='Min Age' />
-        </div>
-        <div>
-          <SearchField id='maxAge' name='maxAge' type='number' label='Max Age' />
-        </div>
-        <button type='submit'>Search</button>
-      </Form>
-    </Formik>
+    <div>
+      <div>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+        >
+          <Form>
+            <div>
+              <SearchField id='minAge' name='minAge' type='number' label='Min Age' />
+            </div>
+            <div>
+              <SearchField id='maxAge' name='maxAge' type='number' label='Max Age' />
+            </div>
+            <button type='submit'>Search</button>
+          </Form>
+        </Formik>
+      </div>
+      <div>
+        <ul>
+          { !error && !loading && !!profiles.length && profiles.map( d =>(
+            <li>[{d.id}]{d.name}({d.age})</li>
+          )) }
+        </ul>
+      </div>
+    </div>
   )
 }
 

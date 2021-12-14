@@ -18,10 +18,9 @@ module Types
       argument :searchParam, ProfileSearchInputType
     end
     def profile_search(searchParam:)
-      ProfileSearch.new(
-        min_age: searchParam.min_age,
-        max_age: searchParam.max_age
-      ).results
+      actual_params = searchParam.to_h.reject{ |k,v| v.blank?}
+      Rails.logger.debug("PARAMS: #{actual_params}")
+      ProfileSearch.new(actual_params).results
     end
 
 
