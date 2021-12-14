@@ -7,6 +7,10 @@ RSpec.describe "Search Profiles", type: :request do
     let!(:created_post) { FactoryBot.create(:post, profile: profile) }
 
     let!(:sought_for) { FactoryBot.create(:profile, age: 50) }
+
+
+    let!(:sought_for_post) { FactoryBot.create(:post, profile: sought_for, interacted_with_by: [profile]) }
+    let!(:my_post) { FactoryBot.create(:post, profile: profile, interacted_with_by: [sought_for]) }
     
     let!(:outliers) do
       FactoryBot.create(:profile, age: 66)
@@ -35,6 +39,7 @@ RSpec.describe "Search Profiles", type: :request do
     before do
 
       sign_in current_user
+      Profile.all.each(&:index)
       Sunspot.commit
       searchParam = {
         minAge: 45,

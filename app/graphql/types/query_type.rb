@@ -19,8 +19,7 @@ module Types
     end
     def profile_search(searchParam:)
       actual_params = searchParam.to_h.reject{ |k,v| v.blank?}
-      Rails.logger.debug("PARAMS: #{actual_params}")
-      ProfileSearch.new(actual_params).results
+      ProfileSearch.new(actual_params.merge(profile_id: context[:current_user].profile.id)).results
     end
 
 
