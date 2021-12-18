@@ -21,7 +21,8 @@ const client = new ApolloClient({
     uri: '/graphql',
     credentials: 'same-origin',
     headers: {
-        'X-CSRF-Token': csrfToken
+      'X-CSRF-Token': csrfToken,
+      'X-ApiToken': 'local-token'
     }
   }),
   cache: new InMemoryCache()

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "LikePosts", type: :request do
+  let(:app_token) { FactoryBot.create(:app_token) }
   let(:profile) { FactoryBot.create(:profile) }
   let(:current_user) { profile.user }
   let!(:created_post) { FactoryBot.create(:post) }
@@ -30,7 +31,10 @@ RSpec.describe "LikePosts", type: :request do
 
   before do
     sign_in current_user
-    post '/graphql', params: { query: gql, variables: { postId: created_post.id, liked: liked } }, as: :json
+    post '/graphql', 
+          params: { query: gql, variables: { postId: created_post.id, liked: liked } },
+          headers: {'X-ApiToken': app_token.token},
+          as: :json
   end
 
   subject { response }

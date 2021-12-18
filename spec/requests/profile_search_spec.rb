@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Search Profiles", type: :request do
+  let(:app_token) { FactoryBot.create(:app_token) }
   describe "GRAPHQL #search_profiles" do
     let(:profile) { FactoryBot.create(:profile, age: 21) }
     let(:current_user) { profile.user }
@@ -45,7 +46,10 @@ RSpec.describe "Search Profiles", type: :request do
         minAge: 45,
         maxAge: 65
       }
-      post '/graphql', params: { query: gql, variables: { searchParam: searchParam } }, as: :json
+      post '/graphql',
+          params: { query: gql, variables: { searchParam: searchParam } },
+          headers: {'X-ApiToken': app_token.token},
+          as: :json
     end
 
     subject { response }

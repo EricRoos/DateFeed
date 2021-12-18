@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "FetchActivityFeed", type: :request do
+  let(:app_token) { FactoryBot.create(:app_token) }
   describe "GRAPHQL #activity_feed" do
     let(:profile) { FactoryBot.create(:profile) }
     let(:current_user) { profile.user }
@@ -42,7 +43,10 @@ RSpec.describe "FetchActivityFeed", type: :request do
 
     before do
       sign_in current_user
-      post '/graphql', params: { query: gql }
+      post '/graphql', 
+          params: { query: gql },
+          headers: {'X-ApiToken': app_token.token},
+          as: :json
     end
 
     subject { response }

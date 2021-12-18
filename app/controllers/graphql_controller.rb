@@ -3,6 +3,7 @@ class GraphqlController < ApplicationController
   # This allows for outside API access while preventing CSRF attacks,
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
+  before_action :check_app_token!
 
   def execute
     variables = prepare_variables(params[:variables])
@@ -47,4 +48,12 @@ class GraphqlController < ApplicationController
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
   end
+
+  def check_app_token!
+    host = request.ip
+    token = request.headers['X-ApiToken']
+    valid = AppToken.where(token: token, host: host).exists?
+    head :bad_request and return unless valid
+  end
+
 end
