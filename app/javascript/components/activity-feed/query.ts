@@ -14,6 +14,7 @@ const ACTIVITY_FEED_QUERY = gql`
       liked
       post {
         id
+        createdAt
         content
         profile {
           name

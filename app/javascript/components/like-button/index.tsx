@@ -1,35 +1,46 @@
 import * as React from "react";
 import useLikeButton from './mutation';
+import { throttle } from 'lodash'
 
 interface Props {
   postId: Number;
   liked: Boolean;
 }
 
-const LikeButton = (props : Props) => {
+const toggleLikeButton = throttle((togglePostInteraction, postId, currentlyLiked, setCurrentlyLiked) => {
+  togglePostInteraction({variables: { liked: !currentlyLiked, postId: postId}}).then((resp) => {
+    setCurrentlyLiked(resp.data.togglePostInteraction.liked);
+  })
+}, 1500);
+
+const LikeButton = ({postId, liked}: Props) => {
+  const [ currentlyLiked, setCurrentlyLiked ] = React.useState(liked);
+
   const [ togglePostInteraction, {
     error,
     data,
     loading,
     called
-  }] = useLikeButton(props.postId);
+  }] = useLikeButton(postId);
+
 
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    togglePostInteraction();
+    setCurrentlyLiked(!currentlyLiked);
+    toggleLikeButton( togglePostInteraction, postId, currentlyLiked, setCurrentlyLiked);
   };
+
   if(!loading && !error){
-    const liked = called ? data.togglePostInteraction.liked : props.liked;
     return (
       <button onClick={buttonHandler}>
-        { liked ? '🔥' : 'Like' }
+        { currentlyLiked ? '🔥' : 'Like' }
       </button>
     );
   }
 
   if(loading){
     return (
-      <div>Loading</div>
+      <div>Saving...</div>
     )
   }
   if(error){

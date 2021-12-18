@@ -4,4 +4,5 @@ export default interface PostType {
   id: number;
   content: string;
   profile: ProfileType;
+  createdAt: Date;
 }

@@ -3,8 +3,9 @@ module Mutations
     field :liked, Boolean , null: false
 
     argument :post_id, ID, required: true
+    argument :liked, Boolean, required: true
 
-    def resolve(post_id:)
+    def resolve(post_id:, liked:)
       attrs = {
         post_id: post_id,
         profile_id: context[:current_user].profile.id
@@ -12,12 +13,14 @@ module Mutations
 
       query_base = PostInteraction
         .where(attrs)
-
-      if query_base.exists?
+      previously_liked = query_base.exists?
+      if previously_liked && !liked
         query_base.destroy_all
         { liked: false }
-      else
+      elsif !previously_liked && liked
         { liked: PostInteraction.new(attrs).save }
+      else
+        { liked: previously_liked }
       end
     end
   end

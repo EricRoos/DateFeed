@@ -5,12 +5,13 @@ RSpec.describe "LikePosts", type: :request do
   let(:current_user) { profile.user }
   let!(:created_post) { FactoryBot.create(:post) }
   let(:expected_like) { true }
+  let(:liked) { true }
 
   let(:exists_query) { PostInteraction.where(post: created_post).where(profile: profile) }
 
   let(:gql) { <<-GQL
-    mutation($postId: ID!){
-      togglePostInteraction(postId: $postId){
+    mutation($postId: ID!, $liked: Boolean!){
+      togglePostInteraction(postId: $postId, liked: $liked){
         liked
       }
     }
@@ -29,7 +30,7 @@ RSpec.describe "LikePosts", type: :request do
 
   before do
     sign_in current_user
-    post '/graphql', params: { query: gql, variables: { postId: created_post.id } }
+    post '/graphql', params: { query: gql, variables: { postId: created_post.id, liked: liked } }, as: :json
   end
 
   subject { response }
@@ -44,9 +45,33 @@ RSpec.describe "LikePosts", type: :request do
   context 'when i have already liked the post' do
     let!(:created_post) { FactoryBot.create(:post, interacted_with_by: [ profile ]) }
     let(:expected_like) { false }
+    let(:liked) { false }
     it { is_expected.to have_attributes(body: expected_response.to_json) }
     it { is_expected.to have_http_status(200) }
     describe 'the removed interaction' do
+      subject { exists_query }
+      it { is_expected.to_not exist }
+    end
+  end
+
+  context 'when i have already liked the post but I toggle on' do
+    let!(:created_post) { FactoryBot.create(:post, interacted_with_by: [ profile ]) }
+    let(:expected_like) { true }
+    let(:liked) { true }
+    it { is_expected.to have_attributes(body: expected_response.to_json) }
+    it { is_expected.to have_http_status(200) }
+    describe 'the original interaction' do
+      subject { exists_query }
+      it { is_expected.to exist }
+    end
+  end
+
+  context 'when i have not already liked the post but I toggle off' do
+    let(:expected_like) { false }
+    let(:liked) { false }
+    it { is_expected.to have_attributes(body: expected_response.to_json) }
+    it { is_expected.to have_http_status(200) }
+    describe 'the original interaction' do
       subject { exists_query }
       it { is_expected.to_not exist }
     end

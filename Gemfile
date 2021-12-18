@@ -78,3 +78,5 @@ gem "sunspot_rails", "~> 2.5"
 gem "sunspot_solr", "~> 2.5", :group => :development
 
 gem "database_cleaner-active_record", "~> 2.0", :group => :test
+
+gem "cssbundling-rails", "~> 0.2.8"

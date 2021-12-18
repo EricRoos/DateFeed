@@ -1,3 +1,4 @@
 web: bin/rails server -p 3000
 js: yarn build --watch
 tsc: yarn tsc --pretty --noEmit -w --jsx react-jsx app/javascript/components/index.tsx
+css: yarn build:css --watch

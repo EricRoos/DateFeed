@@ -1,12 +1,13 @@
 import * as React from "react";
 import {
   useMutation,
-  gql
+  gql,
+  MutationTuple,
 } from "@apollo/client";
 
 const LIKE_ACTIVITY_FEED_MUTATION = gql`
-  mutation($postId: ID!){
-    togglePostInteraction(postId: $postId){
+  mutation($postId: ID!, $liked: Boolean!){
+    togglePostInteraction(postId: $postId, liked: $liked){
       liked
     }
   }
@@ -16,18 +17,12 @@ interface LikeButtonMutationData {
   liked: Boolean;
 }
 
-
 const useLikeButtonData = (postId : Number) => {
   return useMutation<
       { togglePostInteraction: LikeButtonMutationData },
-      { postId: Number}
+      { postId: Number, liked: Boolean}
     >(
       LIKE_ACTIVITY_FEED_MUTATION,
-      {
-        variables: {
-          postId
-        }
-      }
     );
 }
 

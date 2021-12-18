@@ -4,9 +4,9 @@ RSpec.describe "FetchActivityFeed", type: :request do
   describe "GRAPHQL #activity_feed" do
     let(:profile) { FactoryBot.create(:profile) }
     let(:current_user) { profile.user }
-    let!(:created_post) { FactoryBot.create(:post, profile: profile) }
+    let!(:created_post) { FactoryBot.create(:post) }
 
-    let(:expected_likeable) { false }
+    let(:expected_likeable) { true }
     let(:gql) { <<-GQL
       {
         activityFeed {
@@ -31,7 +31,7 @@ RSpec.describe "FetchActivityFeed", type: :request do
               post: {
                 content: created_post.content,
                 profile: {
-                  name: profile.name
+                  name: created_post.profile.name
                 }
               }
             }
