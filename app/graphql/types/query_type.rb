@@ -12,19 +12,19 @@ module Types
     field :profile, ProfileType, 'Find a profile by id' do
       argument :id, ID
     end
+    field :profile_search, [ProfileType], 'Search for profiles' do
+      argument :searchParam, ProfileSearchInputType
+    end
+    field :activity_feed, [ActivityFeedItemType], 'Look at the posts in the feed'
     def profile(id:)
       Profile.find(id)
     end
 
-    field :profile_search, [ProfileType], 'Search for profiles' do
-      argument :searchParam, ProfileSearchInputType
-    end
     def profile_search(searchParam:)
       actual_params = searchParam.to_h.reject { |_k, v| v.blank? }
       ProfileSearch.new(actual_params.merge(profile_id: context[:current_user].profile.id)).results
     end
 
-    field :activity_feed, [ActivityFeedItemType], 'Look at the posts in the feed'
     def activity_feed
       ActivityFeed.for(context[:current_user].profile)
     end

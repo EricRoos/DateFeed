@@ -4,8 +4,8 @@ module Mutations
   class TogglePostInteraction < BaseMutation
     field :liked, Boolean, null: false
 
-    argument :post_id, ID, required: true
     argument :liked, Boolean, required: true
+    argument :post_id, ID, required: true
 
     def resolve(post_id:, liked:)
       attrs = {

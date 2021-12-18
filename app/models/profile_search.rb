@@ -12,11 +12,7 @@ class ProfileSearch
     end
   end
 
-  def results
-    perform.results
-  end
+  delegate :results, to: :perform
 
-  def total
-    perform.total
-  end
+  delegate :total, to: :perform
 end

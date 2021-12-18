@@ -9,10 +9,12 @@ RSpec.describe ActivityFeedItem, type: :model do
 
   describe '#likeable?' do
     subject { feed_item.likeable? }
+
     it { is_expected.to be false }
 
     context 'when current_profile is someone else' do
       let(:current_profile) { FactoryBot.build(:profile) }
+
       it { is_expected.to be true }
     end
   end

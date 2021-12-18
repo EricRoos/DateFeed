@@ -4,7 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'FetchProfiles', type: :request do
   let(:app_token) { FactoryBot.create(:app_token) }
+
   describe 'GRAPHQL #profile' do
+    subject { response }
+
     let(:profile) { FactoryBot.create(:profile) }
     let(:request) do
       <<-GQL
@@ -26,14 +29,15 @@ RSpec.describe 'FetchProfiles', type: :request do
         }
       }
     end
+
     before do
       post '/graphql',
            params: { query: request },
            headers: { 'X-ApiToken': app_token.token },
            as: :json
     end
-    subject { response }
+
     it { is_expected.to have_attributes(body: expected_response.to_json) }
-    it { is_expected.to have_http_status(200) }
+    it { is_expected.to have_http_status(:ok) }
   end
 end

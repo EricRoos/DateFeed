@@ -4,7 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'FetchActivityFeed', type: :request do
   let(:app_token) { FactoryBot.create(:app_token) }
+
   describe 'GRAPHQL #activity_feed' do
+    subject { response }
+
     let(:profile) { FactoryBot.create(:profile) }
     let(:current_user) { profile.user }
     let!(:created_post) { FactoryBot.create(:post) }
@@ -52,15 +55,15 @@ RSpec.describe 'FetchActivityFeed', type: :request do
            as: :json
     end
 
-    subject { response }
     it { is_expected.to have_attributes(body: expected_response.to_json) }
-    it { is_expected.to have_http_status(200) }
+    it { is_expected.to have_http_status(:ok) }
 
     context 'when current user is someone else' do
       let(:current_user) { FactoryBot.create(:user) }
       let(:expected_likeable) { true }
+
       it { is_expected.to have_attributes(body: expected_response.to_json) }
-      it { is_expected.to have_http_status(200) }
+      it { is_expected.to have_http_status(:ok) }
     end
   end
 end

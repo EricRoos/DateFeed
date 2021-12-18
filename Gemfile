@@ -84,3 +84,7 @@ gem 'database_cleaner-active_record', '~> 2.0', group: :test
 gem 'cssbundling-rails', '~> 0.2.8'
 
 gem 'rubocop-rails', '~> 2.12', group: :development
+
+gem 'rubocop-rspec', '~> 2.6', group: :development
+
+gem 'rubocop-graphql', '~> 0.11.2', group: :development
