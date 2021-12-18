@@ -58,33 +58,19 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'jsbundling-rails', '~> 0.2.2'
-
 gem 'guard', '~> 2.18', groups: %i[development test]
 gem 'rspec-rails', '~> 5.0', groups: %i[development test]
-
 gem 'guard-rspec', '~> 4.7', groups: %i[development test]
-
 gem 'graphiql-rails', group: :development
 gem 'graphql', '~> 1.13'
-
 gem 'factory_bot_rails', '~> 6.2', groups: %i[development test]
-
 gem 'faker', '~> 2.19', groups: %i[development test]
-
 gem 'turbo-rails', '~> 0.9.0'
-
 gem 'devise', github: 'heartcombo/devise', branch: 'main'
-
 gem 'sunspot_rails', '~> 2.5'
-
 gem 'sunspot_solr', '~> 2.5', group: :development
-
 gem 'database_cleaner-active_record', '~> 2.0', group: :test
-
 gem 'cssbundling-rails', '~> 0.2.8'
-
 gem 'rubocop-rails', '~> 2.12', group: :development
-
 gem 'rubocop-rspec', '~> 2.6', group: :development
-
 gem 'rubocop-graphql', '~> 0.11.2', group: :development
