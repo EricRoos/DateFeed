@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ProfileSearch, type: :model do
@@ -10,14 +12,14 @@ RSpec.describe ProfileSearch, type: :model do
         [
           FactoryBot.create(:profile, age: 35),
           FactoryBot.create(:profile, age: 40),
-          FactoryBot.create(:profile, age: 50),
+          FactoryBot.create(:profile, age: 50)
         ]
       end
       let(:out_range) do
         [
           FactoryBot.create(:profile, age: 34),
           FactoryBot.create(:profile, age: 51),
-          FactoryBot.create(:profile, age: 70),
+          FactoryBot.create(:profile, age: 70)
         ]
       end
       before do
@@ -32,19 +34,19 @@ RSpec.describe ProfileSearch, type: :model do
 
     context 'when search by max age' do
       let(:search_params) do
-        { max_age: 50}
+        { max_age: 50 }
       end
       let(:in_range) do
         [
           FactoryBot.create(:profile, age: 35),
           FactoryBot.create(:profile, age: 40),
-          FactoryBot.create(:profile, age: 50),
+          FactoryBot.create(:profile, age: 50)
         ]
       end
       let(:out_range) do
         [
           FactoryBot.create(:profile, age: 51),
-          FactoryBot.create(:profile, age: 70),
+          FactoryBot.create(:profile, age: 70)
         ]
       end
       before do
@@ -65,13 +67,13 @@ RSpec.describe ProfileSearch, type: :model do
         [
           FactoryBot.create(:profile, age: 35),
           FactoryBot.create(:profile, age: 40),
-          FactoryBot.create(:profile, age: 50),
+          FactoryBot.create(:profile, age: 50)
         ]
       end
       let(:out_range) do
         [
           FactoryBot.create(:profile, age: 18),
-          FactoryBot.create(:profile, age: 20),
+          FactoryBot.create(:profile, age: 20)
         ]
       end
       before do

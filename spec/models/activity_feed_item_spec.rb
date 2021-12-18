@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe ActivityFeedItem , type: :model do
+RSpec.describe ActivityFeedItem, type: :model do
   let(:post) { FactoryBot.create(:post) }
   let(:current_profile) { post.profile }
-  let(:feed_item) { described_class.new({post: post, current_profile: current_profile}) }
+  let(:feed_item) { described_class.new({ post: post, current_profile: current_profile }) }
 
   describe '#likeable?' do
     subject { feed_item.likeable? }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GraphqlController < ApplicationController
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,
@@ -11,12 +13,13 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     context = {
       # Query context goes here, for example:
-      current_user: current_user,
+      current_user: current_user
     }
     result = DateFeedSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
+
     handle_error_in_development(e)
   end
 
@@ -55,5 +58,4 @@ class GraphqlController < ApplicationController
     valid = AppToken.where(token: token, host: host).exists?
     head :bad_request and return unless valid
   end
-
 end

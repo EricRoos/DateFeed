@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "FetchProfiles", type: :request do
+RSpec.describe 'FetchProfiles', type: :request do
   let(:app_token) { FactoryBot.create(:app_token) }
-  describe "GRAPHQL #profile" do
+  describe 'GRAPHQL #profile' do
     let(:profile) { FactoryBot.create(:profile) }
-    let(:request) { <<-GQL
+    let(:request) do
+      <<-GQL
       {
         profile(id: #{profile.id}) {
           name
@@ -12,7 +15,7 @@ RSpec.describe "FetchProfiles", type: :request do
         }
       }
       GQL
-    }
+    end
     let(:expected_response) do
       {
         data: {
@@ -25,9 +28,9 @@ RSpec.describe "FetchProfiles", type: :request do
     end
     before do
       post '/graphql',
-          params: { query: request },
-          headers: {'X-ApiToken': app_token.token},
-          as: :json
+           params: { query: request },
+           headers: { 'X-ApiToken': app_token.token },
+           as: :json
     end
     subject { response }
     it { is_expected.to have_attributes(body: expected_response.to_json) }

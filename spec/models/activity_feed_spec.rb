@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ActivityFeed, type: :model do
   describe '#for' do
-    let(:current_profile)  { FactoryBot.create(:profile) }
+    let(:current_profile) { FactoryBot.create(:profile) }
     let(:num_posts) { 5 }
     let!(:posts) { num_posts.times { FactoryBot.create(:post) } }
     subject { described_class.for(current_profile) }

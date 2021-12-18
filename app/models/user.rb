@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -12,6 +14,7 @@ class User < ApplicationRecord
 
   def create_profile
     return profile if profile.present?
+
     self.profile = Profile.create!(user: self)
   end
 end

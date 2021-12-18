@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Mutations
   class TogglePostInteraction < BaseMutation
-    field :liked, Boolean , null: false
+    field :liked, Boolean, null: false
 
     argument :post_id, ID, required: true
     argument :liked, Boolean, required: true
@@ -12,7 +14,7 @@ module Mutations
       }
 
       query_base = PostInteraction
-        .where(attrs)
+                   .where(attrs)
       previously_liked = query_base.exists?
       if previously_liked && !liked
         query_base.destroy_all

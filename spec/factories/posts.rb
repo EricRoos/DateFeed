@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :post do
-    content { "MyText" }
+    content { 'MyText' }
     association :profile
     transient do
       interacted_with_by { [] }

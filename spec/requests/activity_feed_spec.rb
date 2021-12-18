@@ -1,14 +1,17 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "FetchActivityFeed", type: :request do
+RSpec.describe 'FetchActivityFeed', type: :request do
   let(:app_token) { FactoryBot.create(:app_token) }
-  describe "GRAPHQL #activity_feed" do
+  describe 'GRAPHQL #activity_feed' do
     let(:profile) { FactoryBot.create(:profile) }
     let(:current_user) { profile.user }
     let!(:created_post) { FactoryBot.create(:post) }
 
     let(:expected_likeable) { true }
-    let(:gql) { <<-GQL
+    let(:gql) do
+      <<-GQL
       {
         activityFeed {
           likeable
@@ -21,7 +24,7 @@ RSpec.describe "FetchActivityFeed", type: :request do
         }
       }
       GQL
-    }
+    end
 
     let(:expected_response) do
       {
@@ -43,10 +46,10 @@ RSpec.describe "FetchActivityFeed", type: :request do
 
     before do
       sign_in current_user
-      post '/graphql', 
-          params: { query: gql },
-          headers: {'X-ApiToken': app_token.token},
-          as: :json
+      post '/graphql',
+           params: { query: gql },
+           headers: { 'X-ApiToken': app_token.token },
+           as: :json
     end
 
     subject { response }
