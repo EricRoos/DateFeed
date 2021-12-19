@@ -74,3 +74,5 @@ gem 'rubocop-rspec', '~> 2.6', group: :development
 gem 'sunspot_rails', '~> 2.5'
 gem 'sunspot_solr', '~> 2.5', group: :development
 gem 'turbo-rails', '~> 0.9.0'
+gem 'simplecov', require: false, group: :test
+
