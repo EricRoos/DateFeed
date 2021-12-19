@@ -15,6 +15,7 @@ const PROFILE_QUERY = gql`
   }
 `
 
+
 interface ProfileQueryData {
   profile: ProfileType;
 }
@@ -45,3 +46,4 @@ const useProfileData = (profileId) => {
 }
 
 export default useProfileData;
+export { PROFILE_QUERY }
