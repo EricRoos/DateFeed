@@ -2,6 +2,7 @@
 
 class Profile < ApplicationRecord
   belongs_to :user
+  has_many :posts
 
   searchable do
     integer :age

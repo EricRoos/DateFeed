@@ -7,6 +7,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :profile
+  has_many :posts, through: :profile
 
   after_commit :create_profile, on: :create
 
