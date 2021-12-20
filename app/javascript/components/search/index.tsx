@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import useSearch from './query';
+import TextInput from '../inputs/text';
 
 import {
   Formik,
@@ -17,24 +18,6 @@ interface SearchFields {
   minAge: number;
   maxAge: number;
 }
-
-interface OtherSearchFieldProps {
-  label : string
-}
-const SearchField = ({ label, ...props} : OtherSearchFieldProps & FieldHookConfig<string>) => {
-   const [field, meta, helpers] = useField(props);
-   return (
-     <>
-       <label>
-         {label}
-         <input {...field} type={props.type} />
-       </label>
-       {meta.touched && meta.error ? (
-         <div className="error">{meta.error}</div>
-       ) : null}
-     </>
-   );
- };
 
 
 const Search = () => {
@@ -53,10 +36,10 @@ const Search = () => {
         >
           <Form>
             <div>
-              <SearchField id='minAge' name='minAge' type='number' label='Min Age' />
+              <TextInput id='minAge' name='minAge' type='number' label='Min Age' />
             </div>
             <div>
-              <SearchField id='maxAge' name='maxAge' type='number' label='Max Age' />
+              <TextInput id='maxAge' name='maxAge' type='number' label='Max Age' />
             </div>
             <button type='submit'>Search</button>
           </Form>
