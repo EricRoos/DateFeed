@@ -7,7 +7,7 @@ import {
 import ActivityFeedItemType from '../models/activity_feed_item';
 
 
-const ACTIVITY_FEED_QUERY = gql`
+export const ACTIVITY_FEED_QUERY = gql`
   query FetchActivityFeed{
     activityFeed{
       likeable

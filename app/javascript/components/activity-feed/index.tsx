@@ -24,7 +24,8 @@ const ActivityFeed = () => {
             <p className="text-sm font-medium leading-snug tracking-wide text-gray-300 text-opacity-100">
               {a.post.content}
             </p>
-            <div>
+            <hr />
+            <div className='text-white'>
               { a.likeable && ( <LikeButton liked={a.liked} postId={a.post.id}/> )}
             </div>
           </TimeLine.Item> 

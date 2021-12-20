@@ -8,6 +8,7 @@ import {
 import PostType from '../models/post';
 import PostInputType from '../models/post_input_type';
 import ValidationErrorType from '../models/validation_error_type';
+import { ACTIVITY_FEED_QUERY } from '../activity-feed/query';
 
 const CREATE_POST_MUTATION = gql`
   mutation CreatePost($postInput: CreatePostInput!){
@@ -38,7 +39,9 @@ interface MutationResponse {
 }
 
 const useCreatePost = () => {
-  return useMutation<MutationResponse, MutationVariables>(CREATE_POST_MUTATION);
+  return useMutation<MutationResponse, MutationVariables>(CREATE_POST_MUTATION, {
+    refetchQueries: [{ query: ACTIVITY_FEED_QUERY}]
+  });
 }
 
 export default useCreatePost;

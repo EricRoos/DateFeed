@@ -4,6 +4,7 @@ import {
   Formik,
   Form,
 } from 'formik';
+import { Navigate, Route } from 'react-router-dom';
 
 import TextInput from '../inputs/text';
 import useCreatePost from './mutation';
@@ -33,6 +34,11 @@ const NewPost = () => {
     });
   }
 
+  if(called && !loading && !data.createPost.errors.length){
+    return (
+      <Navigate to='/' replace />
+    )
+  }
   return (
     <Formik
       initialValues={initialValues}

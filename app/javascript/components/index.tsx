@@ -1,6 +1,8 @@
 // Entry point for the build script in your package.json
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { HashRouter, Routes, Route, BrowserRouter } from "react-router-dom";
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -15,6 +17,8 @@ import ActivityFeed from './activity-feed';
 import Search from './search';
 import TimeLine from './time-line';
 import NewPost from './new-post';
+import Nav from './nav';
+import EditProfile from './edit-profile';
 
 const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
 const client = new ApolloClient({
@@ -39,5 +43,24 @@ function renderComponent(component, container){
     ReactDOM.render(provider, container);
   }
 }
-const helloContainer = document.getElementById('root');
-renderComponent(<NewPost />, helloContainer);
+const appContainer = document.getElementById('root');
+const App = () => (
+  <>
+    <Nav />
+    <div id='app' className='container px-3'>
+      <Routes>
+        <Route path='/' element={<ActivityFeed />} />
+        <Route path='/me' element={<EditProfile />} />
+        <Route path='/search' element={<Search />} />
+        <Route path='/new-post' element={<NewPost />} />
+      </Routes>
+    </div>
+  </>
+);
+const AppWithRouter = () => (
+  <HashRouter>
+    <App />
+  </HashRouter>
+);
+
+renderComponent(<AppWithRouter />, appContainer);

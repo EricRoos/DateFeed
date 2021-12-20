@@ -1,5 +1,6 @@
 import * as React from "react";
 import useLikeButton from './mutation';
+import Icon from 'supercons';
 import { throttle } from 'lodash'
 
 interface Props {
@@ -33,7 +34,7 @@ const LikeButton = ({postId, liked}: Props) => {
   if(!loading && !error){
     return (
       <button onClick={buttonHandler}>
-        { currentlyLiked ? '🔥' : 'Like' }
+        <Icon glyph={ currentlyLiked ? 'thumbsup-fill' : 'thumbsup' } />
       </button>
     );
   }

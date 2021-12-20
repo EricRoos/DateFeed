@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const TimeLineItem = ({children}) => (
-  <li className="mb-5  ">
+  <li className="mb-5">
     <div className="flex group items-center ">
       <div className="bg-gray-800 group-hover:bg-red-700 z-10 rounded-full border-4 border-black  h-5 w-5">
         <div className="bg-black h-1 w-6 items-center  ml-4 mt-1"></div>
@@ -20,7 +20,7 @@ interface TimeLineProps {
 }
 
 const TimeLine = (props : TimeLineProps) => (
-  <div className="py-10 container mx-auto px-5">
+  <div className="container">
     <div className="relative">
       <div className="border-r-4 border-black absolute h-full top-0" style={{ 'left': '9px' }}></div>
       <ul className="list-none m-0 p-0">
