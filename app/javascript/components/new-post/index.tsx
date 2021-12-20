@@ -7,11 +7,11 @@ import {
 
 import TextInput from '../inputs/text';
 import useCreatePost from './mutation';
-interface NewPostFields {
-  content: String;
-}
+import PostInputType from '../models/post_input_type';
+import PostInputSchema from '../models/post_input_schema';
+
 const NewPost = () => {
-  const initialValues: NewPostFields = { content: '' };
+  const initialValues = { content: '' }
 
   const [ createPost , {
     error,
@@ -34,6 +34,7 @@ const NewPost = () => {
   return (
     <Formik
       initialValues={initialValues}
+      validationSchema={PostInputSchema}
       onSubmit={handleSubmit}
     >
       <Form>
