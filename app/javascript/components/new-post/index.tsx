@@ -10,6 +10,8 @@ import useCreatePost from './mutation';
 import PostInputType from '../models/post_input_type';
 import PostInputSchema from '../models/post_input_schema';
 
+import Button from '../inputs/button';
+
 const NewPost = () => {
   const initialValues = { content: '' }
 
@@ -41,7 +43,7 @@ const NewPost = () => {
         <div>
           <TextInput id='content' name='content' type='text' label='Content' />
         </div>
-        <button type='submit'>Search</button>
+        <Button type='submit' disabled={!!loading} >{ !!loading ? 'Sharing...' : 'Share'}</Button>
       </Form>
     </Formik>
   )
