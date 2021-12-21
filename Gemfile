@@ -62,7 +62,6 @@ gem 'database_cleaner-active_record', '~> 2.0', group: :test
 gem 'devise', github: 'heartcombo/devise', branch: 'main'
 gem 'factory_bot_rails', '~> 6.2', groups: %i[development test]
 gem 'faker', '~> 2.19', groups: %i[development test]
-gem 'graphiql-rails', group: :development
 gem 'graphql', '~> 1.13'
 gem 'guard', '~> 2.18', groups: %i[development test]
 gem 'guard-rspec', '~> 4.7', groups: %i[development test]
