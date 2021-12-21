@@ -6,6 +6,9 @@ import {
 } from 'formik';
 import { Navigate, Route } from 'react-router-dom';
 
+import { PageContext } from '../as-page';
+
+
 import TextInput from '../inputs/text';
 import useCreatePost from './mutation';
 import PostInputType from '../models/post_input_type';
@@ -15,6 +18,7 @@ import Button from '../inputs/button';
 
 const NewPost = () => {
   const initialValues = { content: '' }
+  const { showToast } = React.useContext(PageContext);
 
   const [ createPost , {
     error,
@@ -27,6 +31,7 @@ const NewPost = () => {
     createPost({variables: {postInput: { ...values }}}).then( (resp) => {
       const { post, errors } = resp.data.createPost;
       if(post){
+        showToast('Post saved');
         actions.resetForm();
       }else{
         errors.forEach( e => actions.setFieldError(e.field, e.messages.join(", ")) )

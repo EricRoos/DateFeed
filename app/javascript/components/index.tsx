@@ -2,6 +2,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { HashRouter, Routes, Route, BrowserRouter } from "react-router-dom";
+import Toast from './toast';
 
 import {
   ApolloClient,
@@ -19,6 +20,8 @@ import TimeLine from './time-line';
 import NewPost from './new-post';
 import Nav from './nav';
 import EditProfile from './edit-profile';
+
+import asPage from './as-page';
 
 const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
 const client = new ApolloClient({
@@ -43,7 +46,9 @@ function renderComponent(component, container){
     ReactDOM.render(provider, container);
   }
 }
+
 const appContainer = document.getElementById('root');
+
 const App = () => (
   <>
     <Nav />
@@ -52,7 +57,7 @@ const App = () => (
         <Route path='/' element={<ActivityFeed />} />
         <Route path='/me' element={<EditProfile />} />
         <Route path='/search' element={<Search />} />
-        <Route path='/new-post' element={<NewPost />} />
+        <Route path='/new-post' element={<NewPost/>} />
       </Routes>
     </div>
   </>
@@ -63,4 +68,6 @@ const AppWithRouter = () => (
   </HashRouter>
 );
 
-renderComponent(<AppWithRouter />, appContainer);
+const Page = asPage(AppWithRouter);
+
+renderComponent(<Page/>, appContainer);
