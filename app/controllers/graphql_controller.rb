@@ -25,6 +25,14 @@ class GraphqlController < ApplicationController
 
   private
 
+  def check_app_token!
+    host = request.ip
+    token = request.headers['X-ApiToken']
+    Rails.logger.debug("[AppTokenCheck][#{host}] - #{token}")
+    valid = AppToken.exists?(token: token, host: host)
+    head :bad_request and return unless valid
+  end
+
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)
     case variables_param
@@ -52,10 +60,4 @@ class GraphqlController < ApplicationController
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: :internal_server_error
   end
 
-  def check_app_token!
-    host = request.ip
-    token = request.headers['X-ApiToken']
-    valid = AppToken.exists?(token: token, host: host)
-    head :bad_request and return unless valid
-  end
 end

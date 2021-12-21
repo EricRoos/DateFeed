@@ -170,9 +170,6 @@ GEM
     formatador (0.3.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    graphiql-rails (1.7.0)
-      railties
-      sprockets-rails
     graphql (1.13.0)
     guard (2.18.0)
       formatador (>= 0.2.4)
@@ -297,16 +294,6 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
     selenium-webdriver (4.1.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -334,7 +321,6 @@ GEM
       sunspot (= 2.5.0)
     sunspot_solr (2.5.0)
     thor (1.1.0)
-    tilt (2.0.10)
     turbo-rails (0.9.0)
       rails (>= 6.0.0)
     turbolinks (5.2.1)
@@ -368,7 +354,6 @@ DEPENDENCIES
   devise!
   factory_bot_rails (~> 6.2)
   faker (~> 2.19)
-  graphiql-rails
   graphql (~> 1.13)
   guard (~> 2.18)
   guard-rspec (~> 4.7)
@@ -384,10 +369,10 @@ DEPENDENCIES
   rubocop-graphql (~> 0.11.2)
   rubocop-rails (~> 2.12)
   rubocop-rspec (~> 2.6)
-  sass-rails (>= 6)
   selenium-webdriver
   simplecov
   spring
+  sprockets-rails (~> 3.4)
   sunspot_rails (~> 2.5)
   sunspot_solr (~> 2.5)
   turbo-rails (~> 0.9.0)
