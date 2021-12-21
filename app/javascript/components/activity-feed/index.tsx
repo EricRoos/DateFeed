@@ -2,6 +2,7 @@ import * as React from "react";
 import useActivityFeedData from './query';
 import LikeButton from '../like-button';
 import TimeLine from '../time-line';
+import Panel from '../panel';
 
 const ActivityFeed = () => {
   const {
@@ -15,22 +16,35 @@ const ActivityFeed = () => {
       activityFeed
     } = data;
     return (
-      <TimeLine>
-        { activityFeed.map( a => (
-          <TimeLine.Item key={a.post.id}>
-            <h3 className="mb-3 font-bold text-white text-2xl">{a.post.profile.name}</h3>
-            <p className="pb-4 text-sm text-gray-100">{a.post.createdAt}</p>
-            <hr />
-            <p className="text-sm font-medium leading-snug tracking-wide text-gray-300 text-opacity-100">
-              {a.post.content}
-            </p>
-            <hr />
-            <div className='text-white'>
-              { a.likeable && ( <LikeButton liked={a.liked} postId={a.post.id}/> )}
+      <div>
+        <div className='pb-4'>
+          <Panel>
+            <div className='py-3'>
+              <h1 className='text-2xl flex items-center'>
+                <div className='tracking-wider'>
+                  Activity Feed
+                </div>
+              </h1>
             </div>
-          </TimeLine.Item> 
-        )) }
-      </TimeLine>
+          </Panel>
+        </div>
+        <TimeLine>
+          { activityFeed.map( a => (
+            <TimeLine.Item key={a.post.id}>
+              <h3 className="mb-3 font-bold text-white text-2xl">{a.post.profile.name}</h3>
+              <p className="pb-4 text-sm text-gray-100">{a.post.createdAt}</p>
+              <hr />
+              <p className="text-sm font-medium leading-snug tracking-wide text-gray-300 text-opacity-100">
+                {a.post.content}
+              </p>
+              <hr />
+              <div className='text-white'>
+                { a.likeable && ( <LikeButton liked={a.liked} postId={a.post.id}/> )}
+              </div>
+            </TimeLine.Item> 
+          )) }
+        </TimeLine>
+      </div>
     )
   }
 

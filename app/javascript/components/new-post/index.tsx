@@ -13,6 +13,7 @@ import TextInput from '../inputs/text';
 import useCreatePost from './mutation';
 import PostInputType from '../models/post_input_type';
 import PostInputSchema from '../models/post_input_schema';
+import Panel from '../panel';
 
 import Button from '../inputs/button';
 
@@ -45,18 +46,28 @@ const NewPost = () => {
     )
   }
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={PostInputSchema}
-      onSubmit={handleSubmit}
-    >
-      <Form>
+    <Panel>
+      <div className='divide-y divide-gray-300'>
         <div>
-          <TextInput id='content' name='content' type='text' label='Content' />
+          <h1 className='text-xl'>Write Post</h1>
         </div>
-        <Button type='submit' disabled={!!loading} >{ !!loading ? 'Sharing...' : 'Share'}</Button>
-      </Form>
-    </Formik>
+        <div className='pt-2'>
+          <p className='text-gray-600 text-sm'>Lorem Ipsum</p>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={PostInputSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <div className='mb-2'>
+                <TextInput id='content' name='content' type='text' label='Content' />
+              </div>
+              <Button type='submit' disabled={!!loading} >{ !!loading ? 'Sharing...' : 'Share'}</Button>
+            </Form>
+          </Formik>
+        </div>
+      </div>
+    </Panel>
   )
 };
 

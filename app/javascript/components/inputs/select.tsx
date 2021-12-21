@@ -8,14 +8,21 @@ import {
 interface OtherSearchFieldProps {
   label : string
 }
-const TextInput = ({ label, ...props} : OtherSearchFieldProps & FieldHookConfig<string>) => {
+
+const InputOption = ({children, ...props}) => (
+  <option {...props}>{children}</option>
+);
+
+const SelectInput = ({ label,children, ...props} : OtherSearchFieldProps & FieldHookConfig<string>) => {
    const [field, meta, helpers] = useField(props);
    return (
      <div className=''>
        <label className='font-semibold block mb-1 text-md'>
          {label}
        </label>
-       <input {...field} type={props.type} className='text-black w-full border border-solid border-gray-300 bg-gray-100 px-4 py-2 rounded-lg focus:outline-none'/>
+       <select {...field} className='text-black w-full border border-solid border-gray-300 bg-gray-100 px-4 py-2 rounded-lg focus:outline-none'>
+         {children}
+       </select>
        {meta.touched && meta.error ? (
          <div className="error">{meta.error}</div>
        ) : null}
@@ -23,4 +30,6 @@ const TextInput = ({ label, ...props} : OtherSearchFieldProps & FieldHookConfig<
    );
 };
 
-export default TextInput;
+SelectInput.Option = InputOption;
+
+export default SelectInput;
