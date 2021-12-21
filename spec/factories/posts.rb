@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :post do
-    content { 'MyText' }
+    content { Faker::Lorem.sentences(number: 2).join(" ") }
     association :profile
     transient do
       interacted_with_by { [] }

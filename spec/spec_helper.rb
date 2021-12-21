@@ -23,6 +23,7 @@ RSpec.configure do |config|
 
   config.around do |example|
     DatabaseCleaner.cleaning do
+      ActiveStorage::Current.url_options = "https://example.com"
       example.run
     end
   end

@@ -4,6 +4,8 @@ class Profile < ApplicationRecord
   belongs_to :user
   has_many :posts
 
+  has_many :profile_images
+
   searchable do
     integer :age
     integer :shared_interactions_with, multiple: true
@@ -24,5 +26,9 @@ class Profile < ApplicationRecord
     interaction_profiles
       .select { |_k, v| v > 1 }
       .keys
+  end
+
+  def profile_image
+    profile_images.primary
   end
 end

@@ -18,6 +18,7 @@ export const ACTIVITY_FEED_QUERY = gql`
         content
         profile {
           name
+          profileImageUrl
         } 
       }
     }

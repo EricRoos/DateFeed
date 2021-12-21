@@ -46,7 +46,7 @@ const ActivityFeed = () => {
             </div>
             <TimeLine>
               { activityFeed.map( a => (
-                <TimeLine.Item key={a.post.id}>
+                <TimeLine.Item key={a.post.id} imageUrl={a.post.profile.profileImageUrl}>
                   <div className='grid grid-cols-1 divide-y'>
                     <div>
                       <h3 className="font-bold text-white text-2xl">{a.post.profile.name}</h3>

@@ -11,6 +11,7 @@ RSpec.describe 'FetchActivityFeed', type: :request do
     let(:profile) { FactoryBot.create(:profile) }
     let(:current_user) { profile.user }
     let!(:created_post) { FactoryBot.create(:post) }
+    let!(:profile_image) { FactoryBot.create(:profile_image, primary: true, randomized_image: true, profile: created_post.profile) }
 
     let(:expected_likeable) { true }
     let(:gql) do
@@ -22,6 +23,7 @@ RSpec.describe 'FetchActivityFeed', type: :request do
             content
             profile {
               name
+              profileImageUrl
             }
           }
         }
@@ -38,7 +40,8 @@ RSpec.describe 'FetchActivityFeed', type: :request do
               post: {
                 content: created_post.content,
                 profile: {
-                  name: created_post.profile.name
+                  name: created_post.profile.name,
+                  profileImageUrl: Rails.application.routes.url_helpers.rails_blob_url(created_post.profile.profile_image.image)
                 }
               }
             }
