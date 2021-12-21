@@ -5,6 +5,7 @@ import TimeLine from '../time-line';
 import Panel from '../panel';
 import SelectInput from '../inputs/select';
 import { Formik } from 'formik';
+import { formatDistance } from 'date-fns';
 
 const ActivityFeed = () => {
   const {
@@ -49,14 +50,12 @@ const ActivityFeed = () => {
                   <div className='grid grid-cols-1 divide-y'>
                     <div>
                       <h3 className="font-bold text-white text-2xl">{a.post.profile.name}</h3>
-                      <p className="text-sm text-gray-100">{a.post.createdAt}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium leading-snug tracking-wide text-gray-300 text-opacity-100">
+                      <p className="mt-2 text-sm font-medium leading-snug tracking-wide text-gray-300 text-opacity-100">
                         {a.post.content}
                       </p>
                     </div>
                     <div className='text-white'>
+                      <p className="text-sm text-gray-100">{formatDistance(new Date(a.post.createdAt), new Date(), { addSuffix: true })}</p>
                       { a.likeable && ( <LikeButton liked={a.liked} postId={a.post.id}/> )}
                     </div>
                   </div>
