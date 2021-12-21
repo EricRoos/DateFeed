@@ -3,6 +3,8 @@ import useActivityFeedData from './query';
 import LikeButton from '../like-button';
 import TimeLine from '../time-line';
 import Panel from '../panel';
+import SelectInput from '../inputs/select';
+import { Formik } from 'formik';
 
 const ActivityFeed = () => {
   const {
@@ -16,35 +18,54 @@ const ActivityFeed = () => {
       activityFeed
     } = data;
     return (
-      <div>
-        <div className='pb-4'>
-          <Panel>
-            <div className='py-3'>
-              <h1 className='text-2xl flex items-center'>
-                <div className='tracking-wider'>
-                  Activity Feed
+      <Formik
+        initialValues={{time: 15}}
+        onSubmit={ () => {} }
+      >
+        {(values) => (
+          <div className='grid grid-cols-1 gap-2'>
+            <div className='pb-4'>
+              <Panel>
+                <div className='py-3'>
+                  <h1 className='text-2xl flex items-center'>
+                    <div className='tracking-wider'>
+                      Activity Feed
+                    </div>
+                  </h1>
                 </div>
-              </h1>
-            </div>
-          </Panel>
-        </div>
-        <TimeLine>
-          { activityFeed.map( a => (
-            <TimeLine.Item key={a.post.id}>
-              <h3 className="mb-3 font-bold text-white text-2xl">{a.post.profile.name}</h3>
-              <p className="pb-4 text-sm text-gray-100">{a.post.createdAt}</p>
-              <hr />
-              <p className="text-sm font-medium leading-snug tracking-wide text-gray-300 text-opacity-100">
-                {a.post.content}
-              </p>
-              <hr />
-              <div className='text-white'>
-                { a.likeable && ( <LikeButton liked={a.liked} postId={a.post.id}/> )}
+              </Panel>
+              <div>
+                <SelectInput name='time' label='Newer Than...'>
+                  <SelectInput.Option value='5'>5 minutes</SelectInput.Option>
+                  <SelectInput.Option value='15'>15 minutes</SelectInput.Option>
+                  <SelectInput.Option value='30'>30 minutes</SelectInput.Option>
+                  <SelectInput.Option value='60'>1 hour</SelectInput.Option>
+                </SelectInput>
               </div>
-            </TimeLine.Item> 
-          )) }
-        </TimeLine>
-      </div>
+            </div>
+            <TimeLine>
+              { activityFeed.map( a => (
+                <TimeLine.Item key={a.post.id}>
+                  <div className='grid grid-cols-1 divide-y'>
+                    <div>
+                      <h3 className="font-bold text-white text-2xl">{a.post.profile.name}</h3>
+                      <p className="text-sm text-gray-100">{a.post.createdAt}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium leading-snug tracking-wide text-gray-300 text-opacity-100">
+                        {a.post.content}
+                      </p>
+                    </div>
+                    <div className='text-white'>
+                      { a.likeable && ( <LikeButton liked={a.liked} postId={a.post.id}/> )}
+                    </div>
+                  </div>
+                </TimeLine.Item> 
+              )) }
+            </TimeLine>
+          </div>
+        )}
+      </Formik>
     )
   }
 
