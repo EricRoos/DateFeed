@@ -31,7 +31,7 @@ const LikeButton = ({postId, liked}: Props) => {
     toggleLikeButton( togglePostInteraction, postId, currentlyLiked, setCurrentlyLiked);
   };
 
-  if(!loading && !error){
+  if(!error){
     return (
       <button onClick={buttonHandler}>
         <Icon glyph={ currentlyLiked ? 'thumbsup-fill' : 'thumbsup' } />
@@ -39,13 +39,7 @@ const LikeButton = ({postId, liked}: Props) => {
     );
   }
 
-  if(loading){
-    return (
-      <div>Saving...</div>
-    )
-  }
   if(error){
-    console.error(error);
     return (
       <div>Something went wrong</div>
     )

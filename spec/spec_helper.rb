@@ -27,6 +27,7 @@ RSpec.configure do |config|
       example.run
     end
   end
+
   config.after do |_example|
     Sunspot.remove_all!
     Sunspot.commit

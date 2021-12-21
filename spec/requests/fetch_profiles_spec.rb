@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'FetchProfiles', type: :request do
   let(:app_token) { FactoryBot.create(:app_token) }
+  let(:current_user) { FactoryBot.create(:profile).user }
 
   describe 'GRAPHQL #profile' do
     subject { response }
@@ -31,6 +32,7 @@ RSpec.describe 'FetchProfiles', type: :request do
     end
 
     before do
+      sign_in current_user
       post '/graphql',
            params: { query: request },
            headers: { 'X-ApiToken': app_token.token },

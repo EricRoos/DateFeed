@@ -21,12 +21,5 @@ RSpec.describe ActivityFeed, type: :model do
       it { is_expected.to have_attributes(likeable?: true) }
     end
 
-    context 'when I have a post in the feed' do
-      subject { super().detect { |a| a.post == post } }
-
-      let!(:post) { FactoryBot.create(:post, profile: current_profile) }
-
-      it { is_expected.to be_nil }
-    end
   end
 end
