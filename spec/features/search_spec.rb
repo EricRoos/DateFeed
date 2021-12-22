@@ -21,7 +21,6 @@ RSpec.feature "Searches", type: :feature do
 
     sign_in me.user
     visit '/#/search'
-    click_on 'Search'
     expect(page).to have_content(someone.name)
   end
 end

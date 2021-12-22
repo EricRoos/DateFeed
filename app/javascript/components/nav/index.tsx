@@ -17,7 +17,7 @@ const Nav = () => {
         <button onClick={ () => {
             setIsOpen(true);
           }}
-          className='focus:text-orange-500 bg-gray-200 rounded-full p-1 flex shadow'
+          className='focus:text-orange-500 bg-gray-200 rounded-full p-1 flex drop-shadow-lg'
         >
           <Icon glyph='menu' size={48} />
         </button>
@@ -25,7 +25,7 @@ const Nav = () => {
     )
   }
   return (
-    <div className="h-screen w-screen flex fixed top-0 z-20">
+    <div className="h-full w-screen flex fixed top-0 z-20">
       <aside
         className="flex flex-col items-center bg-white text-gray-700 shadow h-full">
         <div className="h-16 flex items-center w-full">

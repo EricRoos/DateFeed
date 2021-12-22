@@ -14,6 +14,7 @@ const SEARCH_QUERY = gql`
       name
       age
       id
+      profileImageUrl
     }
   }
 `
