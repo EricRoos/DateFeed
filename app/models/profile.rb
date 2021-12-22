@@ -13,6 +13,7 @@ class Profile < ApplicationRecord
   searchable do
     integer :age
     integer :shared_interactions_with, multiple: true
+    latlon(:coord) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
   end
 
   def shared_interactions_with

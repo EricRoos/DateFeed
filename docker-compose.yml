@@ -1,7 +1,14 @@
-version: '2'
+version: '3.7'
 
 services:
   solr:
-    image: solr:latest
+    image: solr:8.0.0
     ports:
       - 8983:8983
+    volumes:
+      - type: bind
+        source: ./solr-config/solrconfig.xml
+        target: /opt/solr-8.0.0/server/solr/configsets/_default/conf/solrconfig.xml
+      - type: bind
+        source: ./solr-config/schema.xml
+        target: /opt/solr-8.0.0/server/solr/configsets/_default/conf/schema.xml
