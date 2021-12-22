@@ -4,6 +4,9 @@ class Profile < ApplicationRecord
   belongs_to :user
   validates_uniqueness_of :user
   has_many :posts
+  has_one :profile_geo_detail
+
+  delegate :latitude, :longitude, to: :profile_geo_detail, allow_nil: true
 
   has_many :profile_images
 

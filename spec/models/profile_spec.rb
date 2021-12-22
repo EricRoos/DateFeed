@@ -3,9 +3,20 @@
 require 'rails_helper'
 
 RSpec.describe Profile, type: :model do
-  describe '#valid?' do
-    subject { FactoryBot.build(:profile) }
+  let(:profile) { FactoryBot.create(:profile) }
 
+  describe '#latitude, #longitude' do
+    let(:geo) { FactoryBot.create(:profile_geo_detail, profile: profile) }
+    subject { profile }
+
+    it { is_expected.to have_attributes(latitude: geo.latitude, longitude: geo.longitude) }
+    context 'when no geo location' do
+      let(:geo) { nil }
+      it { is_expected.to have_attributes(latitude: nil, longitude: nil) }
+    end
+  end
+
+  describe '#valid?' do
     it { is_expected.to be_valid }
   end
 

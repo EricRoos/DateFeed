@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_21_043613) do
+ActiveRecord::Schema.define(version: 2021_12_22_153641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 2021_12_21_043613) do
     t.index ["profile_id"], name: "index_posts_on_profile_id"
   end
 
+  create_table "profile_geo_details", force: :cascade do |t|
+    t.float "latitude"
+    t.float "longitude"
+    t.bigint "profile_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["profile_id"], name: "index_profile_geo_details_on_profile_id"
+  end
+
   create_table "profile_images", force: :cascade do |t|
     t.boolean "primary"
     t.bigint "profile_id", null: false
@@ -103,6 +112,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_043613) do
   add_foreign_key "post_interactions", "posts"
   add_foreign_key "post_interactions", "profiles"
   add_foreign_key "posts", "profiles"
+  add_foreign_key "profile_geo_details", "profiles"
   add_foreign_key "profile_images", "profiles"
   add_foreign_key "profiles", "users"
 end
