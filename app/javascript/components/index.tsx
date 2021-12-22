@@ -20,6 +20,7 @@ import TimeLine from './time-line';
 import NewPost from './new-post';
 import Nav from './nav';
 import EditProfile from './edit-profile';
+import Geolocation from './geolocation';
 
 import asPage from './as-page';
 
@@ -66,6 +67,7 @@ const App = () => (
         <Route path='/new-post' element={<NewPost/>} />
       </Routes>
     </div>
+    <Geolocation/>
   </>
 );
 const AppWithRouter = () => (

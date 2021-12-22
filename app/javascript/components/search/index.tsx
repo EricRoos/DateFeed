@@ -33,6 +33,7 @@ const Results = ( props ) => {
     setSearchVars(vals);
   }, 1000));
 
+
   React.useEffect( () => {
     debounceSearch.current(props.values);
   }, [props.values])
