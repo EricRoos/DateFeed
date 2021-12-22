@@ -8,7 +8,7 @@ class ProfileSearch
   def perform
     @perform ||= Profile.search do
       with(:age, (min_age || 18)...(max_age || 120))
-      with(:shared_interactions_with, [profile_id]) if profile_id.present?
+      with(:shared_interactions_with, [profile_id]) if profile_id.present? && false
     end
   end
 

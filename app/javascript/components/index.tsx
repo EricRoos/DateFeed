@@ -23,8 +23,13 @@ import EditProfile from './edit-profile';
 
 import asPage from './as-page';
 
-const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
 const appToken = document.querySelector('meta[name=app_token]').getAttribute('content');
+
+const csrfTokenElement = document.querySelector('meta[name=csrf-token]')
+let csrfToken = '';
+if(!!csrfTokenElement){
+  csrfToken = csrfTokenElement.getAttribute('content');
+}
 const client = new ApolloClient({
   link: new HttpLink({
     uri: '/graphql',
