@@ -2,6 +2,7 @@
 
 class Profile < ApplicationRecord
   belongs_to :user
+  validates_uniqueness_of :user
   has_many :posts
 
   has_many :profile_images

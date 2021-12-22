@@ -8,6 +8,7 @@ RSpec.feature "Searches", type: :feature do
   # Then I see them in the search results
   scenario 'search for people', js: true do
     FactoryBot.create(:app_token, app_name: 'rails_app')
+
     someone = FactoryBot.create(:profile)
     me = FactoryBot.create(:profile)
 

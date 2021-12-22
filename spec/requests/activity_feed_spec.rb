@@ -62,7 +62,7 @@ RSpec.describe 'FetchActivityFeed', type: :request do
     it { is_expected.to have_http_status(:ok) }
 
     context 'when current user is someone else' do
-      let(:current_user) { FactoryBot.create(:user) }
+      let(:current_user) { FactoryBot.create(:profile).user }
       let(:expected_likeable) { true }
 
       it { is_expected.to have_attributes(body: expected_response.to_json) }

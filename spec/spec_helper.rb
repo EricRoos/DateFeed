@@ -18,6 +18,8 @@ require 'rake'
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.before(:suite) do
+    Sunspot.remove_all!
+    Sunspot.commit
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
