@@ -41,7 +41,7 @@ const Results = ( props ) => {
   return (
     <div className='flex flex-wrap gap-4 justify-between'>
       { !error && !loading && !!profiles.length && profiles.map( d =>(
-        <div className='w-1/5 bg-gray-800 flex justify-center items-center drop-shadow-lg'>
+        <div key={d.id} className='w-1/5 bg-gray-800 flex justify-center items-center drop-shadow-lg'>
           <img src={d.profileImageUrl} />
         </div>
       )) }
@@ -66,12 +66,12 @@ const Search = () => {
                 <div className='py'>
                   <div className='text-lg flex items-center gap-2'>
                     { !filtersOpen && (
-                      <button onClick={ () => setFiltersOpen(true) }>
+                      <button onClick={ () => setFiltersOpen(true) } aria-label='Open Filters'>
                         <Icon glyph='filter'/>
                       </button>
                     )}
                     { filtersOpen && (
-                      <button onClick={ () => setFiltersOpen(false) }>
+                      <button onClick={ () => setFiltersOpen(false) } aria-label='Close Fitlers'>
                         <Icon glyph='up-caret'/>
                       </button>
                     )}

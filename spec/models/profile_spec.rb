@@ -17,6 +17,7 @@ RSpec.describe Profile, type: :model do
   end
 
   describe '#valid?' do
+    subject { profile } 
     it { is_expected.to be_valid }
   end
 
