@@ -76,4 +76,4 @@ gem 'turbo-rails', '~> 0.9.0'
 gem 'simplecov', require: false, group: :test
 
 
-gem "sprockets-rails", "~> 3.4"
+gem "sprockets-rails", "~> 3.4", :require => 'sprockets/railtie'

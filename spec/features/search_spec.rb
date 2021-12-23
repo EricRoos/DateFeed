@@ -29,7 +29,6 @@ RSpec.feature "Searches", type: :feature do
     sign_in me.user
     visit '/#/search'
     click_on "Open Filters"
-    sleep 30
-    expect(page).to have_content(someone.name)
+    expect(find_button(someone.name)).to be_present
   end
 end

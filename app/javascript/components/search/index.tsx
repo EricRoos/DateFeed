@@ -41,9 +41,13 @@ const Results = ( props ) => {
   return (
     <div className='flex flex-wrap gap-4 justify-between'>
       { !error && !loading && !!profiles.length && profiles.map( d =>(
-        <div key={d.id} className='w-1/5 bg-gray-800 flex justify-center items-center drop-shadow-lg'>
+        <button
+          key={d.id}
+          className='w-1/5 bg-gray-800 flex justify-center items-center drop-shadow-lg'
+          aria-label={d.name}
+        >
           <img src={d.profileImageUrl} />
-        </div>
+        </button>
       )) }
     </div>
   )

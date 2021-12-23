@@ -7,7 +7,7 @@ class ProfileSearch
 
   def perform
     puts "Got profile id #{profile_id}"
-    @perform ||= Profile.search do
+    @perform ||= Profile.search(include: [ :profile_images ]) do
       with(:age, (min_age || 18)...(max_age || 120))
       with(:shared_interactions_with, [profile_id]) if profile_id.present?
     end
