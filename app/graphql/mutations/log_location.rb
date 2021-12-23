@@ -9,8 +9,13 @@ module Mutations
     # TODO: define resolve method
     def resolve(latitude:, longitude:)
       geo_detail = context[:current_user].profile.profile_geo_detail
-      geo_detail ||= ProfileGeoDetail.new(profile: context[:current_user].profile)
-      { logged: geo_detail.update(latitude: latitude, longitude: longitude) }
+      if !geo_detail.present?
+        geo_detail = ProfileGeoDetail.new(profile: context[:current_user].profile)
+      end
+
+      geo_detail.latitude = latitude 
+      geo_detail.longitude = longitude
+      { logged: geo_detail.save }
     end
   end
 end
