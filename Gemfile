@@ -77,3 +77,5 @@ gem 'simplecov', require: false, group: :test
 
 
 gem "sprockets-rails", "~> 3.4", :require => 'sprockets/railtie'
+
+gem "haversine_distance", "~> 1.1"

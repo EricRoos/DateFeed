@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'haversine'
 
 class Profile < ApplicationRecord
   belongs_to :user
@@ -35,5 +36,15 @@ class Profile < ApplicationRecord
 
   def profile_image
     profile_images.primary
+  end
+
+  def distance_to_profile(profile, unit=:miles)
+    return nil unless latitude.present? && longitude.present? && profile.latitude.present? && profile.longitude.present?
+    Haversine.distance_in_mile(
+      latitude,
+      longitude,
+      profile.latitude,
+      profile.longitude
+    )
   end
 end

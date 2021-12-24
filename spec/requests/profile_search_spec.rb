@@ -27,6 +27,7 @@ RSpec.describe 'Search Profiles', type: :request do
         profileSearch(searchParam: $searchParam) {
           name
           age
+          distance
         }
       }
       GQL
@@ -36,13 +37,15 @@ RSpec.describe 'Search Profiles', type: :request do
       {
         data: {
           profileSearch: [
-            { name: sought_for.name, age: sought_for.age }
+            { name: sought_for.name, age: sought_for.age, distance: 8.099036233564474 }
           ]
         }
       }
     end
 
     before do
+      FactoryBot.create(:profile_geo_detail, profile: sought_for, latitude: 32.3424, longitude: -96.34343)
+      FactoryBot.create(:profile_geo_detail, profile: profile, latitude: 32.423, longitude: -96.444)
       sign_in current_user
       Profile.all.each(&:index)
       Sunspot.commit

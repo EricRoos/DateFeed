@@ -39,4 +39,13 @@ RSpec.describe Profile, type: :model do
 
     it { is_expected.to match_array [other.id, other3.id] }
   end
+
+  describe '#distance_to_profile' do
+    let(:me) { FactoryBot.build(:profile_geo_detail, latitude: 32.524, longitude: -96.4342).profile }
+    let(:them) { FactoryBot.build(:profile_geo_detail, latitude: 32.14, longitude: -96.78342).profile }
+
+    subject { me.distance_to_profile(them) }
+
+    it { is_expected.to eq 33.49793318686372 }
+  end
 end
