@@ -37,9 +37,9 @@ const ProfileMenu = (props) => {
   } = profile;
   return (
     <div className='w-fit bg-gray-300 p-3 drop-shadow-2xl'>
-      <div>
+      <div className='w-full flex justify-center'>
         <div style={{width: '30vw'}}>
-          <img src={profile.profileImageUrl} className-'w-full'/>
+          <img src={profile.profileImageUrl} className='w-full'/>
         </div>
       </div>
       <div className='text-lg'>{name}</div>
@@ -69,7 +69,6 @@ const Results = ( props ) => {
         const profileOpacity = !!currentProfileId ? profile.id === currentProfileId ? 100 : 25 : 100;
         return (
           <Popover
-            reposition={true}
             onClickOutside={ () => setCurrentProfileId(undefined) }
             isOpen={profile.id === currentProfileId}
             positions={['left', 'right']}
@@ -89,7 +88,10 @@ const Results = ( props ) => {
             )}
           > 
               <button
-                onClick={() => setCurrentProfileId(profile.id)}
+                onClick={(ev) => {
+                  ev.stopPropagation();
+                  setCurrentProfileId(profile.id)
+                }}
                 key={profile.id}
                 className={`w-1/5 bg-gray-800 flex justify-center items-center drop-shadow-lg opacity-${profileOpacity}`}
                 aria-label={profile.name}
