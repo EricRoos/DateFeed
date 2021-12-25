@@ -4,5 +4,8 @@ module.exports = {
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
     './app/javascript/**/*.tsx'
-  ]
+  ],
+  purge: {
+    safelist: ['opacity-100', 'opacity-50', 'opacity-25']
+  }
 }

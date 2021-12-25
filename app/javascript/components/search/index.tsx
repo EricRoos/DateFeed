@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ArrowContainer, Popover } from 'react-tiny-popover'
 
 import { debounce } from 'lodash';
 
@@ -26,8 +27,32 @@ interface SearchFields {
   maxAge: number;
 }
 
+const ProfileMenu = (props) => {
+  const { profile } = props;
+
+  const {
+    name,
+    age,
+    distance
+  } = profile;
+  return (
+    <div className='w-fit bg-gray-300 p-3 drop-shadow-2xl'>
+      <div>
+        <div style={{width: '30vw'}}>
+          <img src={profile.profileImageUrl} className-'w-full'/>
+        </div>
+      </div>
+      <div className='text-lg'>{name}</div>
+      <div>{age}</div>
+      <div>{distance}</div>
+    </div>
+  )
+}
+
+
 const Results = ( props ) => {
   const { setSearchVars, error, profiles, loading } = useSearch(props.values);
+  const [ currentProfileId, setCurrentProfileId ] = React.useState(undefined);
 
   const debounceSearch = React.useRef( debounce( (vals) => {
     setSearchVars(vals);
@@ -40,15 +65,40 @@ const Results = ( props ) => {
 
   return (
     <div className='flex flex-wrap gap-4 justify-between'>
-      { !error && !loading && !!profiles.length && profiles.map( d =>(
-        <button
-          key={d.id}
-          className='w-1/5 bg-gray-800 flex justify-center items-center drop-shadow-lg'
-          aria-label={d.name}
-        >
-          <img src={d.profileImageUrl} />
-        </button>
-      )) }
+      { !error && !loading && !!profiles.length && profiles.map( profile => {
+        const profileOpacity = !!currentProfileId ? profile.id === currentProfileId ? 100 : 25 : 100;
+        return (
+          <Popover
+            reposition={true}
+            onClickOutside={ () => setCurrentProfileId(undefined) }
+            isOpen={profile.id === currentProfileId}
+            positions={['left', 'right']}
+            content={({ position, childRect, popoverRect }) => (
+              <ArrowContainer // if you'd like an arrow, you can import the ArrowContainer!
+                position={position}
+                childRect={childRect}
+                popoverRect={popoverRect}
+                arrowSize={10}
+                arrowColor={'rgb(209, 213, 219)'}
+                arrowStyle={{ opacity: 0.7 }}
+                className='popover-arrow-container'
+                arrowClassName='popover-arrow'
+              >
+                <ProfileMenu profile={profile} />
+              </ArrowContainer>
+            )}
+          > 
+              <button
+                onClick={() => setCurrentProfileId(profile.id)}
+                key={profile.id}
+                className={`w-1/5 bg-gray-800 flex justify-center items-center drop-shadow-lg opacity-${profileOpacity}`}
+                aria-label={profile.name}
+              >
+                <img src={profile.profileImageUrl} />
+              </button>
+          </Popover>
+        )
+      }) }
     </div>
   )
 }
