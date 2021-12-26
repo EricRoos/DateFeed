@@ -93,7 +93,7 @@ const ProfileActionsPopover = (props) => {
         </div>
       }
     >
-      <button className='absolute top-4 left-4' onClick={ () => setIsOpen(true) }>
+      <button className='absolute top-4 left-4' onClick={ () => setIsOpen(!isOpen) }>
         <Icon glyph='menu' />
       </button>
     </Popover>
