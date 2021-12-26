@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Modal from 'react-modal';
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 
 import { debounce } from 'lodash';
@@ -27,6 +28,17 @@ interface SearchFields {
   maxAge: number;
 }
 
+interface ProfileAttributeProps {
+  name: String;
+  value: String;
+}
+
+const ProfileAttribute = (props : ProfileAttributeProps) => (
+  <div className='flex justify-between'>
+    <div className='font-bold'>{props.name}</div>
+    <div>{props.value}</div>
+  </div>
+)
 const ProfileMenu = (props) => {
   const { profile } = props;
 
@@ -36,20 +48,57 @@ const ProfileMenu = (props) => {
     distance
   } = profile;
   return (
-    <div className='w-fit bg-gray-300 p-3 drop-shadow-2xl'>
-      <div className='w-full flex justify-center'>
-        <div style={{width: '30vw'}}>
-          <img src={profile.profileImageUrl} className='w-full'/>
+    <div className='divide-y divide-gray-300'>
+      <div className='pb-2'>
+        <div>
+          <img src={profile.profileImageUrl} className='w-full rounded-full drop-shadow'/>
+        </div>
+        <div className='pt-2 text-2xl text-center pb-2'>{name}</div>
+        <div className='photo-strip w-full max-h-32 flex mb-2 p-4 border border-solid border-gray-300 rounded'>
+          <div className='flex gap-x-4 overflow-x-scroll'>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+          </div>
         </div>
       </div>
-      <div className='text-lg'>{name}</div>
-      <div>{age}</div>
-      <div>{distance}</div>
+      <div className='pt-2'>
+        <ProfileAttribute name='Distance' value={distance || '1234 ft.'} />
+        <ProfileAttribute name='Age' value={age} />
+      </div>
     </div>
   )
 }
 
 
+const ProfileActionsPopover = (props) => {
+  const [ isOpen, setIsOpen ] = React.useState(false);
+  return (
+    <Popover
+      isOpen={isOpen}
+      positions={['bottom', 'right']}
+      content={
+        <div className='bg-gray-100 p-2 rounded flex gap-2 border border-solid border-gray-300 drop-shadow'>
+          <button>
+            <Icon glyph='welcome' className='text-red-400'/>
+          </button>
+        </div>
+      }
+    >
+      <button className='absolute top-4 left-4' onClick={ () => setIsOpen(true) }>
+        <Icon glyph='menu' />
+      </button>
+    </Popover>
+  )
+}
 const Results = ( props ) => {
   const { setSearchVars, error, profiles, loading } = useSearch(props.values);
   const [ currentProfileId, setCurrentProfileId ] = React.useState(undefined);
@@ -68,37 +117,25 @@ const Results = ( props ) => {
       { !error && !loading && !!profiles.length && profiles.map( profile => {
         const profileOpacity = !!currentProfileId ? profile.id === currentProfileId ? 100 : 25 : 100;
         return (
-          <Popover
-            onClickOutside={ () => setCurrentProfileId(undefined) }
-            isOpen={profile.id === currentProfileId}
-            positions={['left', 'right']}
-            content={({ position, childRect, popoverRect }) => (
-              <ArrowContainer // if you'd like an arrow, you can import the ArrowContainer!
-                position={position}
-                childRect={childRect}
-                popoverRect={popoverRect}
-                arrowSize={10}
-                arrowColor={'rgb(209, 213, 219)'}
-                arrowStyle={{ opacity: 0.7 }}
-                className='popover-arrow-container'
-                arrowClassName='popover-arrow'
-              >
-                <ProfileMenu profile={profile} />
-              </ArrowContainer>
-            )}
-          > 
-              <button
-                onClick={(ev) => {
-                  ev.stopPropagation();
-                  setCurrentProfileId(profile.id)
-                }}
-                key={profile.id}
-                className={`w-1/5 bg-gray-800 flex justify-center items-center drop-shadow-lg opacity-${profileOpacity}`}
-                aria-label={profile.name}
-              >
-                <img src={profile.profileImageUrl} />
+          <div className={`w-1/5 bg-gray-800 flex justify-center items-center drop-shadow-lg opacity-${profileOpacity}`}>
+            <Modal style={{content: {zIndex: 30, height: '80vh'}}} isOpen={profile.id === currentProfileId}>
+              <ProfileActionsPopover />
+              <button className='absolute top-4 right-4'onClick={() => setCurrentProfileId(undefined)}>
+                <Icon glyph='view-close' />
               </button>
-          </Popover>
+              <ProfileMenu profile={profile} />
+            </Modal>
+            <button
+              onClick={(ev) => {
+                ev.stopPropagation();
+                setCurrentProfileId(profile.id)
+              }}
+              key={profile.id}
+              aria-label={profile.name}
+            >
+              <img src={profile.profileImageUrl} />
+            </button>
+          </div>
         )
       }) }
     </div>
