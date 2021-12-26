@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get '/app-service-worker.js', to: 'service_worker#service_worker'
+  get '/manifest.json', to: 'service_worker#manifest'
+
   devise_for :users
   post '/graphql', to: 'graphql#execute'
   root to: 'dashboard#index'
