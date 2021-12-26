@@ -7,5 +7,10 @@ module.exports = {
   ],
   purge: {
     safelist: ['opacity-100', 'opacity-50', 'opacity-25']
+  },
+  theme: {
+    fontFamily: {
+      sans: ['"Comfortaa"']
+    }
   }
 }
