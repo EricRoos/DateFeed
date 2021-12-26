@@ -3,7 +3,7 @@ import * as Turbo from "@hotwired/turbo"
 
 if (navigator.serviceWorker) {
   navigator.serviceWorker
-    .register("app-service-worker.js")
+    .register("/app-service-worker.js")
     .then(function (reg) {
       console.log("[Companion]", "Service worker registered!");
       console.log(reg);
