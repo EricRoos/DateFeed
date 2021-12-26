@@ -35,8 +35,8 @@ interface ProfileAttributeProps {
 
 const ProfileAttribute = (props : ProfileAttributeProps) => (
   <div className='flex justify-between'>
-    <div className='font-bold'>{props.name}</div>
-    <div>{props.value}</div>
+    <div className='font-bold bg-gray-300 w-1/2 mb-1 p-1'>{props.name}</div>
+    <div className='bg-gray-100 w-1/2 mb-1 p-1'>{props.value}</div>
   </div>
 )
 const ProfileMenu = (props) => {
@@ -56,23 +56,16 @@ const ProfileMenu = (props) => {
         <div className='pt-2 text-2xl text-center pb-2'>{name}</div>
         <div className='photo-strip w-full max-h-32 flex mb-2 p-4 border border-solid border-gray-300 rounded'>
           <div className='flex gap-x-4 overflow-x-scroll'>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
-            <img src={profile.profileImageUrl} className='h-full w-auto drop-shadow'/>
+            { profile.photoUrls.map( src=> <img src={src} className='h-full w-auto drop-shadow'/> )}
           </div>
         </div>
       </div>
       <div className='pt-2'>
         <ProfileAttribute name='Distance' value={distance || '1234 ft.'} />
         <ProfileAttribute name='Age' value={age} />
+        <ProfileAttribute name='Height' value={72} />
+        <ProfileAttribute name='Weight' value={100} />
+        <ProfileAttribute name='Looking For' value={'Right Now'} />
       </div>
     </div>
   )

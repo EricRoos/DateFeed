@@ -10,6 +10,7 @@ module Types
     field :name, String, null: true
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :profile_image_url , String, null: true
+    field :photo_urls, [String], null: true
     field :distance, Float, null: true
 
     def profile_image_url
@@ -17,6 +18,13 @@ module Types
       return ActionController::Base.helpers.image_path("default_profile.jpeg") unless profile_image&.image&.present?
       Rails.application.routes.url_helpers
           .rails_blob_url(profile_image.image)
+    end
+
+    def photo_urls
+      object.profile_images.map do |profile_image|
+        Rails.application.routes.url_helpers
+          .rails_blob_url(profile_image.image)
+      end
     end
 
     def distance

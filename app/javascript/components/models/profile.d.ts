@@ -3,4 +3,5 @@ export default interface ProfileType {
   name: string;
   age: number;
   profileImageUrl?: string;
+  photoUrls?: string[];
 }

@@ -1,5 +1,5 @@
 class ProfileImage < ApplicationRecord
-  validates_uniqueness_of :primary, scope: :profile
+  validates_uniqueness_of :primary, scope: :profile, if: -> { primary }
   belongs_to :profile
   has_one_attached :image
 
