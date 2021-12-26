@@ -22,7 +22,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   user: postgres
   password: mysecretpassword
-  host: 0.0.0.0
+  host: <%= ENV.fetch("DATE_FEED_DATABASE_HOST"){ '0.0.0.0' } %>
 
 development:
   <<: *default
