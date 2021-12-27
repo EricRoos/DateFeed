@@ -20,9 +20,10 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  user: postgres
-  password: mysecretpassword
-  host: <%= ENV.fetch("DATE_FEED_DATABASE_HOST"){ '0.0.0.0' } %>
+  port: <%= Rails.application.credentials.config[:database][:port] rescue "" %>
+  user: <%= Rails.application.credentials.config[:database][:user] rescue "postgres" %>
+  host: <%= Rails.application.credentials.config[:database][:host] rescue "0.0.0.0" %>
+  password: <%= Rails.application.credentials.config[:database][:password] rescue "mysecretpassword"%>
 
 development:
   <<: *default

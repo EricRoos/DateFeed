@@ -14,6 +14,9 @@
 !/log/.keep
 !/tmp/.keep
 
+config/credentials/production.key
+config/credentials/production.yml.enc
+
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
 !/tmp/pids/
@@ -35,3 +38,5 @@
 /node_modules
 
 coverage/*
+
+/config/credentials/production.key
