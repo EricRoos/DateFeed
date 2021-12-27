@@ -87,4 +87,3 @@ production:
   <<: *default
   database: date_feed_production
   username: date_feed
-  password: <%= ENV['DATE_FEED_DATABASE_PASSWORD'] %>
