@@ -16,7 +16,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-        version: 19.03.13
+          version: 20.10.11
       - run:
          name: Dockerhub Login
          command: echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
