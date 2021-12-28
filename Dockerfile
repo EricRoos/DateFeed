@@ -25,7 +25,7 @@ RUN gem install bundler:2.2.16
 
 RUN bundle config set --local without 'development test'
 RUN bundle install --verbose --jobs `expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1` --retry 3
-RUN sudo yarn install
+RUN yarn install
 
 
 COPY . /app
