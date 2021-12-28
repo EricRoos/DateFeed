@@ -53,3 +53,4 @@ bower.json
 
 config/credentials/production.key
 config/credentials/production.yml.enc
+yarn-error.log
