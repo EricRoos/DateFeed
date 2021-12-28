@@ -15,7 +15,8 @@ jobs:
       - image: circleci/ruby:2.6.3-stretch-node
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+        version: 19.03.13
       - run:
          name: Dockerhub Login
          command: echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
