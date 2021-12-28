@@ -13,7 +13,7 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
-    executor: ruby/default
+    executor: docker
     steps:
       - checkout
       - setup_remote_docker
