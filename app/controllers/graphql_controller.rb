@@ -28,7 +28,7 @@ class GraphqlController < ApplicationController
   def check_app_token!
     host = request.ip
     token = request.headers['X-ApiToken']
-    Rails.logger.debug("[AppTokenCheck][#{host}] - #{token}")
+    Rails.logger.info("[AppTokenCheck][#{host}] - #{token}")
     valid = AppToken.exists?(token: token, host: host)
     head :bad_request and return unless valid
   end
