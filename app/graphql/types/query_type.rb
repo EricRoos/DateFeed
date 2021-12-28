@@ -9,15 +9,11 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :me, ProfileType, 'Find my profile '
-    def me
-      context[:current_user].profile
-    end
-
     field :profile, ProfileType, 'Find a profile by id' do
-      argument :id, ID
+      argument :id, ID, required: false
     end
     def profile(id:)
+      return context[:current_user].profile unless id.present?
       Profile.find(id)
     end
 

@@ -14,7 +14,7 @@ RSpec.describe 'FetchMe', type: :request do
     let(:request) do
       <<-GQL
       {
-        me{
+        profile(id: null) {
           name
           age
         }
@@ -24,7 +24,7 @@ RSpec.describe 'FetchMe', type: :request do
     let(:expected_response) do
       {
         data: {
-          me: {
+          profile: {
             name: profile.name,
             age: profile.age
           }

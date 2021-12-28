@@ -15,7 +15,7 @@ module Types
 
     def profile_image_url
       profile_image = object.profile_images.detect { |img| img.primary }
-      return ActionController::Base.helpers.image_path("default_profile.jpeg") unless profile_image&.image&.present?
+      return ActionController::Base.helpers.image_path("default_profile.jpg") unless profile_image&.image&.present?
       Rails.application.routes.url_helpers
           .rails_blob_url(profile_image.image)
     end
