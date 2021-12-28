@@ -30,7 +30,7 @@ interface SearchFields {
 
 interface ProfileAttributeProps {
   name: String;
-  value: String;
+  value: String | Number;
 }
 
 const ProfileAttribute = (props : ProfileAttributeProps) => (

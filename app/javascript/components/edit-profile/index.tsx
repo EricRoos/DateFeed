@@ -1,10 +1,19 @@
 import * as React from 'react';
 import Icon from 'supercons';
+import { PageContext } from '../as-page';
 
 import TextInput from '../inputs/text';
 import SelectInput from '../inputs/select';
 import Button from '../inputs/button';
 import Panel from '../panel';
+
+import ProfileType from '../models/profile';
+import ProfileInputSchema from '../models/profile_input_schema';
+
+import useProfileData from '../profile/query';
+
+import useEditProfile from './mutation';
+
 
 
 import {
@@ -32,10 +41,66 @@ function AgeOptions(){
   return options;
 }
 
-const EditProfile = () => {
-  const initialValues = {};
+interface ProfileFormProps {
+  profile: ProfileType;
+}
+const ProfileForm = (props : ProfileFormProps) => {
+  const { showToast } = React.useContext(PageContext);
+  const [ editProfile,{ loading }] = useEditProfile();
+  const initialValues = props.profile;
 
   function handleSubmit(values, actions){
+    const payload = ProfileInputSchema.cast(values, {stripUnknown: true});
+    editProfile({variables: { profile: payload }}).then( () => {
+      showToast('Profile updated');
+    });
+  }
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+    >
+        <Form>
+          <div className='divide-y divide-gray-300'>
+            <div className='pb-2'>
+              <h2 className='text-lg flex items-center gap-2'>
+                <Icon glyph='profile' />
+                <div>
+                  Information
+                </div>
+              </h2>
+            </div>
+            <div className='py-2'>
+              <div className='mb-2'>
+                <TextInput id='name' name='name' type='text' label='Name' disabled={loading}/>
+              </div>
+              <div className='mb-2'>
+                <SelectInput id='age' name='age' label='Age' disabled={loading}>
+                  <SelectInput.Option value=''>{''}</SelectInput.Option>
+                  { AgeOptions() }
+                </SelectInput>
+              </div>
+            </div>
+            <div className='pt-2'>
+              <Button disabled={loading} type='submit'>{ loading ? 'Saving' : 'Save' }</Button>
+            </div>
+          </div>
+        </Form>
+    </Formik>
+  );
+};
+const EditProfile = () => {
+  const { loading, error, data } = useProfileData(null);
+
+  if(loading){
+    return (
+      <p>loading...</p>
+    );
+  }
+  if(error) {
+    return (
+      <p>Something went wrong</p>
+    )
   }
   return (
     <div>
@@ -50,43 +115,13 @@ const EditProfile = () => {
       </Panel>
 
       <Panel>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-        >
-            <Form>
-              <div className='divide-y divide-gray-300'>
-                <div className='pb-2'>
-                  <h2 className='text-lg flex items-center gap-2'>
-                    <Icon glyph='profile' />
-                    <div>
-                      Information
-                    </div>
-                  </h2>
-                </div>
-                <div className='py-2'>
-                  <div className='mb-2'>
-                    <TextInput id='name' name='name' type='text' label='Name' />
-                  </div>
-                  <div className='mb-2'>
-                    <SelectInput id='age' name='age' label='Age'>
-                      <SelectInput.Option value=''>{''}</SelectInput.Option>
-                      { AgeOptions() }
-                    </SelectInput>
-                  </div>
-                </div>
-                <div className='pt-2'>
-                  <Button type='submit'>Edit</Button>
-                </div>
-              </div>
-            </Form>
-        </Formik>
+        <ProfileForm profile={data.profile} /> 
       </Panel>
 
       <Panel>
         <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
+          initialValues={{}}
+          onSubmit={() => {}}
         >
             <Form>
               <div className='divide-y divide-gray-300'>
@@ -109,8 +144,8 @@ const EditProfile = () => {
 
       <Panel>
         <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
+          initialValues={{}}
+          onSubmit={() => {}}
         >
             <Form>
               <div className='divide-y divide-gray-300'>

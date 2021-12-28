@@ -8,9 +8,10 @@ import ProfileType from '../models/profile';
 
 
 const PROFILE_QUERY = gql`
-  query FetchProfile($profileId: ID!){
+  query FetchProfile($profileId: ID){
     profile(id: $profileId){
       name
+      age
     }
   }
 `
@@ -21,7 +22,7 @@ interface ProfileQueryData {
 }
 
 interface ProfileQueryVars {
-  profileId: number;
+  profileId?: number;
 }
 
 const useProfileData = (profileId) => {
