@@ -18,6 +18,9 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+         name: Dockerhub Login
+         command: echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+      - run:
           name: build it
           command: make build
 
