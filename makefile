@@ -15,7 +15,7 @@ migrate_db:
 push_image:
 	docker tag date_feed:latest ericroos13/date_feed && docker tag date_feed:latest ericroos13/date_feed && docker push ericroos13/date_feed
 deploy:
-	ssh Budgetr /home/ec2-user/deploy.sh
+	ssh DateFeed "cd /home/ec2-user/deployables/date_feed && ./update-service.sh"
 circle_ci_deploy:
 	ssh ec2-user@54.224.120.0 /home/ec2-user/deploy.sh
 deploy_pipeline:
