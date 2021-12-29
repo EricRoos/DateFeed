@@ -79,4 +79,3 @@ const AppWithRouter = () => (
 const Page = asPage(AppWithRouter);
 
 renderComponent(<Page/>, appContainer);
-window.gql = gql;

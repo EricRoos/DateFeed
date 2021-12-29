@@ -1,4 +1,8 @@
 import * as React from 'react';
+import {
+  gql
+} from "@apollo/client";
+
 import Icon from 'supercons';
 import { PageContext } from '../as-page';
 
@@ -13,6 +17,7 @@ import ProfileInputSchema from '../models/profile_input_schema';
 import useProfileData from '../profile/query';
 
 import useEditProfile from './mutation';
+import { MutationResponse } from './mutation';
 
 
 
@@ -53,8 +58,16 @@ const ProfileForm = (props : ProfileFormProps) => {
     const payload = ProfileInputSchema.cast(values, {stripUnknown: true});
     editProfile({
       update: (cache, result) => {
-        cache.evict({id: cache.identify(result.data.editProfile.profile)});
-        cache.gc();
+        cache.writeFragment({
+          id: cache.identify({...result.data.editProfile.profile}),
+          fragment: gql`
+            fragment DeltaProfile on Profile {
+              name
+              age
+            }
+          `,
+          data: result.data.editProfile.profile,
+        })
       },
       variables: { profile: payload }
     }).then( (resp) => {

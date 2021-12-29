@@ -24,8 +24,11 @@ interface MutationVariables {
   profile: ProfileInputType;
 }
 
-interface MutationResponse {
-  profile: ProfileType
+interface EditProfileMutationResponse {
+  profile: ProfileType;
+}
+export interface MutationResponse {
+  editProfile: EditProfileMutationResponse;
 }
 
 const useEditProfile = () => {
