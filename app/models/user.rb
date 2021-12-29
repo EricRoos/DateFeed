@@ -9,12 +9,6 @@ class User < ApplicationRecord
   has_one :profile
   has_many :posts, through: :profile
 
-  after_commit :create_profile, on: :create
 
-  private
-
-  def create_profile
-    Profile.create(user: self)
-  end
 
 end
