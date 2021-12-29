@@ -6,9 +6,9 @@
     <div class='text-center p-4'>
       <h1 class='text-3xl'>Log In</h1>
     </div>
-    <div>
-    <% input_class = 'text-black w-full border border-solid border-gray-300 bg-gray-100 px-4 py-2 rounded-lg focus:outline-none' %>
-    <% label_class = 'font-semibold block mb-1 text-md' %>
+    <div class='p-4'>
+      <% input_class = 'text-black w-full border border-solid border-gray-300 bg-gray-100 px-4 py-2 rounded-lg focus:outline-none' %>
+      <% label_class = 'font-semibold block mb-1 text-md' %>
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
         <div class="field">
           <%= f.label :email, class: label_class %>
@@ -21,18 +21,18 @@
         </div>
 
         <% if devise_mapping.rememberable? %>
-          <div class="field">
+          <div class="field py-2">
             <%= f.check_box :remember_me %>
             <%= f.label :remember_me %>
           </div>
         <% end %>
 
         <div class="actions">
-          <%= f.submit "Log in" %>
+          <%= f.submit "Log in", class: 'flex items-center px-4 py-2 bg-orange-500 text-black hover:text-white rounded-lg shadow-xs cursor-pointer hover:bg-blue-500 hover:text-gray-100 w-full' %>
         </div>
       <% end %>
     </div>
-    <div>
+    <div class='p-4'>
       <%= render "devise/shared/links" %>
     </div>
   </div>
