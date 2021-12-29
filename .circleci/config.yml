@@ -21,8 +21,15 @@ jobs:
          name: Dockerhub Login
          command: echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
       - run:
-          name: build it
+          name: Build and Push Image
           command: make build push_image
+  deploy:
+    docker:
+      - image: circleci/ruby:2.6.3-stretch-node
+    steps:
+      - run:
+          name: Build and Push Image
+          command: ssh ec2-user@18.204.60.141 "cd /home/ec2-user/deployables/date_feed && ./update-service.sh"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -31,3 +38,4 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build
+      - deploy
