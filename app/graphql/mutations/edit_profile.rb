@@ -9,7 +9,7 @@ module Mutations
     def resolve(profile:)
       current_profile = context[:current_user].profile
       current_profile.update(profile.to_h)
-      { profile: profile }
+      { profile: current_profile }
     end
   end
 end

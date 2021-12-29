@@ -10,6 +10,7 @@ import ProfileType from '../models/profile';
 const PROFILE_QUERY = gql`
   query FetchProfile($profileId: ID){
     profile(id: $profileId){
+      id
       name
       age
     }

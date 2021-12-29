@@ -12,6 +12,7 @@ const EDIT_PROFILE_MUTATION = gql`
   mutation EditProfile($profile: ProfileInput!){
     editProfile(profile: $profile){
       profile {
+        id
         name
         age
       }

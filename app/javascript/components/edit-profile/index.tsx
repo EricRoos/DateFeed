@@ -46,12 +46,18 @@ interface ProfileFormProps {
 }
 const ProfileForm = (props : ProfileFormProps) => {
   const { showToast } = React.useContext(PageContext);
-  const [ editProfile,{ loading }] = useEditProfile();
+  const [ editProfile,{ client, loading }] = useEditProfile();
   const initialValues = props.profile;
 
   function handleSubmit(values, actions){
     const payload = ProfileInputSchema.cast(values, {stripUnknown: true});
-    editProfile({variables: { profile: payload }}).then( () => {
+    editProfile({
+      update: (cache, result) => {
+        cache.evict({id: cache.identify(result.data.editProfile.profile)});
+        cache.gc();
+      },
+      variables: { profile: payload }
+    }).then( (resp) => {
       showToast('Profile updated');
     });
   }
