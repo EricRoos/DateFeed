@@ -11,19 +11,14 @@ class ServiceWorkerController < ApplicationController
   def manifest
     respond_to do |format|
       format.json { render json: {
-          "short_name": "DateFeed",
-          "name": "Date Feed",
+          "short_name": "Radius",
+          "name": "Radius",
           "icons": [
             {
-              "src": "/assets/foo.png",
-              "type": "image/png",
+              "src": ActionController::Base.helpers.image_url("radius_badge.svg"),
+              "type": "image/svg",
               "sizes": "192x192"
             },
-            {
-              "src": "/assets/foo.png",
-              "type": "image/png",
-              "sizes": "512x512"
-            }
           ],
           "start_url": root_path,
           "background_color": "#fff",
