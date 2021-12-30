@@ -22,7 +22,7 @@ interface Props {
 }
 function ImageUpload( props : Props ) {
   const { showToast } = React.useContext(PageContext);
-  const [mutate] = useMutation(MUTATION);
+  const [mutate, { loading, error }] = useMutation(MUTATION);
   const [ image, setImage ] = React.useState(undefined);
 
 
@@ -63,6 +63,11 @@ function ImageUpload( props : Props ) {
       showToast('Image Saved');
     });
   }
+  if(error){
+    return (
+      <p>{error}</p>
+    )
+  }
   return (
     <div className='divide-y divide-gray-300'>
       <div className='pb-2'>
@@ -85,7 +90,7 @@ function ImageUpload( props : Props ) {
       { !!image && (
         <div className='pt-2 pb-2'>
           <div className='flex flex-col gap-2'>
-            <Button className='flex w-full justify-center' onClick={saveImage}>Save</Button>
+            <Button className='flex w-full justify-center' onClick={saveImage}>{ loading ? 'Saving' : 'Save' }</Button>
             <Button className='flex w-full justify-center bg-gray-300' onClick={ () => setImage(undefined) }>Clear</Button>
           </div>
         </div>
