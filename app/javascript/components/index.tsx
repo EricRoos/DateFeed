@@ -13,6 +13,8 @@ import {
   HttpLink
 } from "@apollo/client";
 
+import { createUploadLink } from "apollo-upload-client";
+
 import Profile from './profile';
 import ActivityFeed from './activity-feed';
 import Search from './search';
@@ -32,7 +34,7 @@ if(!!csrfTokenElement){
   csrfToken = csrfTokenElement.getAttribute('content');
 }
 const client = new ApolloClient({
-  link: new HttpLink({
+  link: new createUploadLink({
     uri: '/graphql',
     credentials: 'same-origin',
     headers: {

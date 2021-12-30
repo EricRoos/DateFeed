@@ -3,8 +3,10 @@ import { gql, useMutation } from "@apollo/client";
 
 const MUTATION = gql`
   mutation ($file: Upload!) {
-    uploadFile(file: $file) {
-      success
+    addPhoto(file: $file) {
+      profileImage {
+        id
+      }
     }
   }
 `;
@@ -17,6 +19,7 @@ function ImageUpload() {
       validity,
       files: [file],
     } = target;
+    console.log(file)
     if (validity.valid) mutate({ variables: { file } });
   }
 
