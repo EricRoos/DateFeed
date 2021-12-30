@@ -65,7 +65,8 @@ function ImageUpload( props : Props ) {
   }
   if(error){
     return (
-      <p>Something went wrong</p>
+      <p>Something went wrong.</p>
+      <p>{error.message}</p>
     )
   }
   return (
