@@ -19,6 +19,7 @@ import useProfileData from '../profile/query';
 import useEditProfile from './mutation';
 import { MutationResponse } from './mutation';
 
+import ImageUpload from '../image-upload';
 
 
 import {
@@ -153,6 +154,7 @@ const EditProfile = () => {
                   </h2>
                 </div>
                 <div className='py-2'>
+                  <ImageUpload />
                 </div>
                 <div className='pt-2'>
                 </div>
