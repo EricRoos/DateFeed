@@ -163,7 +163,7 @@ const EditProfile = () => {
                     <button className='absolute top-4 right-4' onClick={() => setIsAddImageOpen(false) }>
                       <Icon glyph='view-close' />
                     </button>
-                    <ImageUpload />
+                    <ImageUpload profile={data.profile} />
                   </Modal>
                   <Button onClick={ () =>setIsAddImageOpen(true) }>
                     <span className='text-sm'>Add Photo</span>

@@ -3,6 +3,7 @@ import { PageContext } from '../as-page';
 import { gql, useMutation } from "@apollo/client";
 import Icon from 'supercons';
 
+import ProfileType from '../models/profile';
 import Button from '../inputs/button';
 
 const MUTATION = gql`
@@ -15,7 +16,10 @@ const MUTATION = gql`
   }
 `;
 
-function ImageUpload() {
+interface Props {
+  profile: ProfileType;
+}
+function ImageUpload( props : Props ) {
   const { showToast } = React.useContext(PageContext);
   const [mutate] = useMutation(MUTATION);
   const [ image, setImage ] = React.useState(undefined);
@@ -31,7 +35,29 @@ function ImageUpload() {
     }
   }
   function saveImage(){
-    mutate({ variables: { file: image } }).then( () => {
+    mutate({
+      update: (cache, result) => {
+        const newProfileImage = result.data.addPhoto.profileImage;
+        cache.modify({
+          id: cache.identify({...props.profile}),
+          fields: {
+            profileImages(existingImages = [], { readField }) {
+              const newProfileImageRef = cache.writeFragment({
+                data: newProfileImage,
+                fragment: gql`
+                  fragment NewProfileImage on ProfileImage {
+                    id
+                    url
+                  }
+                `
+              });
+              return [...existingImages, newProfileImageRef];
+            }
+          }
+        });
+      },
+      variables: { file: image }
+    }).then( () => {
       setImage(undefined);
       showToast('Image Saved');
     });
