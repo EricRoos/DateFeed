@@ -111,6 +111,9 @@ GEM
   specs:
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    apollo_upload_server (2.1.0)
+      actionpack (>= 4.2)
+      graphql (>= 1.8)
     ast (2.4.2)
     bcrypt (3.1.16)
     bindex (0.8.1)
@@ -347,6 +350,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  apollo_upload_server (~> 2.1)
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
