@@ -11,6 +11,7 @@ const MUTATION = gql`
     addPhoto(file: $file) {
       profileImage {
         id
+        url
       }
     }
   }
