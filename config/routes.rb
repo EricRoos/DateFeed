@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  post '/javascript_errors', to: 'javascript_errors#create'
   get '/app-service-worker.js', to: 'service_worker#service_worker'
   get '/manifest.json', to: 'service_worker#manifest'
 
