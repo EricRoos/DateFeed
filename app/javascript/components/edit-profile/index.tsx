@@ -3,6 +3,8 @@ import {
   gql
 } from "@apollo/client";
 
+import Modal from 'react-modal';
+
 import Icon from 'supercons';
 import { PageContext } from '../as-page';
 
@@ -53,6 +55,7 @@ interface ProfileFormProps {
 const ProfileForm = (props : ProfileFormProps) => {
   const { showToast } = React.useContext(PageContext);
   const [ editProfile,{ client, loading }] = useEditProfile();
+
   const initialValues = props.profile;
 
   function handleSubmit(values, actions){
@@ -111,6 +114,7 @@ const ProfileForm = (props : ProfileFormProps) => {
 };
 const EditProfile = () => {
   const { loading, error, data } = useProfileData(null);
+  const [ isAddImageOpen, setIsAddImageOpen ] = React.useState(false);
 
   if(loading){
     return (
@@ -154,7 +158,15 @@ const EditProfile = () => {
                   </h2>
                 </div>
                 <div className='py-2'>
-                  <ImageUpload />
+                  <Modal style={{content: {zIndex: 30, height: '80vh'}}} isOpen={isAddImageOpen}>
+                    <button className='absolute top-4 right-4' onClick={() => setIsAddImageOpen(false) }>
+                      <Icon glyph='view-close' />
+                    </button>
+                    <ImageUpload />
+                  </Modal>
+                  <Button onClick={ () =>setIsAddImageOpen(true) }>
+                    <span className='text-sm'>Add Photo</span>
+                  </Button>
                 </div>
                 <div className='pt-2'>
                 </div>
