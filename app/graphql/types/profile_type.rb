@@ -11,6 +11,7 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :profile_image_url , String, null: true
     field :photo_urls, [String], null: true
+    field :profile_images, [Types::ProfileImageType], null: false
     field :distance, Float, null: true
 
     def profile_image_url

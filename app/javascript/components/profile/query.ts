@@ -13,6 +13,11 @@ const PROFILE_QUERY = gql`
       id
       name
       age
+      profileImages{
+        id
+        url
+        primary
+      }
     }
   }
 `

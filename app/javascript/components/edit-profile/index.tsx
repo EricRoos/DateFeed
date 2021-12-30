@@ -126,6 +126,7 @@ const EditProfile = () => {
       <p>Something went wrong</p>
     )
   }
+  console.log(data.profile.profileImages);
   return (
     <div>
       <Panel>
@@ -169,6 +170,13 @@ const EditProfile = () => {
                   </Button>
                 </div>
                 <div className='pt-2'>
+                  <div className='flex flex-wrap gap-4 justify-between'>
+                    { data.profile.profileImages.map( profileImage => (
+                      <div className='w-1/5 aspect-ratio-[9/16] bg-gray-300 flex justify-center items-center'>
+                        <img src={profileImage.url} />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </Form>
