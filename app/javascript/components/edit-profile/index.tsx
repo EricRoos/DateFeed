@@ -11,6 +11,8 @@ import { PageContext } from '../as-page';
 import TextInput from '../inputs/text';
 import SelectInput from '../inputs/select';
 import Button from '../inputs/button';
+import Toggle from '../inputs/toggle';
+
 import Panel from '../panel';
 
 import ProfileType from '../models/profile';
@@ -52,6 +54,37 @@ function AgeOptions(){
 interface ProfileFormProps {
   profile: ProfileType;
 }
+
+const ProfilePreferences = () => {
+  return (
+    <Formik
+      initialValues={{darkMode: false}}
+      onSubmit={(values) => {
+        const {
+          darkMode
+        } = values;
+        const bodyEle = document.querySelector("html")
+        if(darkMode){
+          bodyEle.classList.add("dark");
+        }else{
+          bodyEle.classList.remove("dark");
+        }
+      }}
+    >
+      {({handleChange,submitForm}) => (
+        <Form>
+          <div className='flex p-2'>
+            <div className='flex-grow'>Dark Mode</div>
+            <div className='flex-shrink text-right'>
+              <Toggle name='darkMode' id='darkModeToggle' onChange={ (ev) => { handleChange(ev); submitForm(); } }/>
+            </div>
+          </div>
+        </Form>
+      )}
+    </Formik>
+  );
+};
+
 const ProfileForm = (props : ProfileFormProps) => {
   const { showToast } = React.useContext(PageContext);
   const [ editProfile,{ client, loading }] = useEditProfile();
@@ -126,7 +159,6 @@ const EditProfile = () => {
       <p>Something went wrong</p>
     )
   }
-  console.log(data.profile.profileImages);
   return (
     <div>
       <Panel>
@@ -172,7 +204,7 @@ const EditProfile = () => {
                 <div className='pt-2'>
                   <div className='flex flex-wrap gap-4 justify-between'>
                     { data.profile.profileImages.map( profileImage => (
-                      <div className='w-1/5 aspect-ratio-[9/16] bg-gray-300 flex justify-center items-center'>
+                      <div className='w-1/5 aspect-ratio-[9/16] bg-gray-300 flex justify-center items-center' key={profileImage.id}>
                         <img src={profileImage.url} />
                       </div>
                     ))}
@@ -184,30 +216,20 @@ const EditProfile = () => {
       </Panel>
 
       <Panel>
-        <Formik
-          initialValues={{}}
-          onSubmit={() => {}}
-        >
-            <Form>
-              <div className='divide-y divide-gray-300'>
-                <div className='pb-2'>
-                  <h2 className='text-lg flex items-center gap-2'>
-                    <Icon glyph='settings' />
-                    <div>
-                      Preferences 
-                    </div>
-                  </h2>
-                </div>
-                <div className='py-2'>
-                </div>
-                <div className='pt-2'>
-                </div>
+        <div className='divide-y divide-gray-300'>
+          <div className='pb-2'>
+            <h2 className='text-lg flex items-center gap-2'>
+              <Icon glyph='settings' />
+              <div>
+                Preferences 
               </div>
-            </Form>
-        </Formik>
+            </h2>
+          </div>
+          <div className='py-2'>
+            <ProfilePreferences />
+          </div>
+        </div>
       </Panel>
-
-
     </div>
   )
 }

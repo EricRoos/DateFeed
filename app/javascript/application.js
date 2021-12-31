@@ -5,10 +5,8 @@ if (navigator.serviceWorker) {
   navigator.serviceWorker
     .register("/app-service-worker.js")
     .then(function (reg) {
-      console.log("[Companion]", "Service worker registered!");
-      console.log(reg);
     }).catch( (e) => {
-      console.log(e);
+      console.error(e);
     });
 }
 

@@ -17,7 +17,7 @@ const Nav = () => {
         <button onClick={ () => {
             setIsOpen(true);
           }}
-          className='focus:text-orange-500 bg-gray-200 rounded-full p-1 flex drop-shadow-lg'
+          className='focus:text-orange-500 dark:text-black bg-gray-200 rounded-full p-1 flex drop-shadow-lg'
         >
           <Icon glyph='menu' size={48} />
         </button>
