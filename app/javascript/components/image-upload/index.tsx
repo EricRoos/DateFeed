@@ -78,12 +78,12 @@ function ImageUpload( props : Props ) {
       </div>
       <div className='pt-2 pb-2'>
           <label>
-            <div className='drop-shadow aspect-[9/16] w-full aspect-video bg-gray-200 border border-solid border-gray-300 flex justify-center items-center cursor-pointer scale-75'>
+            <div className='drop-shadow w-full aspect-[9/16] bg-gray-200 border border-solid border-gray-300 flex justify-center items-center cursor-pointer'>
               {!image && (
                 <Icon glyph='plus-fill' />
               )}
               {!!image && (
-                <img src={URL.createObjectURL(image)} className='w-full h-auto' />
+                <img src={URL.createObjectURL(image)} className='' />
               )}
             </div>
             <input type="file" required onChange={setValidImage} className='hidden'/>

@@ -191,7 +191,7 @@ const EditProfile = () => {
                   </h2>
                 </div>
                 <div className='py-2'>
-                  <Modal style={{content: {zIndex: 30, height: '80vh'}}} isOpen={isAddImageOpen}>
+                  <Modal className='dark:bg-slate-900 bg-gray-100' style={{content: {...Modal.defaultStyles.content, backgroundColor: undefined, zIndex: 30, height: '80vh'}}} isOpen={isAddImageOpen}>
                     <button className='absolute top-4 right-4' onClick={() => setIsAddImageOpen(false) }>
                       <Icon glyph='view-close' />
                     </button>
