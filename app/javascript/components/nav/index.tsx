@@ -27,9 +27,9 @@ const Nav = () => {
   return (
     <div className="h-full w-screen flex fixed top-0 z-20">
       <aside
-        className="flex flex-col items-center bg-white text-gray-700 shadow h-full">
+        className="flex flex-col items-center bg-white text-gray-700 dark:bg-slate-900 dark:text-white shadow h-full">
         <div className="h-16 flex items-center w-full">
-          <a className="w-3/5 mx-auto" href="http://svelte.dev/">
+          <a className="w-3/5 mx-auto aspect-square" href="http://svelte.dev/">
             <img
               className="mx-auto"
               src={document.querySelector("meta[name='logo:badge']").getAttribute("content")}
