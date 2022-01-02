@@ -9,6 +9,6 @@ class User < ApplicationRecord
   has_one :profile
   has_many :posts, through: :profile
 
-
+  has_many :notifications, as: :recipient
 
 end
