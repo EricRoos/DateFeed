@@ -10,8 +10,14 @@ import {
   ApolloProvider,
   useQuery,
   gql,
-  HttpLink
+  HttpLink,
+  ApolloLink,
+  useSubscription
 } from "@apollo/client";
+
+import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink';
+
+import { createConsumer } from '@rails/actioncable';
 
 import { createUploadLink } from "apollo-upload-client";
 
@@ -33,8 +39,18 @@ let csrfToken = '';
 if(!!csrfTokenElement){
   csrfToken = csrfTokenElement.getAttribute('content');
 }
-const client = new ApolloClient({
-  link: new createUploadLink({
+const hasSubscriptionOperation = ({ query: { definitions } }) => {
+  return definitions.some(
+    ({ kind, operation }) => kind === 'OperationDefinition' && operation === 'subscription'
+  )
+}
+
+const cable = createConsumer('ws://localhost:3000/cable');
+
+const link = ApolloLink.split(
+  hasSubscriptionOperation,
+  new ActionCableLink({cable}),
+  new createUploadLink({
     uri: '/graphql',
     credentials: 'same-origin',
     headers: {
@@ -42,6 +58,9 @@ const client = new ApolloClient({
       'X-ApiToken': appToken,
     }
   }),
+);
+const client = new ApolloClient({
+  link,
   cache: new InMemoryCache()
 });
 
@@ -58,9 +77,23 @@ function renderComponent(component, container){
 
 const appContainer = document.getElementById('root');
 
+const NotificationWatcher = () => {
+  const query = gql`
+    subscription GetRandomNumber{
+      randomNumber
+    }
+  `
+
+  const { data, loading } = useSubscription(
+    query
+  )
+  console.log(data);
+  return null;
+};
 const App = () => (
   <>
     <Nav />
+    <NotificationWatcher />
     <div id='app' className='container px-3'>
       <Routes>
         <Route path='/' element={<ActivityFeed />} />

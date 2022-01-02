@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class DateFeedSchema < GraphQL::Schema
+  use GraphQL::Subscriptions::ActionCableSubscriptions
+  subscription(Types::SubscriptionType)
+
   mutation(Types::MutationType)
   query(Types::QueryType)
 
