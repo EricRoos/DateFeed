@@ -79,8 +79,10 @@ const appContainer = document.getElementById('root');
 
 const NotificationWatcher = () => {
   const query = gql`
-    subscription GetRandomNumber{
-      randomNumber
+    subscription Notifications{
+      notifications {
+        notifications
+      }
     }
   `
 
