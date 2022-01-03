@@ -10,6 +10,6 @@ class PostInteraction < ApplicationRecord
   after_commit :send_notification, on: :create
 
   def send_notification
-    LikedPostNotification.with(interaction: self).deliver(post.profile.user)
+    LikedPostNotification.with(interaction: self).deliver_later(post.profile.user)
   end
 end

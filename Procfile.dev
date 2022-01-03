@@ -1,5 +1,6 @@
 web: bin/rails server -p 3000
 js: yarn build --watch
+sidekiq: bin/bundle exec sidekiq
 js-test: yarn test --watch
 tsc: yarn tsc --pretty --noEmit -w --jsx react-jsx app/javascript/components/index.tsx
 css: yarn build:css --watch
