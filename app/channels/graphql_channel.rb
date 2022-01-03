@@ -1,5 +1,6 @@
 class GraphqlChannel < ApplicationCable::Channel
   def subscribed
+    Rails.logger.info("Current user #{current_user}")
     @subscription_ids = []
   end
 
@@ -13,6 +14,7 @@ class GraphqlChannel < ApplicationCable::Channel
       # current_user: current_user,
       # Make sure the channel is in the context
       channel: self,
+      current_user_id: current_user.id
     }
 
     result = DateFeedSchema.execute(

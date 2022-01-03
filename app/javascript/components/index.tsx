@@ -81,15 +81,16 @@ const NotificationWatcher = () => {
   const query = gql`
     subscription Notifications{
       notifications {
-        notifications
+        messages
       }
     }
   `
 
-  const { data, loading } = useSubscription(
+  const { data, loading, error } = useSubscription(
     query
   )
   console.log(data);
+  console.error(error);
   return null;
 };
 const App = () => (
