@@ -45,7 +45,9 @@ const hasSubscriptionOperation = ({ query: { definitions } }) => {
   )
 }
 
-const cable = createConsumer('ws://localhost:3000/cable');
+const wsHost = window.location.origin.replace("http", "ws") +"/cable";
+const cable = createConsumer(wsHost);
+
 
 const link = ApolloLink.split(
   hasSubscriptionOperation,
