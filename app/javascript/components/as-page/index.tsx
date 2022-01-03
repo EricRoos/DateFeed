@@ -1,5 +1,9 @@
 import * as React from 'react';
 import Toast from '../toast';
+import{
+  gql,
+  useSubscription
+} from "@apollo/client";
 
 interface PageContextValues {
   showToast: Function;
@@ -12,10 +16,34 @@ const iniContextValues : PageContextValues = {
 
 export const PageContext = React.createContext(iniContextValues);
 
+const NotificationWatcher = ({onNewMessage}) => {
+  const query = gql`
+    subscription Notifications{
+      notifications {
+        messages
+      }
+    }
+  `
+
+  const { data, loading, error } = useSubscription(
+    query
+  )
+
+  React.useEffect( () => {
+    if(data && !!data.notifications.messages){
+      data.notifications.messages.forEach( msg => {
+        onNewMessage(msg)
+      });
+    }
+  }, [data])
+
+  return null;
+};
+
 const asPage = (Component) => {
   return function Page(props) {
     const [ currentToast, setToast ] = React.useState(undefined);
-    const ttl = 1500;
+    const ttl = 3000;
 
     const showToast = (message) => {
       setToast(message);
@@ -23,10 +51,13 @@ const asPage = (Component) => {
     }
 
     return (
-      <PageContext.Provider value={{showToast}}>
-        { <Component {...props} /> }
-        { currentToast && <Toast message={currentToast} /> }
-      </PageContext.Provider>
+      <>
+        <NotificationWatcher onNewMessage={showToast} />
+        <PageContext.Provider value={{showToast}}>
+          { <Component {...props} /> }
+          { currentToast && <Toast message={currentToast} /> }
+        </PageContext.Provider>
+      </>
     )
   };
 }

@@ -77,26 +77,9 @@ function renderComponent(component, container){
 
 const appContainer = document.getElementById('root');
 
-const NotificationWatcher = () => {
-  const query = gql`
-    subscription Notifications{
-      notifications {
-        messages
-      }
-    }
-  `
-
-  const { data, loading, error } = useSubscription(
-    query
-  )
-  console.log(data);
-  console.error(error);
-  return null;
-};
 const App = () => (
   <>
     <Nav />
-    <NotificationWatcher />
     <div id='app' className='container px-3'>
       <Routes>
         <Route path='/' element={<ActivityFeed />} />
