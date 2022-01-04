@@ -53,17 +53,18 @@ const useActivityFeedData = () => {
     }
   );
   let found = {};
+  let done = false;
   if(data){
     const { jobId } = data;
     found = resolvedQueries.find( (query) => query['jobId'] === jobId );
     if(found){
       found = found['result']['data'];
+      done = true;
     }
   }
-
   const activityFeed = found ? found['activityFeed'] : [];
   return {
-    loading,
+    loading: !done,
     error,
     data: { activityFeed }
   }

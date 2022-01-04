@@ -14,9 +14,9 @@ const ActivityFeed = () => {
     data
   } = useActivityFeedData();
 
-  if(!loading && !error){
+  if(!error){
     const {
-      activityFeed
+      activityFeed,
     } = data;
     return (
       <Formik
@@ -44,24 +44,31 @@ const ActivityFeed = () => {
                 </SelectInput>
               </div>
             </div>
-            <TimeLine>
-              { activityFeed.map( a => (
-                <TimeLine.Item key={a.post.id} imageUrl={a.post.profile.profileImageUrl}>
-                  <div className='grid grid-cols-1 divide-y'>
-                    <div>
-                      <h3 className="font-bold text-white text-2xl">{a.post.profile.name}</h3>
-                      <p className="mt-2 text-sm font-medium leading-snug tracking-wide text-gray-300 text-opacity-100">
-                        {a.post.content}
-                      </p>
-                    </div>
-                    <div className='text-white'>
-                      <p className="text-sm text-gray-100">{formatDistance(new Date(a.post.createdAt), new Date(), { addSuffix: true })}</p>
-                      { a.likeable && ( <LikeButton liked={a.liked} postId={a.post.id}/> )}
-                    </div>
-                  </div>
-                </TimeLine.Item> 
-              )) }
-            </TimeLine>
+            <div>
+              { loading && (
+                  <p>Loading feed</p>
+              )}
+              { !loading && (
+                <TimeLine>
+                  { activityFeed.map( a => (
+                    <TimeLine.Item key={a.post.id} imageUrl={a.post.profile.profileImageUrl}>
+                      <div className='grid grid-cols-1 divide-y'>
+                        <div>
+                          <h3 className="font-bold text-white text-2xl">{a.post.profile.name}</h3>
+                          <p className="mt-2 text-sm font-medium leading-snug tracking-wide text-gray-300 text-opacity-100">
+                            {a.post.content}
+                          </p>
+                        </div>
+                        <div className='text-white'>
+                          <p className="text-sm text-gray-100">{formatDistance(new Date(a.post.createdAt), new Date(), { addSuffix: true })}</p>
+                          { a.likeable && ( <LikeButton liked={a.liked} postId={a.post.id}/> )}
+                        </div>
+                      </div>
+                    </TimeLine.Item> 
+                  )) }
+                </TimeLine>
+              )}
+            </div>
           </div>
         )}
       </Formik>
