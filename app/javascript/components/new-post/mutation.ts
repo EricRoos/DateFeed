@@ -40,7 +40,7 @@ interface MutationResponse {
 
 const useCreatePost = () => {
   return useMutation<MutationResponse, MutationVariables>(CREATE_POST_MUTATION, {
-    refetchQueries: [{ query: ACTIVITY_FEED_QUERY}]
+    refetchQueries: [{ query: ACTIVITY_FEED_QUERY, variables: { async: true }}]
   });
 }
 
