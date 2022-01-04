@@ -6,6 +6,7 @@ import {
 } from "@apollo/client";
 
 import ProfileType from '../models/profile';
+import { PageContext } from '../as-page';
 
 
 const SEARCH_QUERY = gql`
@@ -30,11 +31,14 @@ interface SearchQueryVars {
 }
 
 interface QueryVars {
+  async: Boolean,
   searchParam: SearchQueryVars;
 }
 
 const useSearch = (initialVars : SearchQueryVars) => {
   const [ searchVars, setSearchVars ] = React.useState(initialVars)
+  const { resolvedQueries } = React.useContext(PageContext);
+
   const {
     loading,
     error,
@@ -42,18 +46,29 @@ const useSearch = (initialVars : SearchQueryVars) => {
   } = useQuery<SearchQueryData, QueryVars>(
     SEARCH_QUERY,
     {
-      variables: { searchParam: omitBy(searchVars, (v) => !v) }
+      variables: { async: true, searchParam: omitBy(searchVars, (v) => !v) }
     }
   );
   if(!!error){
     console.error(error);
   }
+  let found = {};
+  let done = false;
+  if(data){
+    const jobId = data['jobId'];
+    found = resolvedQueries.find( (query) => query['jobId'] === jobId );
+    if(found){
+      found = found['result']['data'];
+      done = true;
+    }
+  }
+
   return {
     setSearchVars,
-    loading,
+    loading: !done,
     error,
     data,
-    profiles: !!data ? data.profileSearch : undefined
+    profiles: done ? found['profileSearch'] : []
   }
 }
 

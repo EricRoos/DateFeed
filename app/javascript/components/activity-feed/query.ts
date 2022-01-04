@@ -52,6 +52,7 @@ const useActivityFeedData = () => {
       }
     }
   );
+
   let found = {};
   let done = false;
   if(data){
@@ -62,6 +63,7 @@ const useActivityFeedData = () => {
       done = true;
     }
   }
+
   const activityFeed = found ? found['activityFeed'] : [];
   return {
     loading: !done,

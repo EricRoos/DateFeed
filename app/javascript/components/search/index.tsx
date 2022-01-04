@@ -107,6 +107,8 @@ const Results = ( props ) => {
 
   return (
     <div className='flex flex-wrap gap-4 justify-between'>
+      { error && !loading && ( <div>Something went wrong</div> ) }
+      { !error && loading && ( <div>Loading Results...</div> ) }
       { !error && !loading && !!profiles.length && profiles.map( profile => {
         const profileOpacity = !!currentProfileId ? profile.id === currentProfileId ? 100 : 25 : 100;
         return (
