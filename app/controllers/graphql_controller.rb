@@ -4,8 +4,8 @@ class GraphqlController < ApplicationController
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,
   # but you'll have to authenticate your user separately
-  # protect_from_forgery with: :null_session
-  before_action :check_app_token!
+  protect_from_forgery with: :null_session
+  #before_action :check_app_token!
 
   def execute
     variables = prepare_variables(params[:variables])
@@ -15,8 +15,29 @@ class GraphqlController < ApplicationController
       # Query context goes here, for example:
       current_user: current_user
     }
-    result = DateFeedSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
-    render json: result
+    if query.match(/^\{?\s*async\./)
+      query.gsub!(/^\{\s*async\./, '{')
+      actual_query = query.gsub(/^\s*async\./, '')
+      job_id = GraphqlResolveJob.perform_later({
+        query: actual_query,
+        context: context,
+        operation_name: operation_name,
+        variables: variables
+      }).job_id
+      query = actual_query
+      render json: { data: { jobId: job_id} }
+    elsif variables[:async]
+      job_id = GraphqlResolveJob.perform_later({
+        query: query,
+        context: context,
+        operation_name: operation_name,
+        variables: variables
+      }).job_id
+      render json: { data: { jobId: job_id} }
+    else
+      result = DateFeedSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+      render json: result
+    end
   rescue StandardError => e
     raise e unless Rails.env.development?
 

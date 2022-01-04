@@ -9,7 +9,7 @@ class Subscriptions::Notifications < Subscriptions::BaseSubscription
   end
 
   def resolve
-    if object
+    if object && object[:notification_id]
       message = Notification.find(object[:notification_id]).to_notification.message
     else
       message = nil

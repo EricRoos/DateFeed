@@ -7,14 +7,42 @@ import{
 
 interface PageContextValues {
   showToast: Function;
+  resolvedQueries: Object[];
 }
 const iniContextValues : PageContextValues = {
   showToast: () => {
     console.warn('calling initial toast impl');
-  }
+  },
+  resolvedQueries: []
 };
 
 export const PageContext = React.createContext(iniContextValues);
+
+const QueryResolveWatcher = ({children, onNewMessage}) => {
+  const query = gql`
+    subscription Notifications{
+      graphqlResolve {
+        result
+        jobId
+      }
+    }
+  `
+
+  const { data, loading, error } = useSubscription(
+    query
+  );
+
+  React.useEffect( () => {
+    if(data && !!data.graphqlResolve && !!data.graphqlResolve.result){
+      onNewMessage(data.graphqlResolve);
+    }
+  }, [data]);
+
+  if(loading){
+    return null;
+  };
+  return children;
+};
 
 const NotificationWatcher = ({onNewMessage}) => {
   const query = gql`
@@ -28,9 +56,8 @@ const NotificationWatcher = ({onNewMessage}) => {
   const { data, loading, error } = useSubscription(
     query
   )
-
   React.useEffect( () => {
-    if(data && !!data.notifications.messages){
+    if(data && !!data.notifications && !!data.notifications.messages){
       data.notifications.messages.forEach( msg => {
         onNewMessage(msg)
       });
@@ -43,6 +70,7 @@ const NotificationWatcher = ({onNewMessage}) => {
 const asPage = (Component) => {
   return function Page(props) {
     const [ currentToast, setToast ] = React.useState(undefined);
+    const [ resolvedQueries, setResolvedQueries ] = React.useState([]);
     const ttl = 3000;
 
     const showToast = (message) => {
@@ -53,10 +81,12 @@ const asPage = (Component) => {
     return (
       <>
         <NotificationWatcher onNewMessage={showToast} />
-        <PageContext.Provider value={{showToast}}>
-          { <Component {...props} /> }
-          { currentToast && <Toast message={currentToast} /> }
-        </PageContext.Provider>
+        <QueryResolveWatcher onNewMessage={(msg) => setResolvedQueries([...resolvedQueries, msg])}>
+          <PageContext.Provider value={{showToast, resolvedQueries}}>
+            { <Component {...props} /> }
+            { currentToast && <Toast message={currentToast} /> }
+          </PageContext.Provider>
+        </QueryResolveWatcher>
       </>
     )
   };
