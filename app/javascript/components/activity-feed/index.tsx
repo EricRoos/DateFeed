@@ -35,14 +35,16 @@ const ActivityFeed = () => {
                   </h1>
                 </div>
               </Panel>
-              <div>
-                <SelectInput name='time' label='Newer Than...'>
-                  <SelectInput.Option value='5'>5 minutes</SelectInput.Option>
-                  <SelectInput.Option value='15'>15 minutes</SelectInput.Option>
-                  <SelectInput.Option value='30'>30 minutes</SelectInput.Option>
-                  <SelectInput.Option value='60'>1 hour</SelectInput.Option>
-                </SelectInput>
-              </div>
+              { false && (
+                <div>
+                  <SelectInput name='time' label='Newer Than...'>
+                    <SelectInput.Option value='5'>5 minutes</SelectInput.Option>
+                    <SelectInput.Option value='15'>15 minutes</SelectInput.Option>
+                    <SelectInput.Option value='30'>30 minutes</SelectInput.Option>
+                    <SelectInput.Option value='60'>1 hour</SelectInput.Option>
+                  </SelectInput>
+                </div>
+              )}
             </div>
             <div>
               { loading && (
