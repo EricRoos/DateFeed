@@ -13,6 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super
     Profile.create(user: resource)
+    UserSignInNotification.with(text: "#{resource.email} has created an account").deliver_later(User.first)
   end
 
   # GET /resource/edit

@@ -9,9 +9,10 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+    UserSignInNotification.with(text: "#{resource.email} has logged in").deliver_later(User.first)
+  end
 
   # DELETE /resource/sign_out
   # def destroy

@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   get '/manifest.json', to: 'service_worker#manifest'
 
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
   }
 
   post '/graphql', to: 'graphql#execute'
