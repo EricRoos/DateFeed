@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as yup from 'yup';
 import Modal from 'react-modal';
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 
@@ -136,7 +137,10 @@ const Results = ( props ) => {
     </div>
   )
 }
-
+const searchSchema = yup.object().shape({
+  minAge: yup.number(),
+  maxAge: yup.number()
+});
 const Search = () => {
   const [ filtersOpen, setFiltersOpen ] = React.useState(false);
   const initialValues: SearchFields = { minAge: 18, maxAge: 99 }
@@ -144,6 +148,7 @@ const Search = () => {
   return (
     <div>
       <Formik
+        validationSchema={searchSchema}
         initialValues={initialValues}
         onSubmit={ () => {} }
       >
@@ -183,7 +188,7 @@ const Search = () => {
               </div>
             </Panel>
             <div className='mt-2'>
-              <Results values={values} />
+              <Results values={searchSchema.cast(values)} />
             </div>
           </div>
         )}

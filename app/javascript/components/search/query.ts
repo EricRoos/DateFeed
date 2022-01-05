@@ -58,8 +58,11 @@ const useSearch = (initialVars : SearchQueryVars) => {
     const jobId = data['jobId'];
     found = resolvedQueries.find( (query) => query['jobId'] === jobId );
     if(found){
+      console.log("Found %o", found);
       found = found['result']['data'];
       done = true;
+    }else{
+      found = {}
     }
   }
 
