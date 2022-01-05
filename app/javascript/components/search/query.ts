@@ -12,11 +12,7 @@ import { PageContext } from '../as-page';
 const SEARCH_QUERY = gql`
   query ProfileSearch($searchParam: ProfileSearchInput!){
     profileSearch(searchParam: $searchParam){
-      name
-      age
       id
-      profileImageUrl
-      photoUrls
     }
   }
 `

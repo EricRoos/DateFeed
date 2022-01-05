@@ -7,6 +7,7 @@ import { debounce } from 'lodash';
 
 import useSearch from './query';
 import TextInput from '../inputs/text';
+import useProfileData from '../profile/query';
 
 
 import Panel from '../panel';
@@ -93,6 +94,39 @@ const ProfileActionsPopover = (props) => {
     </Popover>
   )
 }
+
+const ResultPreview = ( {profileId } ) => {
+  const { loading, error, data } = useProfileData(profileId);
+  const [ isOpen, setIsOpen ] = React.useState(false);
+  console.log(data);
+  return (
+    <>
+      <Modal style={{content: {zIndex: 30, height: '80vh'}}} isOpen={isOpen}>
+        <ProfileActionsPopover />
+        <button className='absolute top-4 right-4' onClick={ () => setIsOpen(false)}>
+          <Icon glyph='view-close' />
+        </button>
+        { !loading && !error && (
+          <ProfileMenu profile={data.profile} />
+        )}
+      </Modal>
+      { !loading && !error && (
+        <button
+          onClick={(ev) => {
+            ev.stopPropagation();
+            setIsOpen(true);
+          }}
+          key={data.profile.id}
+          aria-label={data.profile.name}
+        >
+          <img src={data.profile.profileImageUrl} />
+        </button>
+      )}
+    </>
+
+  )
+};
+
 const Results = ( props ) => {
   const { setSearchVars, error, profiles, loading } = useSearch(props.values);
   const [ currentProfileId, setCurrentProfileId ] = React.useState(undefined);
@@ -114,23 +148,7 @@ const Results = ( props ) => {
         const profileOpacity = !!currentProfileId ? profile.id === currentProfileId ? 100 : 25 : 100;
         return (
           <div className={`w-1/5 bg-gray-800 flex justify-center items-center drop-shadow-lg opacity-${profileOpacity}`}>
-            <Modal style={{content: {zIndex: 30, height: '80vh'}}} isOpen={profile.id === currentProfileId}>
-              <ProfileActionsPopover />
-              <button className='absolute top-4 right-4'onClick={() => setCurrentProfileId(undefined)}>
-                <Icon glyph='view-close' />
-              </button>
-              <ProfileMenu profile={profile} />
-            </Modal>
-            <button
-              onClick={(ev) => {
-                ev.stopPropagation();
-                setCurrentProfileId(profile.id)
-              }}
-              key={profile.id}
-              aria-label={profile.name}
-            >
-              <img src={profile.profileImageUrl} />
-            </button>
+            <ResultPreview profileId={profile.id} />
           </div>
         )
       }) }
