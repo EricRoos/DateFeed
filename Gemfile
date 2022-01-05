@@ -91,3 +91,5 @@ gem "sidekiq", "~> 6.3"
 gem "sentry-ruby", "~> 4.8", :group => :production
 
 gem "sentry-rails", "~> 4.8", :group => :production
+
+gem "sentry-sidekiq", "~> 4.8", :group => :production
