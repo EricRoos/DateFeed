@@ -11,6 +11,7 @@ const Nav = () => {
         <Link to='/new-post'
           className='hover:text-white bg-orange-500 rounded-full p-1 flex shadow scale-50'
           onClick={ () => setIsOpen(false) }
+          aria-label='New post'
         >
           <Icon glyph='post' size={48} />
         </Link>

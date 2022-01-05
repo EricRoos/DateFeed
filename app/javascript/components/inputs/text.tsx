@@ -31,7 +31,10 @@ const TextInput = ({ label, ...props} : OtherSearchFieldProps & FieldHookConfig<
       <input {...field}
         id={props.id}
         onChange={ (ev) => {
-          const val = props.type === 'number' && !!ev.target.value ? parseInt(ev.target.value) : undefined;
+          let val = ev.target.value;
+          if(!!val && props.type === 'number'){
+            val = parseInt(val)
+          }
           helpers.setValue(val);
           MarkInvalid();
         }}
