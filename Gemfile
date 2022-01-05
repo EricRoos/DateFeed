@@ -87,3 +87,7 @@ gem "aws-sdk-s3", "~> 1.110", require: false
 gem "noticed", "~> 1.5"
 
 gem "sidekiq", "~> 6.3"
+
+gem "sentry-ruby", "~> 4.8", :group => :production
+
+gem "sentry-rails", "~> 4.8", :group => :production

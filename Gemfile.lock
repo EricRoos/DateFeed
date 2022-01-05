@@ -339,6 +339,16 @@ GEM
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
+    sentry-rails (4.8.2)
+      railties (>= 5.0)
+      sentry-ruby-core (~> 4.8.2)
+    sentry-ruby (4.8.2)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      faraday (~> 1.0)
+      sentry-ruby-core (= 4.8.2)
+    sentry-ruby-core (4.8.2)
+      concurrent-ruby
+      faraday
     shellany (0.0.1)
     sidekiq (6.3.1)
       connection_pool (>= 2.2.2)
@@ -422,6 +432,8 @@ DEPENDENCIES
   rubocop-rails (~> 2.12)
   rubocop-rspec (~> 2.6)
   selenium-webdriver
+  sentry-rails (~> 4.8)
+  sentry-ruby (~> 4.8)
   sidekiq (~> 6.3)
   simplecov
   spring
