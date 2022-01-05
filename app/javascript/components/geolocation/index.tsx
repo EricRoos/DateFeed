@@ -8,7 +8,7 @@ const Geolocation = () => {
   const [ logLocation ] = useLogLocation();
   const postGeolocation = React.useRef(throttle( (data) => {
     const { latitude, longitude } = data;
-    logLocation({ variables: { longitude, latitude} });
+    logLocation({ variables: { longitude, latitude, async: true } });
   }, 10000));
 
   const geolocation = useGeolocation({}, postGeolocation.current);

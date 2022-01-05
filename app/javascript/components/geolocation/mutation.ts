@@ -20,7 +20,7 @@ interface LogLocationMutationData {
 const useLogLocationData = () => {
   return useMutation<
       { logLocation: LogLocationMutationData },
-      { latitude: Number, longitude: Number }
+      { latitude: Number, longitude: Number, async: Boolean }
     >(
       LOG_LOCATION_MUTATION
     );
