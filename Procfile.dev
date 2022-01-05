@@ -1,4 +1,4 @@
-web: GRAPHQL_SUBSCRIPTIONS=1 bin/rails server -p 3000
+web: SIDEKIQ_WEB_ENABLED=1 GRAPHQL_SUBSCRIPTIONS=1 bin/rails server -p 3000
 js: yarn build --watch
 sidekiq: bin/bundle exec sidekiq -v
 js-test: yarn test --watch
