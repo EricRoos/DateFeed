@@ -25,10 +25,11 @@ const TextInput = ({ label, ...props} : OtherSearchFieldProps & FieldHookConfig<
 
   return (
     <div className=''>
-      <label className='font-semibold block mb-1 text-md'>
+      <label htmlFor={props.id} className='font-semibold block mb-1 text-md'>
         {label}
       </label>
       <input {...field}
+        id={props.id}
         onChange={ (ev) => {
           helpers.setValue(ev.target.value);
           MarkInvalid();
