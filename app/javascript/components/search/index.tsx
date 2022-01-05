@@ -138,8 +138,10 @@ const Results = ( props ) => {
   )
 }
 const searchSchema = yup.object().shape({
-  minAge: yup.number(),
-  maxAge: yup.number()
+  minAge: yup.number()
+    .positive().nullable(true),
+  maxAge: yup.number().nullable()
+    .positive().nullable(true)
 });
 const Search = () => {
   const [ filtersOpen, setFiltersOpen ] = React.useState(false);
@@ -188,7 +190,7 @@ const Search = () => {
               </div>
             </Panel>
             <div className='mt-2'>
-              <Results values={searchSchema.cast(values)} />
+              <Results values={values} />
             </div>
           </div>
         )}

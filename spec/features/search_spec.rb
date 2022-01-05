@@ -18,7 +18,8 @@ RSpec.feature "Searches", type: :feature do
     sign_in me.user
     visit '/#/search'
     click_on "Open Filters"
-    fill_in 'Min Age', with: 19
+    fill_in 'Min Age', with: ''
+    fill_in 'Min Age', with: '19'
     fill_in 'Min Age', with: 98
     expect(find_button(someone.name)).to be_present
   end

@@ -31,7 +31,8 @@ const TextInput = ({ label, ...props} : OtherSearchFieldProps & FieldHookConfig<
       <input {...field}
         id={props.id}
         onChange={ (ev) => {
-          helpers.setValue(ev.target.value);
+          const val = props.type === 'number' && !!ev.target.value ? parseInt(ev.target.value) : undefined;
+          helpers.setValue(val);
           MarkInvalid();
         }}
         ref={fieldElement}
