@@ -10,8 +10,6 @@ module ApplicationCable
 
     private
       def find_verified_user
-        Rails.logger.info("GOT CONN ATTEMPT BY #{cookies.signed[:user_id]}")
-
         if current_user = User.find_by(id: cookies.signed[:user_id])
           current_user
         else

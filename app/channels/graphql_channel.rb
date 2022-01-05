@@ -1,6 +1,5 @@
 class GraphqlChannel < ApplicationCable::Channel
   def subscribed
-    Rails.logger.info("Current user #{current_user}")
     @subscription_ids = []
   end
 
