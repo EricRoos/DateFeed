@@ -1,6 +1,6 @@
 class JavascriptErrorsController < ApplicationController
 
   def create
-    Rails.logger.info(params);
+    Sentry.capture_message(params.to_json) if Rails.env.production?
   end
 end
