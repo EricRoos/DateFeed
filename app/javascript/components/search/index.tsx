@@ -47,7 +47,8 @@ const ProfileMenu = (props) => {
   const {
     name,
     age,
-    distance
+    distance,
+    lookingFor
   } = profile;
   return (
     <div className='divide-y divide-gray-300'>
@@ -67,7 +68,7 @@ const ProfileMenu = (props) => {
         <ProfileAttribute name='Age' value={age} />
         <ProfileAttribute name='Height' value={72} />
         <ProfileAttribute name='Weight' value={100} />
-        <ProfileAttribute name='Looking For' value={'Right Now'} />
+        <ProfileAttribute name='Looking For' value={lookingFor.join(', ')} />
       </div>
     </div>
   )

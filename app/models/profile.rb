@@ -7,6 +7,16 @@ class Profile < ApplicationRecord
   has_many :posts
   has_one :profile_geo_detail
 
+  # rails doesnt support array of enums afaik
+  # this will help make it easier
+  #
+  # #looking_for is an array of a postgres enum type
+  LOOKING_FOR_ENUMS = [
+    :right_now,
+    :dates,
+    :chat
+  ]
+
   delegate :latitude, :longitude, to: :profile_geo_detail, allow_nil: true
 
   has_many :profile_images

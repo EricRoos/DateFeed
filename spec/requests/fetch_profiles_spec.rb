@@ -16,6 +16,7 @@ RSpec.describe 'FetchProfiles', type: :request do
         profile(id: #{profile.id}) {
           name
           age
+          lookingFor
         }
       }
       GQL
@@ -25,7 +26,8 @@ RSpec.describe 'FetchProfiles', type: :request do
         data: {
           profile: {
             name: profile.name,
-            age: profile.age
+            age: profile.age,
+            lookingFor: [:chat, :right_now]
           }
         }
       }

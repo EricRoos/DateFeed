@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_05_162332) do
+ActiveRecord::Schema.define(version: 2022_01_06_050323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "profile_looking_for", ["right_now", "dates", "chat"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -104,6 +108,7 @@ ActiveRecord::Schema.define(version: 2022_01_05_162332) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
+    t.enum "looking_for", default: '{}', array: true, enum_type: "profile_looking_for"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 

@@ -13,6 +13,7 @@ module Types
     field :photo_urls, [String], null: true
     field :profile_images, [Types::ProfileImageType], null: false
     field :distance, Float, null: true
+    field :looking_for, [String], null: false
 
     def profile_image_url
       profile_image = object.profile_images.detect { |img| img.primary }

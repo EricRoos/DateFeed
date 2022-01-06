@@ -15,6 +15,7 @@ const PROFILE_QUERY = gql`
       age
       profileImageUrl
       photoUrls
+      lookingFor
       profileImages{
         id
         url
