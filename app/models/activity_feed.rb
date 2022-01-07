@@ -8,7 +8,7 @@ class ActivityFeed
         with(:coord).in_radius(profile.latitude, profile.longitude, 5) 
       }.hits.map{ |h| h.primary_key.to_i }
     end
-
+    in_range_profile_ids << profile.id
     Post.select('posts.*, post_interactions.id as interaction_id')
         .includes(:profile)
         .joins("LEFT JOIN post_interactions on post_interactions.post_id = posts.id and post_interactions.profile_id = #{profile.id}")

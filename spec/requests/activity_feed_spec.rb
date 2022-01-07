@@ -8,9 +8,12 @@ RSpec.describe 'FetchActivityFeed', type: :request do
   describe 'GRAPHQL #activity_feed' do
     subject { response }
 
-    let(:profile) { FactoryBot.create(:profile) }
+    let(:profile) { FactoryBot.create(:profile, with_geo_detail: true) }
     let(:current_user) { profile.user }
-    let!(:created_post) { FactoryBot.create(:post) }
+    let!(:created_post) { 
+      profile = FactoryBot.create(:profile, with_geo_detail: true)
+      FactoryBot.create(:post, profile: profile)
+    }
     let!(:profile_image) { FactoryBot.create(:profile_image, primary: true, randomized_image: true, profile: created_post.profile) }
 
     let(:expected_likeable) { true }
@@ -51,6 +54,7 @@ RSpec.describe 'FetchActivityFeed', type: :request do
     end
 
     before do
+      Profile.all.each(&:index!)
       sign_in current_user
       post '/graphql',
            params: { query: gql },
@@ -62,7 +66,7 @@ RSpec.describe 'FetchActivityFeed', type: :request do
     it { is_expected.to have_http_status(:ok) }
 
     context 'when current user is someone else' do
-      let(:current_user) { FactoryBot.create(:profile).user }
+      let(:current_user) { FactoryBot.create(:profile, with_geo_detail: true).user }
       let(:expected_likeable) { true }
 
       it { is_expected.to have_attributes(body: expected_response.to_json) }
