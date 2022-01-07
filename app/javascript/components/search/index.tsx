@@ -7,6 +7,7 @@ import { debounce } from 'lodash';
 
 import useSearch from './query';
 import TextInput from '../inputs/text';
+import SelectInput from '../inputs/select';
 import useProfileData from '../profile/query';
 
 
@@ -64,10 +65,10 @@ const ProfileMenu = (props) => {
         </div>
       </div>
       <div className='pt-2'>
-        <ProfileAttribute name='Distance' value={distance || '1234 ft.'} />
+        <ProfileAttribute name='Distance' value={distance} />
         <ProfileAttribute name='Age' value={age} />
-        <ProfileAttribute name='Height' value={72} />
-        <ProfileAttribute name='Weight' value={100} />
+        <ProfileAttribute name='Height' value={''} />
+        <ProfileAttribute name='Weight' value={''} />
         <ProfileAttribute name='Looking For' value={lookingFor.join(', ')} />
       </div>
     </div>
@@ -160,11 +161,12 @@ const searchSchema = yup.object().shape({
   minAge: yup.number()
     .positive().nullable(true),
   maxAge: yup.number().nullable()
-    .positive().nullable(true)
+    .positive().nullable(true),
+  lookingFor: yup.string().nullable()
 });
 const Search = () => {
   const [ filtersOpen, setFiltersOpen ] = React.useState(false);
-  const initialValues: SearchFields = { minAge: 18, maxAge: 99 }
+  const initialValues: SearchFields = { minAge: 18, maxAge: 99, lookingFor: '' }
 
   return (
     <div>
@@ -202,6 +204,13 @@ const Search = () => {
                       </div>
                       <div>
                         <TextInput id='maxAge' name='maxAge' type='number' label='Max Age' />
+                      </div>
+                      <div>
+                        <SelectInput id='lookingFor' name='lookingFor' label='Looking For'>
+                          <option value=""></option>
+                          <option value='right_now'>Right Now</option>
+                          <option value='chat'>Chat</option>
+                        </SelectInput>
                       </div>
                     </Form>
                   </div>
