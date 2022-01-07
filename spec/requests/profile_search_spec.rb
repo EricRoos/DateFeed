@@ -42,7 +42,7 @@ RSpec.describe 'Search Profiles', type: :request do
             {
               name: sought_for.name,
               age: sought_for.age,
-              distance: 8.099036233564474,
+              distance: '8 mi.',
               lookingFor: sought_for.looking_for
             }
           ]

@@ -15,6 +15,8 @@ RSpec.feature "Searches", type: :feature do
     FactoryBot.create(:post, profile: me, interacted_with_by: [ someone ] )
     FactoryBot.create(:post, profile: someone, interacted_with_by: [ me ] )
 
+
+    # 8 miles apart
     FactoryBot.create(:profile_geo_detail, profile: me, latitude: 32.3424, longitude: -96.34343)
     FactoryBot.create(:profile_geo_detail, profile: someone, latitude: 32.423, longitude: -96.444)
 
@@ -31,6 +33,6 @@ RSpec.feature "Searches", type: :feature do
     someone.looking_for.each do |looking_for|
       expect(page).to have_content(looking_for)
     end
-    expect(page).to have_content(someone.distance_to_profile(me))
+    expect(page).to have_content('8 mi.')
   end
 end

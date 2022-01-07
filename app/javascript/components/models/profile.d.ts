@@ -8,4 +8,5 @@ export default interface ProfileType {
   profileImageUrl?: string;
   photoUrls?: string[];
   profileImages: ProfileImageType[];
+  distance: string;
 }

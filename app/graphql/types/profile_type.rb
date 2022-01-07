@@ -12,7 +12,7 @@ module Types
     field :profile_image_url , String, null: true
     field :photo_urls, [String], null: true
     field :profile_images, [Types::ProfileImageType], null: false
-    field :distance, Float, null: true
+    field :distance, String, null: true #presentational string of distance
     field :looking_for, [String], null: false
 
     def profile_image_url
@@ -30,7 +30,13 @@ module Types
     end
 
     def distance
-      context[:current_user].profile.distance_to_profile(object)
+      d = context[:current_user].profile.distance_to_profile(object)
+      return "" unless d.present?
+      if d < 1
+        return "#{(5280 * d)} ft."
+      end
+
+      "#{d.to_i} mi."
     end
   end
 end
