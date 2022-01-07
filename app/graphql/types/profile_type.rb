@@ -33,7 +33,7 @@ module Types
       d = context[:current_user].profile.distance_to_profile(object)
       return "" unless d.present?
       if d < 1
-        return "#{(5280 * d)} ft."
+        return "#{(5280 * d).to_i} ft."
       end
 
       "#{d.to_i} mi."
