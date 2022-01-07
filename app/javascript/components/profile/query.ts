@@ -16,6 +16,7 @@ const PROFILE_QUERY = gql`
       profileImageUrl
       photoUrls
       lookingFor
+      distance
       profileImages{
         id
         url
