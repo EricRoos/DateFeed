@@ -2,10 +2,14 @@
 require 'haversine'
 
 class Profile < ApplicationRecord
+  include EnumArray
+
   belongs_to :user
   validates_uniqueness_of :user
   has_many :posts
   has_one :profile_geo_detail
+
+  enum_array(:looking_for, enum_class: ProfileAttributes::LookingFor)
 
   # rails doesnt support array of enums afaik
   # this will help make it easier

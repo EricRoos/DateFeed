@@ -93,3 +93,5 @@ gem "sentry-ruby", "~> 4.8", :group => :production
 gem "sentry-rails", "~> 4.8", :group => :production
 
 gem "sentry-sidekiq", "~> 4.8", :group => :production
+
+gem "ruby-enum", "~> 0.9.0"
