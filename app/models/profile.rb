@@ -11,15 +11,6 @@ class Profile < ApplicationRecord
 
   enum_array(:looking_for, enum_class: ProfileAttributes::LookingFor)
 
-  # rails doesnt support array of enums afaik
-  # this will help make it easier
-  #
-  # #looking_for is an array of a postgres enum type
-  LOOKING_FOR_ENUMS = [
-    :right_now,
-    :dates,
-    :chat
-  ]
 
   delegate :latitude, :longitude, to: :profile_geo_detail, allow_nil: true
 
@@ -28,6 +19,7 @@ class Profile < ApplicationRecord
   searchable do
     integer :age
     integer :shared_interactions_with, multiple: true
+    string :looking_for, multiple: true
     latlon(:coord) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
   end
 
