@@ -12,7 +12,12 @@ const Geolocation = () => {
   }, 10000));
 
   const geolocation = useGeolocation({}, postGeolocation.current);
-  return null;
+  if(geolocation.error){
+    return (<div className='fixed bottom-2 left-2'>No location data</div>)
+  }else{
+    return null
+  }
+
 };
 
 export default Geolocation;
