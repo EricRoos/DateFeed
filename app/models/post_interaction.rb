@@ -12,8 +12,12 @@ class PostInteraction < ApplicationRecord
   after_commit :send_notification, on: :create
 
   async_touch :profile
+  async_touch :post
 
   def send_notification
     LikedPostNotification.with(interaction: self).deliver_later(post.profile.user)
   end
+
+  private
+
 end
