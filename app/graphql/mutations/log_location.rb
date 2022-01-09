@@ -15,7 +15,9 @@ module Mutations
 
       geo_detail.latitude = latitude 
       geo_detail.longitude = longitude
-      { logged: geo_detail.save }
+      logged = geo_detail.save
+      Rails.log.debug(logged.errors.as_json)
+      { logged: logged }
     end
   end
 end
