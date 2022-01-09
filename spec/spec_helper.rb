@@ -18,6 +18,7 @@ require 'capybara'
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 Capybara.enable_aria_label = true
+
 RSpec.configure do |config|
   config.before(:suite) do
     Sunspot.remove_all!

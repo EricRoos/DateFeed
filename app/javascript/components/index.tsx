@@ -79,18 +79,37 @@ function renderComponent(component, container){
 
 const appContainer = document.getElementById('root');
 
+const withGeoLocation = (Component) => {
+  return function withGeoLocation(props){
+    return (
+      <Geolocation>
+        <Component {...props} />
+      </Geolocation>
+    )
+  }
+};
+
+const ActivityFeedPage = withGeoLocation(ActivityFeed);
+const EditProfilePage = withGeoLocation(EditProfile);
+const SearchPage = withGeoLocation(Search);
+const NewPostPage = withGeoLocation(NewPost);
+const NoLocationDataPage = () => (
+  <div>
+    No Location Data
+  </div>
+)
 const App = () => (
   <>
     <Nav />
     <div id='app' className='container px-3'>
       <Routes>
-        <Route path='/' element={<ActivityFeed />} />
-        <Route path='/me' element={<EditProfile />} />
-        <Route path='/search' element={<Search />} />
-        <Route path='/new-post' element={<NewPost/>} />
+        <Route path='/' element={<ActivityFeedPage />} />
+        <Route path='/me' element={<EditProfilePage />} />
+        <Route path='/search' element={<SearchPage />} />
+        <Route path='/new-post' element={<NewPostPage />} />
+        <Route path='/no-location-data' element={<NoLocationDataPage />} />
       </Routes>
     </div>
-    <Geolocation/>
   </>
 );
 const AppWithRouter = () => (
