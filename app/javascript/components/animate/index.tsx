@@ -6,6 +6,7 @@ const Animate = (props) => {
   React.useEffect( () => {
     if(animated && animated.current) {
       animated.current.addEventListener('animationend', () => {
+        console.log('end');
         if(props.onAnimationEnd){
           props.onAnimationEnd()
         }
@@ -13,7 +14,7 @@ const Animate = (props) => {
     }
   }, []);
   return (
-    <div ref={animated} className={`animate__animated animate__${props.animation} animate__delay-${props.delay} ${props.className}`}>
+    <div ref={animated} className={`animate__animated animate__${props.animation} ${props.className}`}>
       {props.children}
     </div>
   )

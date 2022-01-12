@@ -23,7 +23,6 @@ const BaseStep = (props) => {
 
   return (
     <div className='flex flex-col h-full gap-6'>
-      <div className='absolute right-3 top-3 text-sm text-gray-300'>{stepString}</div>
       <div className='text-2xl pt-2'>{title}</div>
       <div className='flex-grow flex flex-col items-center justify-center h-full'>
         { innerContent }
@@ -212,24 +211,20 @@ const Registration = () => {
 
   const steps = {
     email: () => (
-      <Animate key='collect-email' animation='fadeIn animate__faster' className='bg-white h-[80vh] w-full rounded-xl drop-shadow p-4 justify-center items-center'>
+      <Animate key='email-collect' animation='fadeIn' className='h-full w-full'>
         <CollectEmail onNext={() => {setCurrentStep('password')} }/>
       </Animate>
     ),
     password: () => (
-      <Animate key='collect-password' animation='slideInRight animate__faster' className='bg-white h-[80vh] w-full rounded-xl drop-shadow p-4 justify-center items-center'>
+      <Animate key='password-collect' animation='fadeIn' className='h-full w-full'>
         <CollectPassword onNext={() => {setCurrentStep('passwordConfirmation')} }/>
       </Animate>
     ),
     passwordConfirmation: () => (
-      <Animate key='collect-password-confirmation' animation='slideInRight animate__faster' className='bg-white h-[80vh] w-full rounded-xl drop-shadow p-4 justify-center items-center'>
-          <CollectPasswordConfirmation onNext={() => {setCurrentStep('tos')} }/>
-      </Animate>
+      <CollectPasswordConfirmation onNext={() => {setCurrentStep('tos')} }/>
     ),
     tos: () => (
-      <Animate key='collect-tos-agree' animation='slideInRight animate__faster' className='bg-white h-[80vh] w-full rounded-xl drop-shadow p-4 justify-center items-center'>
-        <Tos />
-      </Animate>
+      <Tos />
     ),
   }
 
@@ -242,8 +237,10 @@ const Registration = () => {
 
       }}
     >
-      <div className='w-full h-screen flex justify-center p-4'>
-        { steps[currentStep]() }
+      <div className='flex justify-center p-4'>
+        <div className='bg-white h-[80vh] w-full rounded-xl drop-shadow p-4 justify-center items-center overflow-hidden'>
+          { steps[currentStep]() }
+        </div>
       </div>
     </Formik>
   )
