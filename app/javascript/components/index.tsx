@@ -28,6 +28,7 @@ import TimeLine from './time-line';
 import NewPost from './new-post';
 import Nav from './nav';
 import EditProfile from './edit-profile';
+import Registration from './registration';
 import Geolocation from './geolocation';
 
 import asPage from './as-page';
@@ -89,28 +90,37 @@ const withGeoLocation = (Component) => {
   }
 };
 
-const ActivityFeedPage = withGeoLocation(ActivityFeed);
-const EditProfilePage = withGeoLocation(EditProfile);
-const SearchPage = withGeoLocation(Search);
-const NewPostPage = withGeoLocation(NewPost);
+const withNav = (Component) => {
+  return function withNav(props){
+    return (
+      <>
+        <Nav />
+        <Component {...props} />
+      </>
+    )
+  }
+}
+
+const ActivityFeedPage = withNav(withGeoLocation(ActivityFeed));
+const EditProfilePage = withNav(withGeoLocation(EditProfile));
+const SearchPage = withNav(withGeoLocation(Search));
+const NewPostPage = withNav(withGeoLocation(NewPost));
 const NoLocationDataPage = () => (
   <div>
     No Location Data
   </div>
 )
 const App = () => (
-  <>
-    <Nav />
-    <div id='app' className='container px-3'>
-      <Routes>
-        <Route path='/' element={<ActivityFeedPage />} />
-        <Route path='/me' element={<EditProfilePage />} />
-        <Route path='/search' element={<SearchPage />} />
-        <Route path='/new-post' element={<NewPostPage />} />
-        <Route path='/no-location-data' element={<NoLocationDataPage />} />
-      </Routes>
-    </div>
-  </>
+  <div id='app' className='container px-3'>
+    <Routes>
+      <Route path='/' element={<ActivityFeedPage />} />
+      <Route path='/me' element={<EditProfilePage />} />
+      <Route path='/search' element={<SearchPage />} />
+      <Route path='/new-post' element={<NewPostPage />} />
+      <Route path='/no-location-data' element={<NoLocationDataPage />} />
+      <Route path='/register' element={<Registration/>} />
+    </Routes>
+  </div>
 );
 const AppWithRouter = () => (
   <HashRouter>
