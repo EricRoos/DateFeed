@@ -120,14 +120,18 @@ const App = () => (
       <Route path='/search' element={<SearchPage />} />
       <Route path='/new-post' element={<NewPostPage />} />
       <Route path='/no-location-data' element={<NoLocationDataPage />} />
-      <Route path='/register' element={<Registration/>} />
     </Routes>
   </div>
 );
 
 const RegistrationApp = () => (
   <div className='container px-3'>
-    <Registration />
+    <HashRouter>
+      <Routes>
+        <Route path='/' element={<Registration />} />
+        <Route path='/confirm' element={<Registration currentStep='confirmAccount' />} />
+      </Routes>
+    </HashRouter>
   </div>
 );
 

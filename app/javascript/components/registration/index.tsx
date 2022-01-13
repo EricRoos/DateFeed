@@ -11,203 +11,50 @@ import Multistep from 'react-multistep'
 import Button from '../inputs/button';
 import Animate from '../animate';
 
+import useCreateAccount from './create-account';
 
-const BaseStep = (props) => {
-  const {
-    title,
-    stepString,
-    extraContent,
-    innerContent,
-    actionContent
-  } = props;
+import FloatField from '../inputs/float-field';
+import BaseStep from './steps/base-step';
+import CollectEmail from './steps/collect-email';
+import CollectPassword from './steps/collect-password';
+import CollectPasswordConfirmation from './steps/collect-password-confirmation';
+import Tos from './steps/tos';
 
-  return (
-    <div className='flex flex-col h-full gap-6'>
-      <div className='text-2xl pt-2'>{title}</div>
-      <div className='flex-grow flex flex-col items-center justify-center h-full'>
-        { innerContent }
-      </div>
-      <div>
-        { actionContent }
-      </div>
-    </div>
-  );
-}
+import RegistrationInput from './type';
+import RegistrationSchema from './schema';
 
-const FloatField = ({label, ...props}) => {
-  return (
-    <div>
-      <div className='text-center'>
-        <label htmlFor={props.id} className='text-lg text-gray-500 pt-2 pb-6'>{label}</label>
-      </div>
-      <div >
-        <div className="relative z-0 w-full mb-5">
-          <Field
-            {...props}
-            className="text-center pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 border-gray-200"
-          />
-          <span className="text-sm text-red-600 hidden invalid:show" id="error">is required</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-const CollectEmail = (props) => {
-  const { values, errors } = useFormikContext(); 
+const CreateAccount = (props) => {
+  const { values , errors } : RegistrationInput & any = useFormikContext(); 
+  const [ createAccount , { loading, data } ] = useCreateAccount();
 
-  const canGoNext = !!values.email && !errors.email;
-
+  React.useEffect( () => {
+    createAccount({variables: {
+      email: values.email,
+      password: values.password
+    }}).then( () => props.onNext() );
+  }, [values]);
+  
   return (
     <BaseStep
-      title='First...'
-      stepString={'1/4'}
-      innerContent={(
-        <>
-          <FloatField name='email' id='email' label='Email' type='email'/>
-          <Animate animation=''>
-            <div className='text-sm text-gray-500 mt-8' >
-              <p className=''>
-                So that we can keep in touch about important things, we need a valid email.
-              </p>
-              <p className='mt-2'>
-                We promise we won't bug you with spam. Or sell your information. Just notifications that you can control in your account panel after you finish signup.
-              </p>
-            </div>
-          </Animate>
-        </>
-      )}
-      actionContent={(
-        <div className='flex flex-col gap-2'>
-        <div className='w-full'>
-          { canGoNext && (
-              <Animate animation='pulse animate__infinite'>
-                <Button onClick={props.onNext} className='w-full'>Next</Button>
-              </Animate>
-          ) }
-          { !canGoNext && (
-              <Button disabled className='w-full opacity-25'>Next</Button>
-          ) }
-        </div>
-        <Button disabled className='w-full bg-gray-300'>Cancel</Button>
-        </div>
-      )}
-    />
-  );
-};
-
-const CollectPassword = (props) => {
-  const { values, errors } = useFormikContext(); 
-
-  const canGoNext = !!values.password && !errors.password;
-
-  return (
-    <BaseStep
-      title='Security things'
-      stepString={'2/4'}
-      innerContent={(
-        <>
-          <FloatField name='password' id='password' label='Password' type='password'/>
-          <Animate animation=''>
-            <div className='text-sm text-gray-500 mt-8' >
-              <ul>
-                <li>At least 6 characters</li>
-              </ul>
-            </div>
-          </Animate>
-        </>
-      )}
-      actionContent={(
-        <div className='flex flex-col gap-2'>
-        <div className='w-full'>
-          { canGoNext && (
-              <Animate animation='pulse animate__infinite'>
-                <Button onClick={props.onNext} className='w-full'>Next</Button>
-              </Animate>
-          ) }
-          { !canGoNext && (
-              <Button disabled className='w-full opacity-25'>Next</Button>
-          ) }
-        </div>
-        <Button disabled className='w-full bg-gray-300'>Cancel</Button>
-        </div>
-      )}
-    />
-  );
-};
-
-const CollectPasswordConfirmation = (props) => {
-  const { values, errors } = useFormikContext(); 
-
-  const canGoNext = !!values.passwordConfirmation && !errors.passwordConfirmation
-
-  return (
-    <BaseStep
-      title='Just to confirm.'
-      stepString={'3/4'}
-      innerContent={(
-        <>
-          <FloatField name='passwordConfirmation' id='passwordConfirmation' label='Re-Enter Password' type='password'/>
-          <Animate animation=''>
-          </Animate>
-        </>
-      )}
-      actionContent={(
-        <div className='flex flex-col gap-2'>
-        <div className='w-full'>
-          { canGoNext && (
-              <Animate animation='pulse animate__infinite'>
-                <Button onClick={props.onNext} className='w-full'>Next</Button>
-              </Animate>
-          ) }
-          { !canGoNext && (
-              <Button disabled className='w-full opacity-25'>Next</Button>
-          ) }
-        </div>
-        <Button disabled className='w-full bg-gray-300'>Cancel</Button>
-        </div>
-      )}
-    />
-  );
-};
-
-const Tos = (props) => {
-  const { values, errors } = useFormikContext(); 
-
-  const canGoNext = true;
-
-  return (
-    <BaseStep
-      title='Legal Stuff'
+      title='Saving...'
       stepString={'4/4'}
       innerContent={(
-        <>
-          <p>
-            words words words
-          </p>
           <Animate animation=''>
-          </Animate>
-        </>
-      )}
-      actionContent={(
-        <div className='flex flex-col gap-2'>
-          <div className='w-full'>
-            <Animate animation='pulse animate__infinite'>
-              <Button onClick={props.onNext} className='w-full'>I Accept</Button>
-            </Animate>
+            <div className='text-sm text-gray-500 mt-8' >
+            <p className='mt-2'>
+              Saving your account, please wait.    
+            </p>
           </div>
-          <Button disabled className='w-full bg-gray-300'>No thanks</Button>
-        </div>
+        </Animate>
       )}
+      actionContent={null}
     />
-  );
-
+  )
 }
-const RegistrationSchema = yup.object().shape({
-  email: yup.string().email().required(),
-});
 
-const Registration = () => {
-  const [ currentStep, setCurrentStep ] = React.useState('email');
+
+const Registration = (props) => {
+  const [ currentStep, setCurrentStep ] = React.useState(props.currentStep || 'email');
 
   const steps = {
     email: () => (
@@ -221,18 +68,35 @@ const Registration = () => {
       </Animate>
     ),
     passwordConfirmation: () => (
-      <CollectPasswordConfirmation onNext={() => {setCurrentStep('tos')} }/>
+      <Animate key='password-confirm-collect' animation='fadeIn' className='h-full w-full'>
+        <CollectPasswordConfirmation onNext={() => {setCurrentStep('tos')} }/>
+      </Animate>
     ),
     tos: () => (
-      <Tos />
+      <Animate key='tos-accept-collect' animation='fadeIn' className='h-full w-full'>
+        <Tos onNext={() => { setCurrentStep('create') }} />
+      </Animate>
     ),
+    create: () => (
+      <CreateAccount onNext={ () => setCurrentStep('success') } />
+    ),
+    success: () => (
+      <Animate key='confirm-account' animation='fadeIn' className='h-full w-full'>
+        You did it! Be on the lookout for a email containing your confirmation code.
+      </Animate>
+    )
   }
 
+  const initialValues: RegistrationInput = {
+    email:'',
+    password:'',
+    passwordConfirmation: ''
+  };
 
   return (
     <Formik
       validationSchema={RegistrationSchema}
-      initialValues={{email:'', password:'', passwordConfirmation: ''}}
+      initialValues={initialValues}
       onSubmit={() => {
 
       }}

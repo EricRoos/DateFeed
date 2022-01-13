@@ -35,7 +35,7 @@ class GraphqlController < ApplicationController
     elsif variables[:async]
       job_id = GraphqlResolveJob.perform_later({
         query: query,
-        context: context,
+        context: context.to_h.slice(:current_user),
         operation_name: operation_name,
         variables: variables
       }).job_id

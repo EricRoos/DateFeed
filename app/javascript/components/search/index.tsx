@@ -29,6 +29,7 @@ import {
 interface SearchFields {
   minAge: number;
   maxAge: number;
+  lookingFor: string;
 }
 
 interface ProfileAttributeProps {

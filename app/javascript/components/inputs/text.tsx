@@ -9,7 +9,7 @@ interface OtherSearchFieldProps {
   label : string
 }
 const TextInput = ({ label, ...props} : OtherSearchFieldProps & FieldHookConfig<string>) => {
-  const [field, meta, helpers] = useField(props);
+  const [field, meta, helpers] = useField(props.name);
   const fieldElement = React.createRef<HTMLInputElement>();
 
   function MarkInvalid(){
@@ -33,9 +33,10 @@ const TextInput = ({ label, ...props} : OtherSearchFieldProps & FieldHookConfig<
         onChange={ (ev) => {
           let val = ev.target.value;
           if(!!val && props.type === 'number'){
-            val = parseInt(val)
+            helpers.setValue(parseInt(val));
+          }else{
+            helpers.setValue(val);
           }
-          helpers.setValue(val);
           MarkInvalid();
         }}
         ref={fieldElement}

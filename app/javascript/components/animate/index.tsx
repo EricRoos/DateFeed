@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const Animate = (props) => {
-  const animated = React.useRef();
+  const animated = React.createRef<HTMLDivElement>();
   //<Component {...props} className={props.className+" animate__"+animationClass+" animate__animated"} />
   React.useEffect( () => {
     if(animated && animated.current) {
