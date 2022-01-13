@@ -1,20 +1,26 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
+  include GraphqlDevise::Concerns::SetUserByToken
+
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,
   # but you'll have to authenticate your user separately
   protect_from_forgery with: :null_session
+  skip_before_action :authenticate_user!
   #before_action :check_app_token!
 
   def execute
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
+
+
     context = {
-      # Query context goes here, for example:
       current_user: current_user
-    }
+    }.merge(gql_devise_context(User))
+
+
     if query.match(/^\{?\s*async\./)
       query.gsub!(/^\{\s*async\./, '{')
       actual_query = query.gsub(/^\s*async\./, '')

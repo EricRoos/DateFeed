@@ -60,6 +60,8 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'cssbundling-rails', '~> 0.2.8'
 gem 'database_cleaner-active_record', '~> 2.0', group: :test
 gem 'devise', github: 'heartcombo/devise', branch: 'main'
+gem 'graphql_devise', github: 'graphql-devise/graphql_devise', branch: 'master'
+gem 'devise_token_auth', github: 'lynndylanhurley/devise_token_auth', branch: 'master'
 gem 'factory_bot_rails', '~> 6.2', groups: %i[development test]
 gem 'faker', '~> 2.19', groups: %i[development test]
 gem 'graphql', '~> 1.13'
@@ -95,3 +97,4 @@ gem "sentry-rails", "~> 4.8", :group => :production
 gem "sentry-sidekiq", "~> 4.8", :group => :production
 
 gem "ruby-enum", "~> 0.9.0"
+

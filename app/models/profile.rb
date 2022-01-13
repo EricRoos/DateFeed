@@ -12,7 +12,7 @@ class Profile < ApplicationRecord
   enum_array(:looking_for, enum_class: ProfileAttributes::LookingFor)
 
 
-  delegate :latitude, :longitude, to: :profile_geo_detail, allow_nil: true
+  delegate :latitude, :longitude, to: :profile_geo_detail, allow_nil: false
 
   has_many :profile_images
 
