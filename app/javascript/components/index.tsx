@@ -74,11 +74,13 @@ function renderComponent(component, container){
         {component}
       </ApolloProvider>
     )
-    ReactDOM.render(provider, container);
+    console.log(container);
+    console.log(provider);
+    console.log(component);
+    console.log(ReactDOM.render(provider, container));
   }
 }
 
-const appContainer = document.getElementById('root');
 
 const withGeoLocation = (Component) => {
   return function withGeoLocation(props){
@@ -122,6 +124,13 @@ const App = () => (
     </Routes>
   </div>
 );
+
+const RegistrationApp = () => (
+  <div className='container px-3'>
+    <Registration />
+  </div>
+);
+
 const AppWithRouter = () => (
   <HashRouter>
     <App />
@@ -129,5 +138,10 @@ const AppWithRouter = () => (
 );
 
 const Page = asPage(AppWithRouter);
+const RegPage = RegistrationApp;
+
+const appContainer = document.getElementById('root');
+const regContainer = document.getElementById('reg-root');
 
 renderComponent(<Page/>, appContainer);
+renderComponent(<RegPage/>, regContainer);
