@@ -2,6 +2,7 @@
 
 module ApplicationHelper
   def app_token
-    AppToken.where(app_name: 'rails_app').first.token
+    #AppToken.where(app_name: 'rails_app').first.token
+    :fake
   end
 end

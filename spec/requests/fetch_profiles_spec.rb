@@ -34,11 +34,10 @@ RSpec.describe 'FetchProfiles', type: :request do
     end
 
     before do
-      sign_in current_user
       post '/graphql',
-           params: { query: request },
-           headers: { 'X-ApiToken': app_token.token },
-           as: :json
+        params: { query: request },
+        headers: current_user.create_new_auth_token,
+        as: :json
     end
 
     it { is_expected.to have_attributes(body: expected_response.to_json) }

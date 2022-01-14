@@ -14,12 +14,13 @@ class GraphqlController < ApplicationController
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
+    devise_context = gql_devise_context(User)
+
+    context = devise_context
+    context[:current_user] = context[:current_resource]
 
 
-    context = {
-      current_user: current_user
-    }.merge(gql_devise_context(User))
-
+    Rails.logger.info("GOT CURRENT USER #{context[:current_user]}")
 
     if query.match(/^\{?\s*async\./)
       query.gsub!(/^\{\s*async\./, '{')
@@ -35,7 +36,7 @@ class GraphqlController < ApplicationController
     elsif variables[:async]
       job_id = GraphqlResolveJob.perform_later({
         query: query,
-        context: context.to_h.slice(:current_user),
+        context: context.to_h.slice(:current_user,:current_resource),
         operation_name: operation_name,
         variables: variables
       }).job_id

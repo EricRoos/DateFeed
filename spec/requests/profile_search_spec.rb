@@ -53,7 +53,6 @@ RSpec.describe 'Search Profiles', type: :request do
     before do
       FactoryBot.create(:profile_geo_detail, profile: sought_for, latitude: 32.3424, longitude: -96.34343)
       FactoryBot.create(:profile_geo_detail, profile: profile, latitude: 32.423, longitude: -96.444)
-      sign_in current_user
       Profile.all.each(&:index)
       Sunspot.commit
       searchParam = {
@@ -63,7 +62,7 @@ RSpec.describe 'Search Profiles', type: :request do
       }
       post '/graphql',
            params: { query: gql, variables: { searchParam: searchParam } },
-           headers: { 'X-ApiToken': app_token.token },
+           headers: current_user.create_new_auth_token,
            as: :json
     end
 

@@ -13,7 +13,9 @@ class GraphqlChannel < ApplicationCable::Channel
       # current_user: current_user,
       # Make sure the channel is in the context
       channel: self,
-      current_user_id: current_user.id
+      current_user_id: current_user.id,
+      current_user: current_user.id,
+      current_resource: current_user.id
     }
 
     result = DateFeedSchema.execute(

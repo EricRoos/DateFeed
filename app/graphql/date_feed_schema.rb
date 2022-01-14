@@ -5,7 +5,15 @@ class DateFeedSchema < GraphQL::Schema
     query:            Types::QueryType,
     mutation:         Types::MutationType,
     resource_loaders: [
-      GraphqlDevise::ResourceLoader.new(User, only: [:login, :confirm_registration_with_token, :register])
+      GraphqlDevise::ResourceLoader.new(
+        User,
+        {
+          only: [:login, :confirm_registration_with_token, :register],
+          additional_mutations: {
+            profile_register: GraphqlDevise::Mutations::ProfileRegister
+          },
+        }
+      )
     ]
   )
 

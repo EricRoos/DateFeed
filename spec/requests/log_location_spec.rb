@@ -34,11 +34,10 @@ RSpec.describe 'Log Location', type: :request do
   end
 
   before do
-    sign_in current_user
     existing_geo_location
     post '/graphql',
         params: { query: gql, variables: { latitude: latitude, longitude: longitude}},
-        headers: { 'X-ApiToken': app_token.token },
+        headers: current_user.create_new_auth_token,
         as: :json
   end
 

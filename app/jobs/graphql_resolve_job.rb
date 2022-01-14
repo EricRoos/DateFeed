@@ -1,6 +1,10 @@
 class GraphqlResolveJob < ApplicationJob
   queue_as :default
 
+  rescue_from(Exception) do |exception|
+    Rails.logger.debug(exception)
+  end
+
   def perform(args)
     args.symbolize_keys!
     query = args[:query]

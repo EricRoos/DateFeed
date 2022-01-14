@@ -7,10 +7,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable, :confirmable
   include GraphqlDevise::Concerns::Model
 
-  has_one :profile
+  has_one :profile, inverse_of: :user
   has_many :posts, through: :profile
 
   has_many :notifications, as: :recipient
+  
+  accepts_nested_attributes_for :profile
 
 
 end

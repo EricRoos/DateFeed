@@ -35,10 +35,9 @@ RSpec.describe 'LikePosts', type: :request do
   end
 
   before do
-    sign_in current_user
     post '/graphql',
          params: { query: gql, variables: { postId: created_post.id, liked: liked } },
-         headers: { 'X-ApiToken': app_token.token },
+         headers: current_user.create_new_auth_token,
          as: :json
   end
 

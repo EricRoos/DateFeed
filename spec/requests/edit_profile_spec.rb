@@ -39,10 +39,9 @@ RSpec.describe 'Edit Profile', type: :request do
   end
 
   before do
-    sign_in profile.user
     post '/graphql',
         params: { query: gql, variables: { profile: new_data } },
-        headers: { 'X-ApiToken': app_token.token },
+        headers: profile.user.create_new_auth_token,
         as: :json
   end
 

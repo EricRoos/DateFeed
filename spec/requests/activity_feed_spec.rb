@@ -55,10 +55,9 @@ RSpec.describe 'FetchActivityFeed', type: :request do
 
     before do
       Profile.all.each(&:index!)
-      sign_in current_user
       post '/graphql',
            params: { query: gql },
-           headers: { 'X-ApiToken': app_token.token },
+           headers: current_user.create_new_auth_token,
            as: :json
     end
 

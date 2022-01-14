@@ -50,17 +50,42 @@ const wsHost = window.location.origin.replace("http", "ws") +"/cable";
 const cable = createConsumer(wsHost);
 
 
+const graphqlTokenEle = document.querySelector('meta[name=graphql-token]');
+if(graphqlTokenEle){
+  const graphqlTokenStr = atob(document.querySelector('meta[name=graphql-token]').getAttribute('content'));
+  localStorage.setItem("auth", graphqlTokenStr);
+}
+
 const link = ApolloLink.split(
   hasSubscriptionOperation,
-  new ActionCableLink({cable}),
-  new createUploadLink({
-    uri: '/graphql',
-    credentials: 'same-origin',
-    headers: {
-      'X-CSRF-Token': csrfToken,
-      'X-ApiToken': appToken,
-    }
+  new ActionCableLink({
+    cable,
   }),
+  new ApolloLink((operation, forward) => {
+    const graphqlToken = JSON.parse(localStorage.getItem("auth"));
+    operation.setContext( ({headers = {}}) => ({
+      headers: {
+        'X-CSRF-Token': csrfToken,
+        'X-ApiToken': appToken,
+        ...graphqlToken
+      }
+    }));
+    return forward(operation).map(response => {
+      const newAccessToken = operation.getContext().response.headers.get('access-token');
+      const newClient= operation.getContext().response.headers.get('client');
+      if(!!newAccessToken){
+        graphqlToken['access-token'] = newAccessToken;
+        graphqlToken['client'] = newClient;
+        localStorage.setItem("auth", JSON.stringify(graphqlToken));
+      }
+      return response;
+    });
+  }).concat(
+    new createUploadLink({
+      uri: '/graphql',
+      credentials: 'same-origin',
+    })
+  )
 );
 const client = new ApolloClient({
   link,

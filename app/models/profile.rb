@@ -4,7 +4,7 @@ require 'haversine'
 class Profile < ApplicationRecord
   include EnumArray
 
-  belongs_to :user
+  belongs_to :user, inverse_of: :profile
   validates_uniqueness_of :user
   has_many :posts
   has_one :profile_geo_detail
@@ -12,7 +12,7 @@ class Profile < ApplicationRecord
   enum_array(:looking_for, enum_class: ProfileAttributes::LookingFor)
 
 
-  delegate :latitude, :longitude, to: :profile_geo_detail, allow_nil: false
+  delegate :latitude, :longitude, to: :profile_geo_detail, allow_nil: true
 
   has_many :profile_images
 

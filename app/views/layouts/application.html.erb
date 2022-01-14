@@ -19,6 +19,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="<%= image_url("apple-touch.png")%>" >
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     <meta name='logo:badge' content="<%= image_url("radius_badge.svg") %>" />
+    <% if current_user %>
+      <meta name='graphql-token' content="<%= Base64.encode64(current_user.create_new_auth_token.to_json) %>" />
+    <% end %>
   </head>
 
   <body class='bg-gray-100 dark:bg-slate-900 dark:text-white font-sans'>
