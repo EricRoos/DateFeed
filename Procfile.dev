@@ -1,6 +1,5 @@
 web: SIDEKIQ_WEB_ENABLED=1 GRAPHQL_SUBSCRIPTIONS=1 bin/rails server -p 3000
+websocket: bin/cable
 js: yarn build --watch
-sidekiq: bin/bundle exec sidekiq -v
-js-test: yarn test --watch
-tsc: yarn tsc --pretty --noEmit -w --jsx react-jsx app/javascript/components/index.tsx
+tsc: yarn tsc --noEmit -w --jsx react-jsx app/javascript/components/index.tsx
 css: yarn build:css --watch

@@ -1,0 +1,2 @@
+#!/bin/bash
+bundle exec puma -v -p 28080 cable/config.ru --pidfile tmp/pids/cable.pid

@@ -19,10 +19,15 @@ class GraphqlController < ApplicationController
     context = devise_context
     context[:current_user] = context[:current_resource]
 
-
-    Rails.logger.info("GOT CURRENT USER #{context[:current_user]}")
-
-    if query.match(/^\{?\s*async\./)
+    if variables[:async]
+      job_id = GraphqlResolveJob.perform_later({
+        query: query,
+        context: context.to_h.slice(:current_user,:current_resource),
+        operation_name: operation_name,
+        variables: variables
+      }).job_id
+      render json: { data: { jobId: job_id} }
+    elsif query.match(/^\{?\s*async\./)
       query.gsub!(/^\{\s*async\./, '{')
       actual_query = query.gsub(/^\s*async\./, '')
       job_id = GraphqlResolveJob.perform_later({
@@ -32,14 +37,6 @@ class GraphqlController < ApplicationController
         variables: variables
       }).job_id
       query = actual_query
-      render json: { data: { jobId: job_id} }
-    elsif variables[:async]
-      job_id = GraphqlResolveJob.perform_later({
-        query: query,
-        context: context.to_h.slice(:current_user,:current_resource),
-        operation_name: operation_name,
-        variables: variables
-      }).job_id
       render json: { data: { jobId: job_id} }
     else
       result = DateFeedSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
