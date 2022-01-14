@@ -46,7 +46,7 @@ const hasSubscriptionOperation = ({ query: { definitions } }) => {
   )
 }
 
-const wsHost = window.location.origin.replace("http", "ws").replace("3000","28080")+"/cable";
+const wsHost = document.querySelector('meta[name=ws_host]').getAttribute('content');
 const cable = createConsumer(wsHost);
 
 

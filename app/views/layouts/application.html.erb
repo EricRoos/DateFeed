@@ -22,6 +22,7 @@
     <% if current_user %>
       <meta name='graphql-token' content="<%= Base64.encode64(current_user.create_new_auth_token.to_json) %>" />
     <% end %>
+    <meta name='ws_host' content="<%= Rails.application.config.action_cable.url %>" />
   </head>
 
   <body class='bg-gray-100 dark:bg-slate-900 dark:text-white font-sans'>

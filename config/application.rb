@@ -22,5 +22,6 @@ module DateFeed
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.action_cable.url = ENV['WS_ADDRESS'] || 'ws://localhost:28080'
   end
 end
