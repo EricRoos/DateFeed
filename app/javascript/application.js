@@ -1,5 +1,6 @@
 // Entry point for the build script in your package.json
 import * as Turbo from "@hotwired/turbo"
+import * as yup from 'yup';
 
 if (navigator.serviceWorker) {
   navigator.serviceWorker
@@ -28,3 +29,4 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
   })
 }
 import './components';
+window.yup = yup;

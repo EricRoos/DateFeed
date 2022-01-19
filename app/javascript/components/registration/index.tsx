@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from "react-router-dom";
 import * as yup from 'yup';
 
 import {
@@ -54,36 +55,46 @@ const CreateAccount = (props) => {
 
 
 const Registration = (props) => {
+  let navigate = useNavigate();
   const [ currentStep, setCurrentStep ] = React.useState(props.currentStep || 'email');
 
   const steps = {
     email: () => (
-      <Animate key='email-collect' animation='fadeIn' className='h-full w-full'>
-        <CollectEmail onNext={() => {setCurrentStep('password')} }/>
-      </Animate>
+      <CollectEmail onBack={() => null } onNext={() => {setCurrentStep('password')} }/>
     ),
     password: () => (
-      <Animate key='password-collect' animation='fadeIn' className='h-full w-full'>
-        <CollectPassword onNext={() => {setCurrentStep('passwordConfirmation')} }/>
-      </Animate>
+      <CollectPassword onBack={ () => {setCurrentStep('email')} } onNext={() => {setCurrentStep('passwordConfirmation')} }/>
     ),
     passwordConfirmation: () => (
-      <Animate key='password-confirm-collect' animation='fadeIn' className='h-full w-full'>
-        <CollectPasswordConfirmation onNext={() => {setCurrentStep('tos')} }/>
-      </Animate>
+      <CollectPasswordConfirmation onBack={() => setCurrentStep('password') } onNext={() => {setCurrentStep('tos')} }/>
     ),
     tos: () => (
-      <Animate key='tos-accept-collect' animation='fadeIn' className='h-full w-full'>
-        <Tos onNext={() => { setCurrentStep('create') }} />
-      </Animate>
+      <Tos onBack={() => setCurrentStep('passwordConfirmation')} onNext={() => { setCurrentStep('create') }} />
     ),
     create: () => (
       <CreateAccount onNext={ () => setCurrentStep('success') } />
     ),
     success: () => (
-      <Animate key='confirm-account' animation='fadeIn' className='h-full w-full'>
-        You did it! Be on the lookout for a email containing your confirmation code.
-      </Animate>
+      <BaseStep
+        title='You did it!'
+        stepString={''}
+        innerContent={(
+          <Animate animation=''>
+            <div className='text-sm text-gray-500 mt-8' >
+              <p className='mt-2'>
+                Be on the lookout for a email containing your confirmation code.
+              </p>
+            </div>
+          </Animate>
+        )}
+        actionContent={
+          <div className='flex flex-col gap-2'>
+            <Animate animation='pulse animate__infinite'>
+              <Button onClick={() => { navigate('/confirm')} } className='w-full'>Confirm account</Button>
+            </Animate>
+          </div>
+        }
+      />
     )
   }
 
@@ -103,7 +114,9 @@ const Registration = (props) => {
     >
       <div className='flex justify-center p-4'>
         <div className='bg-white h-[80vh] w-full rounded-xl drop-shadow p-4 justify-center items-center overflow-hidden'>
-          { steps[currentStep]() }
+          <Animate key={currentStep} animation='fadeIn' className='h-full w-full'>
+            { steps[currentStep]() }
+          </Animate>
         </div>
       </div>
     </Formik>

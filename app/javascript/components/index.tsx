@@ -149,12 +149,15 @@ const App = () => (
   </div>
 );
 
+const ConfirmationPage = () => (
+  <div>confirmed</div>
+)
 const RegistrationApp = () => (
   <div className='container px-3'>
     <HashRouter>
       <Routes>
         <Route path='/' element={<Registration />} />
-        <Route path='/confirm' element={<Registration currentStep='confirmAccount' />} />
+        <Route path='/confirm' element={<ConfirmationPage/>} />
       </Routes>
     </HashRouter>
   </div>

@@ -37,11 +37,6 @@ import {
   FieldHookConfig
 } from 'formik';
 
-interface EditProfileFields {
-  name: String;
-  age: Number;
-}
-
 
 function AgeOptions(){
   let options = [];
@@ -92,7 +87,6 @@ const ProfileForm = (props : ProfileFormProps) => {
   const initialValues = props.profile;
 
   function handleSubmit(values, actions){
-    const payload = ProfileInputSchema.cast(values, {stripUnknown: true});
     editProfile({
       update: (cache, result) => {
         cache.writeFragment({
@@ -106,7 +100,10 @@ const ProfileForm = (props : ProfileFormProps) => {
           data: result.data.editProfile.profile,
         })
       },
-      variables: { profile: payload }
+      variables: { profile: {
+        name: values.name,
+        age: !!values.age ? parseInt(values.age) : null
+      }}
     }).then( (resp) => {
       showToast('Profile updated');
     });
@@ -131,7 +128,7 @@ const ProfileForm = (props : ProfileFormProps) => {
                 <TextInput id='name' name='name' type='text' label='Name' disabled={loading}/>
               </div>
               <div className='mb-2'>
-                <SelectInput id='age' name='age' label='Age' disabled={loading}>
+                <SelectInput as='number' id='age' name='age' label='Age' disabled={loading}>
                   <SelectInput.Option value=''>{''}</SelectInput.Option>
                   { AgeOptions() }
                 </SelectInput>

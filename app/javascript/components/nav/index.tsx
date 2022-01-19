@@ -18,6 +18,7 @@ const Nav = () => {
         <button onClick={ () => {
             setIsOpen(true);
           }}
+          aria-label='Menu'
           className='focus:text-orange-500 dark:text-black bg-gray-200 rounded-full p-1 flex drop-shadow-lg'
         >
           <Icon glyph='menu' size={48} />
@@ -58,6 +59,7 @@ const Nav = () => {
           <li className="hover:bg-gray-100">
             <Link to='/me'
               onClick={ () => setIsOpen(false) }
+              aria-label='Profile'
               className="h-16 px-6 flex flex justify-center items-center w-full
               focus:text-orange-500">
               <Icon glyph='profile' />

@@ -45,7 +45,7 @@ const CollectPassword = (props) => {
               <Button disabled className='w-full opacity-25'>Next</Button>
           ) }
         </div>
-        <Button disabled className='w-full bg-gray-300'>Cancel</Button>
+        <Button onClick={props.onBack} className='w-full bg-gray-300'>Cancel</Button>
         </div>
       )}
     />

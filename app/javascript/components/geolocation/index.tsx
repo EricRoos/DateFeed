@@ -6,16 +6,22 @@ import useLogLocation from './mutation';
 
 import Button from '../inputs/button';
 
-const Geolocation = (props) => {
+const PostGeoLocation = (props) => {
+  const {
+    longitude,
+    latitude
+  } = props;
   const [ logLocation ] = useLogLocation();
-
-  const postGeolocation = React.useRef(throttle( (data) => {
-    const { latitude, longitude } = data;
+  React.useEffect( () => {
     logLocation({ variables: { longitude, latitude, async: true } });
-  }, 10000));
+  }, [props.latitude, props.longitude])
+  return null;
+};
+const Geolocation = (props) => {
 
 
-  const geolocation = useGeolocation({}, postGeolocation.current);
+
+  const geolocation = useGeolocation({})
   if(geolocation.error){
     return (
       <div className='flex flex-col p-4 divide-y divide-gray-500 gap-4'>
@@ -38,7 +44,12 @@ const Geolocation = (props) => {
       </div>
     )
   }else{
-    return props.children;
+    return (
+      <>
+        <PostGeoLocation latitude={geolocation.latitude} longitude={geolocation.longitude} />
+        {props.children}
+      </>
+    )
   }
 
 };

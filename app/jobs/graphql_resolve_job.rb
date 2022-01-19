@@ -2,6 +2,7 @@ class GraphqlResolveJob < ApplicationJob
   queue_as :default
 
   rescue_from(Exception) do |exception|
+    puts exception
     Rails.logger.debug(exception)
   end
 

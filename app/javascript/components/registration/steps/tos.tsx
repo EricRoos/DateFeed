@@ -33,7 +33,7 @@ const Tos = (props) => {
               <Button onClick={props.onNext} className='w-full'>I Accept</Button>
             </Animate>
           </div>
-          <Button disabled className='w-full bg-gray-300'>No thanks</Button>
+          <Button onClick={props.onBack} className='w-full bg-gray-300'>No thanks</Button>
         </div>
       )}
     />
