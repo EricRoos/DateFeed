@@ -13,6 +13,9 @@ const PostGeoLocation = (props) => {
   } = props;
   const [ logLocation ] = useLogLocation();
   React.useEffect( () => {
+    if(!longitude || !latitude){
+      return;
+    }
     logLocation({ variables: { longitude, latitude, async: true } });
   }, [props.latitude, props.longitude])
   return null;
