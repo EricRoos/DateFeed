@@ -43,6 +43,12 @@ const Geolocation = (props) => {
         </div>
       </div>
     )
+  }else if(!geolocation.latitude || !geolocation.longitude){
+    return (
+      <div>
+        Fetching location.
+      </div>
+    );
   }else{
     return (
       <>
