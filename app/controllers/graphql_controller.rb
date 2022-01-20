@@ -8,7 +8,6 @@ class GraphqlController < ApplicationController
   # but you'll have to authenticate your user separately
   protect_from_forgery with: :null_session
   skip_before_action :authenticate_user!
-  #before_action :check_app_token!
 
   def execute
     variables = prepare_variables(params[:variables])
@@ -27,17 +26,6 @@ class GraphqlController < ApplicationController
         variables: variables
       }).job_id
       render json: { data: { jobId: job_id} }
-    elsif query.match(/^\{?\s*async\./)
-      query.gsub!(/^\{\s*async\./, '{')
-      actual_query = query.gsub(/^\s*async\./, '')
-      job_id = GraphqlResolveJob.perform_later({
-        query: actual_query,
-        context: context,
-        operation_name: operation_name,
-        variables: variables
-      }).job_id
-      query = actual_query
-      render json: { data: { jobId: job_id} }
     else
       result = DateFeedSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
       render json: result
@@ -49,14 +37,6 @@ class GraphqlController < ApplicationController
   end
 
   private
-
-  def check_app_token!
-    host = request.ip
-    token = request.headers['X-ApiToken']
-    Rails.logger.info("[AppTokenCheck][#{host}] - #{token}")
-    valid = AppToken.exists?(token: token, host: host)
-    head :bad_request and return unless valid
-  end
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)

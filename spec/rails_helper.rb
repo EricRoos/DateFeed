@@ -2,7 +2,7 @@
 require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter do |source_file|
-    source_file.relevant_lines < 5
+    source_file.relevant_lines < 7
   end
 end
 
