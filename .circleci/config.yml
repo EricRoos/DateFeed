@@ -16,6 +16,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Bundle install
+          command: bundle install
+      - run:
           name: Unit Tests
           command: bundle exec rspec
   build:
