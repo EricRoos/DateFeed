@@ -28,7 +28,7 @@ module Types
 
     field :activity_feed, [ActivityFeedItemType], 'Look at the posts in the feed'
     def activity_feed
-      ActivityFeed.for(context[:current_user].profile)
+      ActivityFeed.for(context[:current_user].profile, 50)
     end
   end
 end
