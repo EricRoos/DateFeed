@@ -20,8 +20,8 @@ jobs:
           name: setup dbs
           command: docker-compose up -d 
       - run:
-          name: Bundle install
-          command: bundle install
+          name: Check Services
+          command: docker-compose ps
       - run:
           name: Unit Tests
           command: RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
