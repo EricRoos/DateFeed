@@ -16,13 +16,6 @@ class LikedPostNotification < Noticed::Base
   #
   param :interaction
 
-  # Define helper methods to make rendering easier.
-  #
-
-  def url
-    "/"
-  end
-
   public
   def message
     "#{params[:interaction].profile.name || 'Someone'} liked your post"  
