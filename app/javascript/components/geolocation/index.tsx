@@ -21,10 +21,10 @@ const PostGeoLocation = (props) => {
   return null;
 };
 const Geolocation = (props) => {
+  const [ geolocation, setGeoLocation ] = React.useState({});
 
+  const nextGeolocation = useGeolocation({}, setGeoLocation);
 
-
-  const geolocation = useGeolocation({})
   if(geolocation.error){
     return (
       <div className='flex flex-col p-4 divide-y divide-gray-500 gap-4'>

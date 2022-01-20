@@ -128,10 +128,10 @@ const withNav = (Component) => {
   }
 }
 
-const ActivityFeedPage = withNav(withGeoLocation(ActivityFeed));
-const EditProfilePage = withNav(withGeoLocation(EditProfile));
-const SearchPage = withNav(withGeoLocation(Search));
-const NewPostPage = withNav(withGeoLocation(NewPost));
+const ActivityFeedPage = withNav(ActivityFeed);
+const EditProfilePage = withNav(EditProfile);
+const SearchPage = withNav(Search);
+const NewPostPage = withNav(NewPost);
 const NoLocationDataPage = () => (
   <div>
     No Location Data
@@ -169,7 +169,7 @@ const AppWithRouter = () => (
   </HashRouter>
 );
 
-const Page = asPage(AppWithRouter);
+const Page = withGeoLocation(asPage(AppWithRouter));
 const RegPage = RegistrationApp;
 
 const appContainer = document.getElementById('root');
