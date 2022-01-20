@@ -12,7 +12,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: circleci/ruby:3.0.0-stretch-node
+      - image: circleci/ruby:3-node-browsers-legacy
     steps:
       - checkout
       - run:
