@@ -309,6 +309,8 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.5)
+    rollout (2.5.0)
+      redis (~> 4.0)
     rsolr (2.3.0)
       builder (>= 2.1.2)
       faraday (>= 0.9.0)
@@ -454,6 +456,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails!
   redis (~> 4.0)
+  rollout (~> 2.5)
   rspec-rails (~> 5.0)
   rubocop-graphql (~> 0.11.2)
   rubocop-rails (~> 2.12)

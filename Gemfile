@@ -98,3 +98,5 @@ gem "sentry-sidekiq", "~> 4.8", :group => :production
 
 gem "ruby-enum", "~> 0.9.0"
 
+
+gem "rollout", "~> 2.5"

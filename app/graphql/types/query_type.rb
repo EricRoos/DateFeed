@@ -28,7 +28,9 @@ module Types
 
     field :activity_feed, [ActivityFeedItemType], 'Look at the posts in the feed'
     def activity_feed
-      ActivityFeed.for(context[:current_user].profile, 50)
+      distance = $rollout.get(:activity_feed).data.fetch("range") { 5 }
+      Rails.logger.info("Searching with distance #{distance}")
+      ActivityFeed.for(context[:current_user].profile, distance)
     end
   end
 end
