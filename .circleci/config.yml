@@ -20,7 +20,7 @@ jobs:
           command: bundle install
       - run:
           name: Unit Tests
-          command: bundle exec rspec
+          command: RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
