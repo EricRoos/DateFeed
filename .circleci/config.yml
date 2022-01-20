@@ -13,6 +13,7 @@ jobs:
   test:
     docker:
       - image: circleci/ruby:3.0.0-stretch-node
+    steps:
       - checkout
       - run:
           name: Unit Tests
@@ -46,7 +47,9 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - test
-      - build
+      - build:
+        requires:
+          - test
       - deploy:
           requires:
             - build
