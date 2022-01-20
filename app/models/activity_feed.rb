@@ -5,7 +5,7 @@ class ActivityFeed
     in_range_profile_ids = []
     if profile.latitude && profile.longitude
       in_range_profile_ids = Profile.search {
-        with(:coord).in_radius(profile.latitude, profile.longitude, 5) 
+        with(:coord).in_radius(profile.latitude, profile.longitude, radius) 
       }.hits.map{ |h| h.primary_key.to_i }
     end
     in_range_profile_ids << profile.id
