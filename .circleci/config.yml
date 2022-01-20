@@ -12,7 +12,8 @@ orbs:
 jobs:
   test:
     machine:
-      - image: circleci/ruby:3.0.0-node-browsers-legacy
+      image: ubuntu-1604:202007-01
+    resource_class: medium
     steps:
       - checkout
       - run:
