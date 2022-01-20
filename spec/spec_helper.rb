@@ -17,7 +17,22 @@ require 'capybara'
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+ENV['WS_ADDRESS'] = '/cable'
+
+require 'selenium-webdriver'
+require 'byebug'
+
 Capybara.enable_aria_label = true
+opts = Selenium::WebDriver::Firefox::Options.new
+opts.add_preference('geo.enabled', true)
+opts.add_preference('permissions.default.geo', 1)
+
+Capybara.register_driver(:custom) do |app|
+  Capybara::Selenium::Driver.new(app, capabilities: opts)
+end
+
+Capybara.default_max_wait_time = 10
+Capybara.javascript_driver = :custom
 
 RSpec.configure do |config|
   config.before(:suite) do
