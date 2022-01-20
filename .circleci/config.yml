@@ -11,10 +11,13 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   test:
-    docker:
+    machine:
       - image: circleci/ruby:3.0.0-node-browsers-legacy
     steps:
       - checkout
+      - run:
+          name: setup dbs
+          command: docker-compose up -d 
       - run:
           name: Bundle install
           command: bundle install
