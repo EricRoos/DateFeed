@@ -11,22 +11,20 @@ RUN apk add --no-cache --update build-base \
 
 ARG RAILS_MASTER_KEY
 
-
 ENV RAILS_ENV=production
 ENV RAILS_LOG_TO_STDOUT=true
 ENV RAILS_SERVE_STATIC_FILES=true
 
-
 RUN mkdir /app
 WORKDIR /app
 
-COPY package.json yarn.lock Gemfile Gemfile.lock /app/
+COPY Gemfile Gemfile.lock /app/
 RUN gem install bundler:2.2.16
-
 RUN bundle config set --local without 'development test'
 RUN bundle install --jobs `expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1` --retry 3
-RUN yarn install
 
+COPY package.json yarn.lock /app/
+RUN yarn install
 
 COPY . /app
 

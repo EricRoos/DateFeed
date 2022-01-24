@@ -1,6 +1,19 @@
 version: '3.7'
 
 services:
+  app:
+    image: circleci/ruby:3.0.0-node-browsers-legacy
+    working_dir: /app
+    command: bundle exec rspec
+    volumes:
+      - .:/app
+      - bundle_path:/bundle
+      - bundle_cache_path:/app/vendor/cache
+    environment:
+      - BUNDLE_PATH=/bundle/vendor
+    depends_on:
+      - db
+      - solr
   db:
     image: postgres:latest
     ports:
@@ -18,3 +31,6 @@ services:
       - type: bind
         source: ./solr-config/schema.xml
         target: /opt/solr-8.0.0/server/solr/configsets/_default/conf/schema.xml
+volumes:
+  bundle_path:
+  bundle_cache_path:
