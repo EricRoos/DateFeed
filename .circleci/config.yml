@@ -17,11 +17,14 @@ jobs:
     steps:
       - checkout
       - run:
-          name: setup dbs
-          command: docker-compose up -d 
+          name: Up dbs
+          command: docker-compose up -d solr db redis
       - run:
           name: Check Services
-          command: docker-compose ps
+          command: docker-compose exec solr solre create_core -c test
+      - run:
+          name: Init DB
+          command: docker-compose run --rm app bundle exec rails db:setup
       - run:
           name: Unit Tests
           command: RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
