@@ -27,7 +27,7 @@ jobs:
           command: docker-compose build app
       - run:
           name: Init DB
-          command: docker-compose run --rm app bundle exec rails db:setup
+          command: docker-compose run --rm app bundle exec rails db:create
       - run:
           name: Unit Tests
           command: RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
