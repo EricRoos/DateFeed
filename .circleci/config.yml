@@ -19,7 +19,7 @@ jobs:
         environment:
           DB_HOST: 127.0.0.1
           RAILS_MASTER_KEY: $DEV_KEY
-          SOLR_HOST: solr
+          SOLR_HOST: 127.0.0.1
 
     # Service container image available at `host: localhost`
 
