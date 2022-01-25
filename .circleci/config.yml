@@ -19,6 +19,7 @@ jobs:
         environment:
           RAILS_ENV: test
           DBHOST: 127.0.0.1
+          RAILS_MASTER_KEY: $DEV_KEY
 
     # Service container image available at `host: localhost`
 
