@@ -21,7 +21,7 @@ ENV['WS_ADDRESS'] = '/cable'
 
 require 'selenium-webdriver'
 require 'byebug'
-
+puts 'Config selenium'
 Capybara.enable_aria_label = true
 opts = Selenium::WebDriver::Firefox::Options.new
 opts.add_preference('geo.enabled', true)
@@ -36,8 +36,10 @@ end
 Capybara.default_max_wait_time = 10
 Capybara.javascript_driver = :custom
 
+puts 'Config rspec'
 RSpec.configure do |config|
   config.before(:suite) do
+    puts 'Cleaning all data sources'
     Sunspot.remove_all!
     Sunspot.commit
     DatabaseCleaner.strategy = :transaction

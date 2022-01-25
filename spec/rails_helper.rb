@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 require 'simplecov'
+puts 'init simple cov'
 SimpleCov.start 'rails' do
   add_filter do |source_file|
     source_file.relevant_lines < 7
   end
 end
+puts 'done init simple cov'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
