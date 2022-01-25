@@ -12,27 +12,46 @@ orbs:
 jobs:
   test:
     docker:
-      - image: circleci/ruby:3.0.0-browsers
+      - image: cimg/ruby:3.0-node
+        auth:
+          username: $DOCKER_LOGIN
+          password: $DOCKER_PWD  # context / project UI env-var reference
+        environment:
+          RAILS_ENV: test
+          DBHOST: 127.0.0.1
+
+    # Service container image available at `host: localhost`
+
+      - image: cimg/postgres:14.0
+        auth:
+          username: $DOCKER_LOGIN
+          password: $DOCKER_PWD  # context / project UI env-var reference
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: mysecretpassword
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-          version: 20.10.11
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - date-feed-{{ checksum "Gemfile.lock" }}
+            - date-feed-
+      # Bundle install dependencies
       - run:
-          name: 'setup dbs'
-          command: docker-compose up -d db solr redis
+          name: Install dependencies
+          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+      - run: sudo apt install -y postgresql-client || true
+      # Store bundle cache
+      - save_cache:
+          key: rails-demo-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
       - run:
-          name: 'check dbs'
-          command: docker-compose ps
-      - run:
-          name: 'bundle install'
-          command: bundle install
-      - run:
-          name: 'db:create'
-          command: RAILS_MASTER_KEY=$DEV_KEY bundle exec rails db:create
-      - run:
-          name: 'rspec'
-          command: RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
+          name: Database Setup
+          command: |
+            bundle exec rake db:create
+            bundle exec rake db:structure:load
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
