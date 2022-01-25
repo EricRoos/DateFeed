@@ -19,8 +19,8 @@ jobs:
           docker_layer_caching: true
           version: 20.10.11
       - run:
-        name: 'setup dbs'
-        command: docker-compose up -d db solr redis
+          name: 'setup dbs'
+          command: docker-compose up -d db solr redis
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
