@@ -19,7 +19,7 @@ RUN yarn install
 COPY --chown=circleci . /home/circleci/project
 #RUN sudo chown -R circleci:circleci /home/circleci/project
 
-
+RUN sudo apt-get install postgresql-client
 #EXPOSE 3000
 #CMD bundle exec rails s -p 3000
 
