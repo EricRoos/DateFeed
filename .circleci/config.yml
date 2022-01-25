@@ -21,6 +21,12 @@ jobs:
       - run:
           name: 'setup dbs'
           command: docker-compose up -d db solr redis
+      - run:
+          name: 'bundle install'
+          command: bundle install
+      - run:
+          name: 'rspec'
+          command: bundle exec rspec
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
