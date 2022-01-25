@@ -51,8 +51,8 @@ jobs:
       - run:
           name: Database Setup
           command: |
-            bundle exec rake db:create
-            bundle exec rake db:structure:load
+            RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:create
+            RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:structure:load
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
