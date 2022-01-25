@@ -25,6 +25,9 @@ jobs:
           name: 'bundle install'
           command: bundle install
       - run:
+          name: 'db:create'
+          command: bundle exec rails db:create
+      - run:
           name: 'rspec'
           command: RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
   build:
