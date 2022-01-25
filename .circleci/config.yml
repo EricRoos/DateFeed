@@ -11,6 +11,16 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   test:
+    docker:
+      - image: circleci/ruby:3.0.0-browsers
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+          version: 20.10.11
+      - run:
+        name: 'setup dbs'
+        command: docker-compose up -d db solr redis
     machine:
       image: ubuntu-1604:202007-01
     resource_class: medium
