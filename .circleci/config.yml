@@ -23,6 +23,9 @@ jobs:
           name: Check Services
           command: docker-compose exec solr solr create_core -c test
       - run:
+          name: Build app
+          command: docker-compose build app
+      - run:
           name: Init DB
           command: docker-compose run --rm app bundle exec rails db:setup
       - run:
