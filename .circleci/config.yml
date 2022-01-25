@@ -12,7 +12,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/ruby:3.0-node
+      - image: cimg/ruby:3.0.0-browsers
         auth:
           username: $DOCKER_LOGIN
           password: $DOCKER_PWD  # context / project UI env-var reference
