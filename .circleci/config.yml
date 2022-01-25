@@ -24,6 +24,7 @@ jobs:
     # Service container image available at `host: localhost`
 
       - image: ericroos13/sunspot-solr
+        name: solr
       - image: cimg/postgres:14.0
         auth:
           username: $DOCKER_LOGIN
@@ -54,6 +55,10 @@ jobs:
           key: rails-demo-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+      - run:
+          name: Solr Setup
+          command: |
+            docker ps
       - run:
           name: Database Setup
           command: |
