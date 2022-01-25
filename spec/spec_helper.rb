@@ -20,7 +20,6 @@ require 'capybara'
 ENV['WS_ADDRESS'] = '/cable'
 
 require 'selenium-webdriver'
-require 'byebug'
 puts 'Config selenium'
 Capybara.enable_aria_label = true
 opts = Selenium::WebDriver::Firefox::Options.new
@@ -134,4 +133,6 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #Kernel.srand config.seed
+  puts 'done in spec helper'
 end
+puts 'close'
