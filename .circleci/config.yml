@@ -21,26 +21,6 @@ jobs:
       - run:
         name: 'setup dbs'
         command: docker-compose up -d db solr redis
-    machine:
-      image: ubuntu-1604:202007-01
-    resource_class: medium
-    steps:
-      - checkout
-      - run:
-          name: Up dbs
-          command: docker-compose up -d solr db redis
-      - run:
-          name: Build app
-          command: docker-compose build app
-      - run:
-          name: Init solr
-          command: docker-compose exec solr solr create_core -c test
-      - run:
-          name: Init DB
-          command: docker-compose run app bundle exec rails db:create
-      - run:
-          name: Unit Tests
-          command: docker-compose run app bundle exec rspec ./spec/models
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
