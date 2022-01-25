@@ -22,6 +22,9 @@ jobs:
           name: 'setup dbs'
           command: docker-compose up -d db solr redis
       - run:
+          name: 'check dbs'
+          command: docker-compose ps
+      - run:
           name: 'bundle install'
           command: bundle install
       - run:
