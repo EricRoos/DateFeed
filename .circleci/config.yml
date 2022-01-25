@@ -11,63 +11,29 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   test:
-    docker:
-      - image: cimg/ruby:3.0.0-browsers
-        auth:
-          username: $DOCKER_LOGIN
-          password: $DOCKER_PWD  # context / project UI env-var reference
-        environment:
-          DB_HOST: 127.0.0.1
-          RAILS_MASTER_KEY: $DEV_KEY
-          SOLR_HOST: 127.0.0.1
-
-    # Service container image available at `host: localhost`
-
-      - image: ericroos13/sunspot-solr
-        name: solr
-      - image: cimg/postgres:14.0
-        auth:
-          username: $DOCKER_LOGIN
-          password: $DOCKER_PWD  # context / project UI env-var reference
-        environment:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: mysecretpassword
+    machine:
+      image: ubuntu-1604:202007-01
+    resource_class: medium
     steps:
-      - run: |
-          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-          sudo apt-get update
-          sudo apt install -y postgresql-14
-
       - checkout
-
-      # Restore bundle cache
-      - restore_cache:
-          keys:
-            - date-feed-{{ checksum "Gemfile.lock" }}
-            - date-feed-
-      # Bundle install dependencies
       - run:
-          name: Install dependencies
-          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
-      # Store bundle cache
-      - save_cache:
-          key: rails-demo-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+          name: Up dbs
+          command: docker-compose up -d solr db redis
       - run:
-          name: Solr Setup
-          command: |
-            docker ps
+          name: Check Services
+          command: docker-compose exec solr solr create_core -c test
       - run:
-          name: Database Setup
-          command: |
-            RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:create
-            yes "" | RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:schema:load || true
+          name: Build app
+          command: docker-compose build app
       - run:
-          name: Rspec
-          command: |
-            RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
+          name: Init DB
+          command: docker-compose run --rm app bundle exec rails db:create
+      - run:
+          name: Load Schema
+          command: docker-compose run --rm app /bin/bash -c 'yes | bundle exec rails db:schema:load'
+      - run:
+          name: Unit Tests
+          command: RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
