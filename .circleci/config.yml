@@ -30,7 +30,7 @@ jobs:
           command: docker-compose run --rm app bundle exec rails db:create
       - run:
           name: Unit Tests
-          command: docker-compose run --rm app bundle exec rspec
+          command: docker-compose run --rm app bundle exec rspec ./spec/models
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
