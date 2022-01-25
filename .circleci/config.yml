@@ -17,7 +17,7 @@ jobs:
           username: $DOCKER_LOGIN
           password: $DOCKER_PWD  # context / project UI env-var reference
         environment:
-          DBHOST: 127.0.0.1
+          DB_HOST: 127.0.0.1
           RAILS_MASTER_KEY: $DEV_KEY
 
     # Service container image available at `host: localhost`
