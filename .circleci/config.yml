@@ -56,7 +56,7 @@ jobs:
           name: Database Setup
           command: |
             RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:create
-            yes "" | RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:schema:load
+            yes "" | RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:schema:load || true
       - run:
           name: Rspec
           command: |
