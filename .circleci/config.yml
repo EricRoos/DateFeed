@@ -47,6 +47,7 @@ jobs:
           key: rails-demo-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+      - run: pg_dump
       - run:
           name: Database Setup
           command: |
