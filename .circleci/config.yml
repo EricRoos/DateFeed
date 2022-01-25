@@ -20,17 +20,17 @@ jobs:
           name: Up dbs
           command: docker-compose up -d solr db redis
       - run:
-          name: Check Services
-          command: docker-compose exec solr solr create_core -c test
-      - run:
           name: Build app
           command: docker-compose build app
       - run:
+          name: Init solr
+          command: docker-compose exec solr solr create_core -c test
+      - run:
           name: Init DB
-          command: docker-compose run --rm app bundle exec rails db:create
+          command: docker-compose run app bundle exec rails db:create
       - run:
           name: Unit Tests
-          command: docker-compose run --rm app bundle exec rspec ./spec/models
+          command: docker-compose run app bundle exec rspec ./spec/models
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
