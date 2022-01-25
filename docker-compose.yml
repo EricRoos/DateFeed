@@ -2,18 +2,22 @@ version: '3.7'
 
 services:
   app:
-    image: circleci/ruby:3.0.0-node-browsers-legacy
-    working_dir: /app
-    command: bundle exec rspec
-    volumes:
-      - .:/app
-      - bundle_path:/bundle
-      - bundle_cache_path:/app/vendor/cache
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
     environment:
-      - BUNDLE_PATH=/bundle/vendor
+      - RAILS_MASTER_CODE=6ad6c231b93f6357ca4f327253322eeb
+      - DB_HOST=db
+      - SOLR_HOST=solr
+      - REDIS_URL=redis://redis:6379
+    command: bundle exec rspec
     depends_on:
       - db
       - solr
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
   db:
     image: postgres:latest
     ports:
@@ -32,5 +36,5 @@ services:
         source: ./solr-config/schema.xml
         target: /opt/solr-8.0.0/server/solr/configsets/_default/conf/schema.xml
 volumes:
-  bundle_path:
-  bundle_cache_path:
+  gem_bundle_path:
+  git_gem_bundle_path:

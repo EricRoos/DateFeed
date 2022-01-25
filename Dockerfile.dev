@@ -1,0 +1,25 @@
+FROM cimg/ruby:3.0.0-browsers
+
+RUN sudo apt-get update
+RUN sudo apt-get -yq install postgresql-client firefox
+
+COPY Gemfile Gemfile.lock /home/circleci/project/
+WORKDIR /home/circleci/project
+RUN gem install bundler:2.2.16
+
+RUN bundle install --jobs `expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1` --retry 3
+
+COPY package.json yarn.lock /home/circleci/project/
+
+RUN sudo npm install -g n
+RUN sudo n stable
+
+RUN yarn install
+
+COPY --chown=circleci . /home/circleci/project
+#RUN sudo chown -R circleci:circleci /home/circleci/project
+
+
+#EXPOSE 3000
+#CMD bundle exec rails s -p 3000
+

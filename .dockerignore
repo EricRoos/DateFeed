@@ -39,7 +39,7 @@ coverage/
 spec/tmp
 **.orig
 
-.bundle
+.bundle/*
 
 .ruby-version
 .ruby-gemset
@@ -53,4 +53,6 @@ bower.json
 *.key
 
 config/credentials/production.key
+config/master.key
 yarn-error.log
+vendor/cache/*
