@@ -40,3 +40,4 @@ config/credentials/production.key
 coverage/*
 
 /config/credentials/production.key
+/vendor/cache/*
