@@ -17,7 +17,6 @@ jobs:
           username: $DOCKER_LOGIN
           password: $DOCKER_PWD  # context / project UI env-var reference
         environment:
-          RAILS_ENV: test
           DBHOST: 127.0.0.1
           RAILS_MASTER_KEY: $DEV_KEY
 
@@ -52,6 +51,7 @@ jobs:
           name: Database Setup
           command: |
             RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:create
+            RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:migrate
       - run:
           name: Rspec
           command: |
