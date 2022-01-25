@@ -52,7 +52,10 @@ jobs:
           name: Database Setup
           command: |
             RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:create
-            RAILS_MASTER_KEY=$DEV_KEY bundle exec rake db:structure:load
+      - run:
+          name: Rspec
+          command: |
+            RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
