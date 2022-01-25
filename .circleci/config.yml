@@ -26,7 +26,7 @@ jobs:
           command: bundle install
       - run:
           name: 'rspec'
-          command: RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
+          command: DB_HOST=db SOLR_HOST=solr REDIS_URL=redis://redis:6379 RAILS_MASTER_KEY=$DEV_KEY bundle exec rspec
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
