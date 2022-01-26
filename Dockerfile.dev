@@ -20,7 +20,7 @@ RUN yarn install
 
 COPY --chown=circleci . /home/circleci/project
 RUN yarn build
-#RUN bundle exec rake assets:precompile
+RUN yarn build:css
 #RUN sudo chown -R circleci:circleci /home/circleci/project
 
 #EXPOSE 3000
