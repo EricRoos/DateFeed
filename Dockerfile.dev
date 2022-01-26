@@ -16,15 +16,13 @@ RUN sudo n stable
 
 RUN yarn install
 
-COPY --chown=circleci /home/circleci/project/app/javascript/ /home/circleci/project/app/javascript
-RUN yarn build
-RUN bundle exec rake assets:precompile
 
 
 COPY --chown=circleci . /home/circleci/project
+RUN yarn build
+#RUN bundle exec rake assets:precompile
 #RUN sudo chown -R circleci:circleci /home/circleci/project
 
-RUN sudo apt-get install postgresql-client
 #EXPOSE 3000
 #CMD bundle exec rails s -p 3000
 
