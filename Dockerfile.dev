@@ -15,7 +15,8 @@ RUN sudo npm install -g n
 RUN sudo n stable
 
 RUN yarn install
-
+RUN yarn build
+RUN bundle exec rake assets:precompile
 COPY --chown=circleci . /home/circleci/project
 #RUN sudo chown -R circleci:circleci /home/circleci/project
 
