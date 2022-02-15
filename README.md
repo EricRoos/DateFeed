@@ -1,24 +1,4 @@
-# README
+# DateFeed
+## using sidekiq to resolve graphql requests 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Built the app on a system in which all graphql queries can be optionally resolved by sidekiq. Utilizing graphql subscriptions, Apollo, and  action cable the app performs well and allows for ease of scaling.
